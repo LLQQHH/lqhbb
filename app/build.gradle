@@ -1,0 +1,98 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+}
+//打包时间
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+def outPutFIleHeadName="jaxlinmaster"
+
+android {
+    signingConfigs {
+        //这个只是签名名字,重要的是在 buildTypes配置
+        release {
+            storeFile file('./keystore/jaxlinkey.jks')
+            storePassword '123456'
+            keyAlias 'key'
+            keyPassword '123456'
+        }
+    }
+    compileSdkVersion jaxandroid.compileSdkVersion
+    buildToolsVersion jaxandroid.buildToolsVersion
+    defaultConfig {
+        applicationId "com.lqh.jaxlinmaster"
+        minSdkVersion jaxandroid.minSdkVersion
+        targetSdkVersion jaxandroid.targetSdkVersion
+        versionCode jaxandroid.versionReleaseCode
+        versionName jaxandroid.versionReleaseName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            // 不开启混淆
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // 使用自定义的签名
+            signingConfig signingConfigs.release
+            //为已经存在的applicationId添加后缀，一般不用
+            //applicationIdSuffix '_releaseId'
+            // 为版本名添加后缀
+            //versionNameSuffix '.release'
+        }
+        debug {
+            //这个最好别用,一般不用,直接用会报错 直接运行会报错
+            //applicationIdSuffix '.debugId'
+            //代码中获取versionName会加这个后缀
+            //versionNameSuffix '_debug'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+/*    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            //输出apk名称为：app名_版本名_时间_版本类型.apk
+            def fileName = "${outPutFIleHeadName}_${defaultConfig.versionName}_${releaseTime()}_${buildType.name}.apk"
+            outputFileName = fileName
+//如果修改输出路径，会导致通过按钮安装的会无法安装或者是旧版
+            if (buildType.name == 'release'){
+            //${project}/outputs/apk/文件夹下
+                variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath+"/outputs/apk/release")
+            }else{
+                variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath+"/outputs/apk/debug")
+            }
+        }
+    }*/
+}
+
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation rootProject.ext.jaxdependencies.appcompat
+    implementation jaxdependencies.material
+    implementation jaxdependencies.constraintlayout
+    implementation jaxdependencies.fragment
+    implementation jaxdependencies.butterknife
+    annotationProcessor jaxdependencies.butterknife_compiler
+    implementation jaxdependencies.flexbox
+    implementation jaxdependencies.SmartRefreshLayout
+    implementation jaxdependencies.SmartRefreshHeader
+    implementation jaxdependencies.okgo
+    implementation jaxdependencies.rxjava
+    implementation jaxdependencies.rxandroid
+    implementation jaxdependencies.hawk
+    implementation jaxdependencies.BaseRecyclerViewAdapterHelper
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
