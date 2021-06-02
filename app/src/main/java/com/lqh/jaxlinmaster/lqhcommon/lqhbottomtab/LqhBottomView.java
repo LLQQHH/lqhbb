@@ -10,5 +10,5 @@ public class LqhBottomView {
     private int qqq;
     private int age;
     private int sex555;
-    private String name;
+    private String name111;
 }
