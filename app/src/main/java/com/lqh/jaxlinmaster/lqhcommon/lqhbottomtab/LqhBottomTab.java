@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 public class LqhBottomTab extends LinearLayout{
      private Context mContext;
      private int sex555;
-
     public LqhBottomTab(Context context) {
         this(context,null);
     }
