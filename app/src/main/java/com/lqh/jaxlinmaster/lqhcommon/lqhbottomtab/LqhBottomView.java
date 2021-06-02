@@ -7,5 +7,6 @@ package com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab;
  */
 //@CreateUidAnnotation(uid = "10100")
 public class LqhBottomView {
-	private int bbb;
+	 private int fff;
+    private int ttt;
 }
