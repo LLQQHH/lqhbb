@@ -9,5 +9,6 @@ package com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab;
 public class LqhBottomView {
     private int qqq;
     private int age;
-    private int sex333;
+    private int sex555;
+    private String name;
 }
