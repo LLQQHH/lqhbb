@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 //@CreateUidAnnotation(uid = "10100")
 public class LqhBottomTab extends LinearLayout{
      private Context mContext;
-     private int sex333;
+     private int sex555;
 
     public LqhBottomTab(Context context) {
         this(context,null);
