@@ -13,16 +13,16 @@ import androidx.annotation.Nullable;
  * @describe:
  */
 //@CreateUidAnnotation(uid = "10100")
-class LqhBottomItem extends FrameLayout {
-    public LqhBottomItem(@NonNull Context context) {
+class LqhBottomItemView extends FrameLayout {
+    public LqhBottomItemView(@NonNull Context context) {
         this(context,null);
     }
 
-    public LqhBottomItem(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public LqhBottomItemView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public LqhBottomItem(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public LqhBottomItemView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 }

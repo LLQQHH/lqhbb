@@ -1,40 +1,37 @@
-package com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab;
+package com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.LinearLayout;
-
-import androidx.annotation.Nullable;
+import android.content.Context
+import android.util.AttributeSet
+import android.widget.LinearLayout
+import com.lqh.jaxlinmaster.R
 
 /**
  * Created by Linqh on 2021/5/27.
-@describe:
- *
+ * @describe:
  */
 //@CreateUidAnnotation(uid = "10100")
-public class LqhBottomTab extends LinearLayout{
-     private Context mContext;
-     private int sex555;
-    public LqhBottomTab(Context context) {
-        this(context,null);
-    }
-
-    public LqhBottomTab(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
-    }
-
-    public LqhBottomTab(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        this.mContext=context;
-        init(attrs);
-    }
-
-    private void init(AttributeSet attrs) {
-    }
-    public static class TabView extends LinearLayout{
-
-        public TabView(Context context) {
-            super(context);
+  class LqhBottomTab @JvmOverloads constructor(
+    private val mContext: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : LinearLayout(
+    mContext, attrs, defStyleAttr
+) {
+    private var config: Config? = null
+    private fun init(attrs: AttributeSet?) {
+        if (attrs == null) {
+            return
         }
+        val ta = mContext.obtainStyledAttributes(attrs, R.styleable.LqhBottomTab)
+    }
+
+    //这个是配置类,主要是用来配置item的
+    class Config
+
+    init {
+        if (config == null) {
+            config = Config()
+        }
+        init(attrs)
     }
 }
