@@ -7,11 +7,24 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+    <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-       />
+        android:orientation="horizontal"
+        >
+        <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lqhitem_itemText="测试1"
+            />
+        <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:lqhitem_itemText="测试2"
+            />
+
+    </com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab>
 
 </LinearLayout>

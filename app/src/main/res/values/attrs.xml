@@ -2,21 +2,32 @@
 <resources>
     <declare-styleable name="LqhBottomTab">
         <!--默认状态下的文字颜色-->
-        <attr name="lqhtab_item_textColor" format="color"/>
+        <attr name="lqhtab_item_textColorNormal" format="color"/>
         <!--选中状态下的文字颜色-->
-        <attr name="lqhtab_item_selectedColor" format="color"/>
+        <attr name="lqhtab_item_textColorSelected" format="color"/>
         <!--默认状态下的大小-->
-        <attr name="lqhtab_item_normalTextSize" format="dimension"/>
+        <attr name="lqhtab_item_textSizeNormal" format="dimension"/>
         <!--选中状态下的文字大小-->
-        <attr name="lqhtab_item_selectedTextSize" format="dimension"/>
+        <attr name="lqhtab_item_textSizeSelected" format="dimension"/>
         <!--文字和图标的顶部距离-->
         <attr name="lqhtab_item_iconMargin" format="dimension"/>
     </declare-styleable>
-    <declare-styleable name="LqhBottomItem">
+    <declare-styleable name="LqhBottomItemView">
+        <!--默认状态下的文字颜色-->
+        <attr name="lqhitem_textColorNormal" format="color"/>
+        <!--选中状态下的文字颜色-->
+        <attr name="lqhitem_textColorSelected" format="color"/>
+        <!--默认状态下的大小-->
+        <attr name="lqhitem_textSizeNormal" format="dimension"/>
+        <!--选中状态下的文字大小-->
+        <attr name="lqhitem_textSizeSelected" format="dimension"/>
+        <!--文字和图标的顶部距离-->
+        <attr name="lqhitem_iconMargin" format="dimension"/>
+
         <!--默认状态下的图标-->
-        <attr name="lqhitem_normalIcon" format="reference"/>
+        <attr name="lqhitem_iconNormal" format="reference"/>
         <!--选中状态下的图标-->
-        <attr name="lqhitem_selectedIcon" format="reference"/>
+        <attr name="lqhitem_iconSelected" format="reference"/>
         <!--文本-->
         <attr name="lqhitem_itemText" format="string"/>
         <!--自定义id-->
