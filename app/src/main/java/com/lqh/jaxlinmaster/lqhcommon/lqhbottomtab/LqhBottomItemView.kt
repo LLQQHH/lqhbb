@@ -19,7 +19,7 @@ import com.lqh.jaxlinmaster.R
  * @describe:
  */
 //@CreateUidAnnotation(uid = "10100")
-internal class LqhBottomItemView @JvmOverloads constructor(
+ class LqhBottomItemView @JvmOverloads constructor(
     private val mContext: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -41,6 +41,7 @@ internal class LqhBottomItemView @JvmOverloads constructor(
 
     var tvTitle: TextView? = null
     var ivIcon: ImageView? = null
+
     private fun init(attrs: AttributeSet?) {
         if (attrs == null) {
             return
@@ -102,7 +103,7 @@ internal class LqhBottomItemView @JvmOverloads constructor(
         updateView()
     }
 
-    public fun updateView() {
+     fun updateView() {
         orientation = LinearLayout.VERTICAL
         gravity = Gravity.CENTER
         if (!itemText.isNullOrEmpty()) {
@@ -133,7 +134,7 @@ internal class LqhBottomItemView @JvmOverloads constructor(
             tvTitle?.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeNormal.toFloat())
         } else {
             if (config != null) {
-                tvTitle?.setTextSize(TypedValue.COMPLEX_UNIT_PX, config!!.textColorNormal.toFloat())
+                tvTitle?.setTextSize(TypedValue.COMPLEX_UNIT_PX, config!!.textSizeNormal.toFloat())
             }
         }
         if (normalIcon != null) {
@@ -178,7 +179,7 @@ internal class LqhBottomItemView @JvmOverloads constructor(
                 if (config != null) {
                     tvTitle?.setTextSize(
                         TypedValue.COMPLEX_UNIT_PX,
-                        config!!.textColorNormal.toFloat()
+                        config!!.textSizeNormal.toFloat()
                     )
                 }
             }

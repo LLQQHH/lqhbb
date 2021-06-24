@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.lqh.jaxlinmaster.R
 
 /**
@@ -18,16 +20,17 @@ class LqhBottomTab @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(
     mContext, attrs, defStyleAttr
-) {
+), ViewPager.OnPageChangeListener {
     private var config: Config? = null
 
     //保存所有item
     private var mItemViews: MutableList<LqhBottomItemView> = mutableListOf()
 
     //监听器
-    private var selectedListeners: MutableList<BaseOnTabSelectedListener> = mutableListOf()
+    private var selectedListeners: MutableList<OnTabSelectedListener> = mutableListOf()
     private var onInterruptListener: OnInterruptListener? = null
-    private var mCurrentItem = 0 //当前条目的索引
+    private var mCurrentItem = -1 //当前条目的索引
+    private var mViewPager: ViewPager? = null
 
 
     private fun init(attrs: AttributeSet?) {
@@ -123,16 +126,30 @@ class LqhBottomTab @JvmOverloads constructor(
                 childView.setOnClickListener(LqhOnClickListener(i))
             }
         }
+        if (mCurrentItem == -1) {
+            changeSelected(mCurrentItem, 0)
+        }
     }
 
     inner class LqhOnClickListener(private val clickPosition: Int) : OnClickListener {
         override fun onClick(v: View) {
             //判断有没有打断
-            judgeSelected(mCurrentItem, clickPosition)
+            if (judgeCanSelected(mCurrentItem, clickPosition)) {
+                if (mViewPager != null) {
+                    if (clickPosition == mCurrentItem) {
+                        //如果还是同个页签，使用setCurrentItem不会回调OnPageSelecte(),所以在此处需要回调点击监听
+                        changeSelected(mCurrentItem, clickPosition)
+                    } else {
+                        mViewPager!!.setCurrentItem(clickPosition, false)
+                    }
+                } else {
+                    changeSelected(mCurrentItem, clickPosition)
+                }
+            }
         }
     }
 
-    interface BaseOnTabSelectedListener {
+    interface OnTabSelectedListener {
         fun onTabSelected(position: Int)
         fun onTabUnselected(position: Int)
         fun onTabReselected(position: Int)
@@ -144,10 +161,8 @@ class LqhBottomTab @JvmOverloads constructor(
     }
 
 
-    public fun judgeSelected(oldPosition: Int, newPosition: Int) {
-        if (onInterruptListener == null || onInterruptListener!!.onInterrupt(newPosition)) {
-            changeSelected(oldPosition, newPosition)
-        }
+    public fun judgeCanSelected(oldPosition: Int, newPosition: Int): Boolean {
+        return onInterruptListener == null || !onInterruptListener!!.onInterrupt(newPosition)
     }
 
     fun changeSelected(oldPosition: Int, newPosition: Int) {
@@ -187,8 +202,69 @@ class LqhBottomTab @JvmOverloads constructor(
      * 重置当前按钮的状态
      */
     private fun resetStateUI() {
-        for (i in mItemViews.indices) {
-            mItemViews[i].refreshTab(false)
+        if (mCurrentItem > -1 && mCurrentItem < mItemViews.size) {
+            if (mItemViews[mCurrentItem].isSelected) {
+                mItemViews[mCurrentItem].refreshTab(false)
+            }
+        }
+    }
+
+    fun addOnTabSelectedListener(listener: OnTabSelectedListener) {
+        if (!selectedListeners.contains(listener)) {
+            selectedListeners.add(listener)
+        }
+    }
+
+    fun removeOnTabSelectedListener(listener: OnTabSelectedListener) {
+        selectedListeners.remove(listener)
+    }
+
+    fun getPositionTabView(position: Int): LqhBottomItemView? {
+        if (position >= 0 && position < mItemViews.size - 1) {
+            return mItemViews[position]
+        }
+        return null
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+    }
+
+    override fun onPageSelected(position: Int) {
+        changeSelected(mCurrentItem, position)
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+
+    }
+
+    fun setViewPager(viewPager: ViewPager) {
+        if (this.mViewPager != null) {
+            this.mViewPager?.removeOnPageChangeListener(this)
+        }
+        this.mViewPager = viewPager
+        if (mViewPager != null) {
+            val adapter: PagerAdapter? = mViewPager?.adapter
+            require(!(adapter != null && adapter.count != childCount)) { "子View数量必须和ViewPager条目数量一致" }
+        }
+        if (mViewPager != null) {
+            this.mViewPager?.removeOnPageChangeListener(this)
+            this.mViewPager?.addOnPageChangeListener(this)
+        }
+    }
+
+    fun setSelectItem(clickPosition: Int) {
+        if (judgeCanSelected(mCurrentItem, clickPosition)) {
+            if (mViewPager != null) {
+                if (clickPosition == mCurrentItem) {
+                    //如果还是同个页签，使用setCurrentItem不会回调OnPageSelecte(),所以在此处需要回调点击监听
+                    changeSelected(mCurrentItem, clickPosition)
+                } else {
+                    mViewPager!!.setCurrentItem(clickPosition, false)
+                }
+            } else {
+                changeSelected(mCurrentItem, clickPosition)
+            }
         }
     }
 }
