@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.lqh.jaxlinmaster.R
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 
 /**
  * Created by Linqh on 2021/5/27.
@@ -24,7 +24,21 @@ import com.lqh.jaxlinmaster.R
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(mContext, attrs, defStyleAttr) {
+    constructor(build:Builder):this(build.context){
+        //次构造方法可以初始化代码
+        textColorNormal=build.textColorNormal
+        textColorSelected=build.textColorSelected
+        textSizeNormal=build.textSizeNormal
+        textSizeSelected=build.textSizeSelected
+        iconMargin=build.iconMargin
+        normalIcon=build.normalIcon
+        selectedIcon=build.selectedIcon
+        itemText=build.itemText
+        customLayout=build.customLayout
+        LogUtils.e("执行顺序","次constructor")
+    }
     init {
+        LogUtils.e("执行顺序","init")
         init(attrs)
     }
     var textColorNormal: Int = 0
@@ -35,6 +49,7 @@ import com.lqh.jaxlinmaster.R
     var normalIcon: Drawable? = null
     var selectedIcon: Drawable? = null
     var itemText: String? = null
+
     var customLayout: View? = null
     var defaultLayout: View? = null
     var config: LqhBottomTab.Config? = null
@@ -43,9 +58,6 @@ import com.lqh.jaxlinmaster.R
     var ivIcon: ImageView? = null
 
     private fun init(attrs: AttributeSet?) {
-        if (attrs == null) {
-            return
-        }
         val ta = mContext.obtainStyledAttributes(attrs, R.styleable.LqhBottomItemView)
         textColorNormal = ta.getColor(
             R.styleable.LqhBottomItemView_lqhitem_textColorNormal,
@@ -79,6 +91,7 @@ import com.lqh.jaxlinmaster.R
         initView()
     }
 
+
     //这是初始化View
     private fun initView() {
         tvTitle = defaultLayout!!.findViewById<TextView>(R.id.tv_title)
@@ -105,7 +118,7 @@ import com.lqh.jaxlinmaster.R
 
      fun updateView() {
         orientation = LinearLayout.VERTICAL
-        gravity = Gravity.CENTER
+        //gravity = Gravity.CENTER
         if (!itemText.isNullOrEmpty()) {
             tvTitle?.text = itemText
             tvTitle?.visibility = View.VISIBLE
@@ -186,6 +199,52 @@ import com.lqh.jaxlinmaster.R
             if (normalIcon != null) {
                 ivIcon?.setImageDrawable(normalIcon)
             }
+        }
+    }
+    class Builder(var context: Context) {
+        var textColorNormal: Int = 0
+        var textColorSelected: Int = 0
+        var textSizeNormal: Int = 0
+        var textSizeSelected: Int = 0
+        var iconMargin: Int = 0
+        var normalIcon: Drawable? = null
+        var selectedIcon: Drawable? = null
+        var itemText: String? = null
+        var customLayout: View? = null
+        fun build():LqhBottomItemView{
+           return LqhBottomItemView(this)
+        }
+        fun setTextColorNormal(textColorNormal:Int):Builder{
+            this.textColorNormal=textColorNormal
+            return this
+        }
+        fun setTextColorSelected(textColorSelected:Int):Builder{
+            this.textColorSelected=textColorSelected
+            return this
+        }
+        fun setTextSizeNormal(textSizeNormal:Int):Builder{
+            this.textSizeNormal=textSizeNormal
+            return this
+        }
+        fun setTextSizeSelected(textSizeSelected:Int):Builder{
+            this.textSizeSelected=textSizeSelected
+            return this
+        }
+        fun setNormalIcon(normalIcon:Drawable?):Builder{
+            this.normalIcon=normalIcon
+            return this
+        }
+        fun setSelectedIcon(selectedIcon:Drawable?):Builder{
+            this.selectedIcon=selectedIcon
+            return this
+        }
+        fun setItemText(itemText:String):Builder{
+            this.itemText=itemText
+            return this
+        }
+        fun setCustomLayout(customLayout:View):Builder{
+            this.customLayout=customLayout
+            return this
         }
     }
 }

@@ -29,7 +29,7 @@ class LqhBottomTab @JvmOverloads constructor(
     //监听器
     private var selectedListeners: MutableList<OnTabSelectedListener> = mutableListOf()
     private var onInterruptListener: OnInterruptListener? = null
-    private var mCurrentItem = -1 //当前条目的索引
+    var mCurrentItem = -1 //当前条目的索引
     private var mViewPager: ViewPager? = null
 
 
@@ -78,8 +78,8 @@ class LqhBottomTab @JvmOverloads constructor(
         }
     }
 
-    private fun addTab(child: LqhBottomItemView) {
-        val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+    public fun addTab(child: LqhBottomItemView) {
+        val layoutParams = LayoutParams(0, LayoutParams.MATCH_PARENT)
         layoutParams.weight = 1f
         child.layoutParams = layoutParams
         addConfigToTab(child)
@@ -161,7 +161,7 @@ class LqhBottomTab @JvmOverloads constructor(
     }
 
 
-    public fun judgeCanSelected(oldPosition: Int, newPosition: Int): Boolean {
+    private fun judgeCanSelected(oldPosition: Int, newPosition: Int): Boolean {
         return onInterruptListener == null || !onInterruptListener!!.onInterrupt(newPosition)
     }
 
@@ -170,10 +170,11 @@ class LqhBottomTab @JvmOverloads constructor(
         resetStateUI()
         //更改选中样式
         updateSelectedTabUI(newPosition)
-        //监听都发出去
-        dispatchTabListener(oldPosition, newPosition)
         //重新赋值
         mCurrentItem = newPosition
+        //监听都发出去
+        dispatchTabListener(oldPosition, newPosition)
+
     }
 
     //分发监听

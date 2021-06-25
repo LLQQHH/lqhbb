@@ -7,53 +7,87 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:clipChildren="false">
-    <androidx.viewpager.widget.ViewPager
+<!--    <androidx.viewpager.widget.ViewPager-->
+<!--        android:visibility="visible"-->
+<!--        android:id="@+id/viewpager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_above="@+id/lin_lqhBottomTab"-->
+<!--        />-->
+    <androidx.viewpager2.widget.ViewPager2
         android:visibility="visible"
-        android:id="@+id/viewpager"
+        android:id="@+id/viewpager2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/lqhBottomTab"
+        android:layout_above="@+id/lin_lqhBottomTab"
         />
-
-    <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab
-        android:id="@+id/lqhBottomTab"
-        android:layout_alignParentBottom="true"
+    <LinearLayout
+        android:id="@+id/lin_lqhBottomTab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:orientation="horizontal"
-        app:lqhtab_item_textColorNormal="@color/black"
-        app:lqhtab_item_textColorSelected="@color/bbl_ff0000"
-        app:lqhtab_item_iconMargin="2dp"
-        app:lqhtab_item_textSizeNormal="12sp"
-        app:lqhtab_item_textSizeSelected="12sp"
-        android:clipChildren="false"
-        >
-        <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
-            app:lqhitem_textColorSelected="@android:color/holo_blue_bright"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:lqhitem_itemText="测试1"
-            app:lqhitem_iconNormal="@drawable/ic_main_msg_normalcy"
-            app:lqhitem_iconSelected="@drawable/ic_main_msg_pitchon"
-            />
-        <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:clipChildren="false">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/bbl_999999"/>
+        <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab
+            android:background="@color/white"
+            android:id="@+id/lqhBottomTab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:orientation="horizontal"
+            app:lqhtab_item_textColorNormal="@color/black"
+            app:lqhtab_item_textColorSelected="@color/bbl_ff0000"
+            app:lqhtab_item_iconMargin="4dp"
+            app:lqhtab_item_textSizeNormal="12sp"
+            app:lqhtab_item_textSizeSelected="12sp"
             android:clipChildren="false"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:lqhitem_itemText="测试2"
-            app:lqhitem_customLayoutId="@layout/layout_item_lqhbottom_custom"
-            />
-        <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
-            app:lqhitem_iconNormal="@drawable/ic_main_qiye_normalcy"
-            app:lqhitem_iconSelected="@drawable/ic_main_qiye_pitchon"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:lqhitem_itemText="测试2"
-            />
+            >
+            <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
+                app:lqhitem_textColorSelected="@android:color/holo_blue_bright"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:lqhitem_itemText="测试1"
+                app:lqhitem_iconNormal="@drawable/ic_main_msg_normalcy"
+                app:lqhitem_iconSelected="@drawable/ic_main_msg_pitchon"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="@dimen/dp_4"
+                />
+            <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
+                app:lqhitem_iconNormal="@drawable/ic_main_address_normalcy"
+                app:lqhitem_iconSelected="@drawable/ic_main_address_pitchon"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:lqhitem_itemText="测试2"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="@dimen/dp_4"
+                />
+            <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
+                android:clipChildren="false"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:lqhitem_itemText="测试2"
+                app:lqhitem_customLayoutId="@layout/layout_item_lqhbottom_custom"
+                android:gravity="bottom|center_horizontal"
+                />
+            <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
+                app:lqhitem_iconNormal="@drawable/ic_main_qiye_normalcy"
+                app:lqhitem_iconSelected="@drawable/ic_main_qiye_pitchon"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:lqhitem_itemText="测试3"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="@dimen/dp_4"
+                />
 
-    </com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab>
+        </com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab>
+    </LinearLayout>
+
 
 </RelativeLayout>
