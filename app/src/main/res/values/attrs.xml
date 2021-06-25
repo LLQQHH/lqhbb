@@ -33,4 +33,9 @@
         <!--自定义id-->
         <attr name="lqhitem_customLayoutId" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="LqhUnreadView">
+        <!-- 当为几个字的时候是在为圆形-->
+        <attr name="circleNumberCount" format="integer"/>
+        <attr name="unreadText" format="reference|string"/>
+    </declare-styleable>
 </resources>

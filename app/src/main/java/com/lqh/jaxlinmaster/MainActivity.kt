@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.lqh.jaxlinmaster.bean.LqhtestBean
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
 import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        LqhtestBean("aa")
+        LogUtils.e("name==============")
+        LqhtestBean("cc",5)
         lqhBottomTab.addOnTabSelectedListener(object :LqhBottomTab.OnTabSelectedListener{
             override fun onTabSelected(position: Int) {
                 LogUtils.e("选中"+position)
