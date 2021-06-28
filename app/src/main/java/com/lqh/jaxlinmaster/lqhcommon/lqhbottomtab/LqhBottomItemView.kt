@@ -31,6 +31,8 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
         textSizeNormal=build.textSizeNormal
         textSizeSelected=build.textSizeSelected
         iconMargin=build.iconMargin
+        iconWidth=build.iconWidth
+        iconHeight=build.iconHeight
         normalIcon=build.normalIcon
         selectedIcon=build.selectedIcon
         itemText=build.itemText
@@ -46,6 +48,8 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
     var textSizeNormal: Int = 0
     var textSizeSelected: Int = 0
     var iconMargin: Int = 0
+    var iconWidth: Int = 0
+    var iconHeight: Int = 0
     var normalIcon: Drawable? = null
     var selectedIcon: Drawable? = null
     var itemText: String? = null
@@ -55,6 +59,7 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
     var config: LqhBottomTab.Config? = null
 
     var tvTitle: TextView? = null
+    var tvUnreadMsg: LqhUnreadView? = null
     var ivIcon: ImageView? = null
 
     private fun init(attrs: AttributeSet?) {
@@ -76,10 +81,12 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
             0
         )
         iconMargin = ta.getDimensionPixelSize(R.styleable.LqhBottomItemView_lqhitem_iconMargin, 0)
+        iconWidth = ta.getDimensionPixelSize(R.styleable.LqhBottomItemView_lqhitem_iconWidth, 0)
+        iconHeight = ta.getDimensionPixelSize(R.styleable.LqhBottomItemView_lqhitem_iconHeight, 0)
         normalIcon = ta.getDrawable(R.styleable.LqhBottomItemView_lqhitem_iconNormal)
         selectedIcon = ta.getDrawable(R.styleable.LqhBottomItemView_lqhitem_iconSelected)
         itemText = ta.getString(R.styleable.LqhBottomItemView_lqhitem_itemText)
-        var customLayoutId: Int =
+        val customLayoutId: Int =
             ta.getResourceId(R.styleable.LqhBottomItemView_lqhitem_customLayoutId, 0)
         if (customLayoutId != 0) {
             customLayout =
@@ -96,6 +103,7 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
     private fun initView() {
         tvTitle = defaultLayout!!.findViewById<TextView>(R.id.tv_title)
         ivIcon = defaultLayout!!.findViewById<ImageView>(R.id.iv_icon)
+        tvUnreadMsg = defaultLayout!!.findViewById<LqhUnreadView>(R.id.tv_unreadMsg)
         if (customLayout != null) {
             removeView(defaultLayout)
             if (this != customLayout!!.parent) {
@@ -123,6 +131,15 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
             tvTitle?.text = itemText
             tvTitle?.visibility = View.VISIBLE
             if (normalIcon != null) {
+                val layoutParams = ivIcon?.layoutParams as MarginLayoutParams?
+                if (iconWidth != 0 && iconHeight != 0) {
+                    //如果有设置图标的宽度和高度，则设置ImageView的宽高
+                    layoutParams?.width = iconWidth
+                    layoutParams?.height = iconHeight
+                }else if(config != null&&config!!.iconWidth != 0 &&config!!.iconHeight != 0){
+                    layoutParams?.width = config!!.iconWidth
+                    layoutParams?.height = config!!.iconHeight
+                }
                 if (iconMargin != 0) {
                     (tvTitle?.layoutParams as MarginLayoutParams).topMargin = iconMargin
                 } else {
@@ -207,6 +224,8 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
         var textSizeNormal: Int = 0
         var textSizeSelected: Int = 0
         var iconMargin: Int = 0
+        var iconWidth: Int = 0
+        var iconHeight: Int = 0
         var normalIcon: Drawable? = null
         var selectedIcon: Drawable? = null
         var itemText: String? = null

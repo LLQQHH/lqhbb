@@ -31,6 +31,17 @@ class MainActivity : AppCompatActivity() {
         lqhBottomTab.addOnTabSelectedListener(object :LqhBottomTab.OnTabSelectedListener{
             override fun onTabSelected(position: Int) {
                 LogUtils.e("选中"+position)
+                if (position==0){
+                    lqhBottomTab.getPositionTabView(0)!!.tvUnreadMsg!!.setUnreadNum(5)
+                }else if (position==1){
+                    lqhBottomTab.getPositionTabView(0)!!.tvUnreadMsg!!.setUnreadNum(0)
+                }else if(position==2){
+                    lqhBottomTab.getPositionTabView(0)!!.tvUnreadMsg!!.setUnreadNum(-1)
+                }else if (position==3){
+                    lqhBottomTab.getPositionTabView(0)!!.tvUnreadMsg!!.setUnreadNum(100)
+                }else if(position==4){
+                    lqhBottomTab.getPositionTabView(0)!!.tvUnreadMsg!!.setUnreadStr("new")
+                }
                 if (position==2){
                     val positionTabView = lqhBottomTab.getPositionTabView(position)
                     if (positionTabView?.customLayout != null){

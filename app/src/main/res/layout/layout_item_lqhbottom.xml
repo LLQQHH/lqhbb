@@ -2,36 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal">
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:src="@drawable/ic_main_msg_normalcy"/>
         <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhUnreadView
             android:includeFontPadding="false"
-            android:visibility="gone"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@+id/iv_icon"
+            android:layout_marginStart="-10dp"
             android:id="@+id/tv_unreadMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:background="@drawable/shape_unread"
+            android:background="@drawable/shape_unread"
             android:textSize="@dimen/sp_8"
             android:textColor="@color/white"
-            android:padding="@dimen/dp_3"
-            app:unreadText="99"
+            android:paddingTop="@dimen/dp_2"
+            android:paddingBottom="@dimen/dp_2"
+            android:paddingLeft="@dimen/dp_3"
+            android:paddingRight="@dimen/dp_3"
             android:gravity="center"
-
+            app:unr_maxNumber="99"
+            app:unr_minNumber="-1"
             />
-    </FrameLayout>
+    </RelativeLayout>
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"

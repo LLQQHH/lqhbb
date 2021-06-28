@@ -11,6 +11,10 @@
         <attr name="lqhtab_item_textSizeSelected" format="dimension"/>
         <!--文字和图标的顶部距离-->
         <attr name="lqhtab_item_iconMargin" format="dimension"/>
+        <!--设置图标的宽度-->
+        <attr name="lqhtab_item_iconWidth" format="dimension"/>
+        <!--设置图标的高度-->
+        <attr name="lqhtab_item_iconHeight" format="dimension"/>
     </declare-styleable>
     <declare-styleable name="LqhBottomItemView">
         <!--默认状态下的文字颜色-->
@@ -23,6 +27,11 @@
         <attr name="lqhitem_textSizeSelected" format="dimension"/>
         <!--文字和图标的顶部距离-->
         <attr name="lqhitem_iconMargin" format="dimension"/>
+        <!--设置图标的宽度-->
+        <attr name="lqhitem_iconWidth" format="dimension"/>
+        <!--设置图标的高度-->
+        <attr name="lqhitem_iconHeight" format="dimension"/>
+
 
         <!--默认状态下的图标-->
         <attr name="lqhitem_iconNormal" format="reference"/>
@@ -35,7 +44,10 @@
     </declare-styleable>
     <declare-styleable name="LqhUnreadView">
         <!-- 当为几个字的时候是在为圆形-->
-        <attr name="circleNumberCount" format="integer"/>
-        <attr name="unreadText" format="reference|string"/>
+        <attr name="unr_circleNumberCount" format="integer"/>
+        <attr name="unr_unreadText" format="reference|string"/>
+        <attr name="unr_maxNumber" format="integer"/>
+        <attr name="unr_unNumber" format="integer"/>
+        <attr name="unr_minNumber" format="integer"/>
     </declare-styleable>
 </resources>

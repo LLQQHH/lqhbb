@@ -56,11 +56,17 @@ class LqhBottomTab @JvmOverloads constructor(
         )
         var iconMargin =
             ta.getDimensionPixelSize(R.styleable.LqhBottomTab_lqhtab_item_iconMargin, 0)
+        var iconWidth =
+            ta.getDimensionPixelSize(R.styleable.LqhBottomTab_lqhtab_item_iconWidth, 0)
+        var iconHeight =
+            ta.getDimensionPixelSize(R.styleable.LqhBottomTab_lqhtab_item_iconHeight, 0)
         config?.textColorNormal = textColorNormal
         config?.textColorSelected = textColorSelected
         config?.textSizeNormal = textSizeNormal
         config?.textSizeSelected = textSizeSelected
         config?.iconMargin = iconMargin
+        config?.iconWidth = iconWidth
+        config?.iconHeight = iconHeight
         ta.recycle()
     }
 
@@ -99,6 +105,8 @@ class LqhBottomTab @JvmOverloads constructor(
         var textSizeNormal: Int = 0
         var textSizeSelected: Int = 0
         var iconMargin: Int = 0
+        var iconWidth: Int = 0
+        var iconHeight: Int = 0
     }
 
     init {
