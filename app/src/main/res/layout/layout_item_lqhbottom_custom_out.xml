@@ -26,5 +26,6 @@
             android:text="自定义"
             android:gravity="center"
             android:paddingBottom="@dimen/dp_4"
+            android:textSize="@dimen/sp_18"
             />
 </RelativeLayout>

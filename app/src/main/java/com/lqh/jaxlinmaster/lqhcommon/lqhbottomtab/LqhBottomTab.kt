@@ -276,4 +276,24 @@ class LqhBottomTab @JvmOverloads constructor(
             }
         }
     }
+
+    fun setUnreadNum(position:Int,number:Int){
+        mItemViews[position].tvUnreadMsg?.setUnreadNum(number)
+    }
+    fun setUnreadStr(position:Int,unReadText:String?){
+        mItemViews[position].tvUnreadMsg?.setUnreadStr(unReadText)
+    }
+    //隐藏小红点
+    fun hideUnread(position:Int) {
+        mItemViews[position].tvUnreadMsg?.visibility = View.GONE
+    }
+
+    //强制显示红点
+    fun showDot(position:Int) {
+        showDot(position,0)
+    }
+    //强制显示红点,并设置小红点的大小
+    fun showDot(position:Int,dotWidth: Int) {
+        mItemViews[position].tvUnreadMsg?.showDot(dotWidth)
+    }
 }

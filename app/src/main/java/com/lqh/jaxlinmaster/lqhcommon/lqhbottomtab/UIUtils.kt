@@ -3,6 +3,8 @@ package com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StringUtils
+import java.util.regex.Pattern
 
 /**
  * Created by Linqh on 2021/6/22.
@@ -46,6 +48,18 @@ class UIUtils {
         fun getColor(context: Context, colorId: Int): Int {
             return ContextCompat.getColor(context,colorId)
         }
+        fun isNumber(str: String?): Boolean {
+            if (StringUtils.isEmpty(str)) {
+                return false
+            }
+            val pattern = Pattern.compile("[-]?[0-9]*")
+            return pattern.matcher(str).matches()
+        }
+        fun isEmpty(s: CharSequence?): Boolean {
+            return s == null || s.isEmpty()
+        }
     }
+
+
 
 }
