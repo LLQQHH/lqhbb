@@ -1,5 +1,6 @@
 package com.lqh.jaxlinmaster.lqhbase
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +32,7 @@ abstract class LqhBaseFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //挪到这边为了是kotlin控件好找
+        //挪到这边为了是kotlin控件好找,加hasLayout=false,是在Viewpager某些情况下，有时候执行一次onCreateView但是会多次执行onViewCreated
         if (hasLayout){
             hasLayout=false
             initView(layout!!)
@@ -46,5 +47,19 @@ abstract class LqhBaseFragment: Fragment() {
 
     //初始化布局
     abstract fun getLayoutId(): Int
+    open fun jumpToClass(activity: Class<*>?, bundle: Bundle?) {
+        val intent = Intent(context, activity)
+        if (bundle != null) {
+            intent.putExtra("bundle", bundle)
+        }
+        startActivity(intent)
+    }
 
+    open fun jumpToClassForResult(activity: Class<*>?, bundle: Bundle?, requestCode: Int) {
+        val intent = Intent(context, activity)
+        if (bundle != null) {
+            intent.putExtra("bundle", bundle)
+        }
+        startActivityForResult(intent, requestCode)
+    }
 }

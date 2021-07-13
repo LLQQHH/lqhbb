@@ -1,6 +1,7 @@
 package com.lqh
 
 import android.app.Application
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.Utils
 
 /**
  * Created by Linqh on 2021/5/25.
@@ -15,6 +16,6 @@ import android.app.Application
     }
 
     private fun initData() {
-
+        Utils.init(this)
     }
 }

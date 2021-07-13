@@ -1,4 +1,4 @@
-package com.lqh.jaxlinmaster.lqhtest
+package com.lqh
 
 import android.content.Context
 import android.os.Bundle
@@ -14,12 +14,12 @@ import kotlinx.android.synthetic.main.fragment_test.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class TestFragment() : BaseLazyFragmentForViewpagerX() {
+class FragmentD() : BaseLazyFragmentForViewpagerX() {
 
     private var title: String?=null
     companion object{
-        fun newInstance(title: String): TestFragment {
-            var testFragment = TestFragment()
+        fun newInstance(title: String): FragmentD {
+            var testFragment = FragmentD()
             val bundle = Bundle()
             bundle.putString("title", title)
             testFragment.arguments = bundle
@@ -33,18 +33,20 @@ class TestFragment() : BaseLazyFragmentForViewpagerX() {
     }
 
     override fun initView(layout: View) {
-        title=arguments?.getString("title")
+
         tv_title.text =title
     }
 
-    override fun getLayoutId(): Int = R.layout.fragment_test
+    override fun getLayoutId(): Int = R.layout.fragment_d
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        title=arguments?.getString("title")
         LogUtils.e("当前$title", "onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         LogUtils.e("当前$title", "onCreate")
     }
 
@@ -91,5 +93,14 @@ class TestFragment() : BaseLazyFragmentForViewpagerX() {
     override fun onDetach() {
         super.onDetach()
         LogUtils.e("当前$title", "onDetach")
+    }
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        LogUtils.e("当前$title", "isVisibleToUser:$isVisibleToUser")
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        LogUtils.e("当前$title", "onHiddenChanged:$hidden")
     }
 }

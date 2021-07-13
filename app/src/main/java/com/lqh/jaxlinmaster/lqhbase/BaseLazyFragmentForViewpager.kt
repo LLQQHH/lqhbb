@@ -2,8 +2,8 @@ package com.lqh.jaxlinmaster.lqhbase
 
 import android.os.Bundle
 
-//这个只兼容Viewpager
-abstract class LqhBaseLazyFragmentForSupport : LqhBaseFragment() {
+//这个只兼容Viewpager,模式为BEHAVIOR_SET_USER_VISIBLE_HINT
+abstract class BaseLazyFragmentForViewpager : LqhBaseFragment() {
     protected var isCanVisible = false
     private var isPrepared = false
     private var isFirst = true

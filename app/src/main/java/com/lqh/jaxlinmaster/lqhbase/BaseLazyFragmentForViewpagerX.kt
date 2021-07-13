@@ -3,10 +3,10 @@ package com.lqh.jaxlinmaster.lqhbase
 /**
  * Created by Linqh on 2021/6/24.
 @describe:
- *
+ *此方案是针对Androidx之后的Viewpager以及2的懒加载,就是使用BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT这种方式
  */
-//@CreateUidAnnotation(uid = "10100")
-abstract class LqhBaseLazyFragmentForX :LqhBaseFragment(){
+
+abstract class BaseLazyFragmentForViewpagerX :LqhBaseFragment(){
     private var isFirstLoad = true // 是否第一次加载
     override fun onResume() {
         super.onResume()

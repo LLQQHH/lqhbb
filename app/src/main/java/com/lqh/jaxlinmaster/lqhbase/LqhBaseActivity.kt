@@ -1,7 +1,7 @@
 package com.lqh.jaxlinmaster.lqhbase
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -15,17 +15,18 @@ import butterknife.Unbinder
 abstract class LqhBaseActivity:AppCompatActivity(){
 
     private  var bind: Unbinder?=null
-
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         beforeOnCreate(savedInstanceState)
-        super.onCreate(savedInstanceState, persistentState)
+        super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
-        //setSwipeAnyWhere(true);
         bind = ButterKnife.bind(this)
-        initOnCreate()
+        initView(savedInstanceState)
+        initData(savedInstanceState)
     }
 
-     abstract fun initOnCreate()
+    abstract fun initView(savedInstanceState: Bundle?)
+
+    abstract fun initData(savedInstanceState: Bundle?)
 
     protected fun beforeOnCreate(savedInstanceState: Bundle?) {
     }
@@ -34,5 +35,20 @@ abstract class LqhBaseActivity:AppCompatActivity(){
     override fun onDestroy() {
         bind?.unbind()
         super.onDestroy()
+    }
+    open fun jumpToClass(activity: Class<*>?, bundle: Bundle?) {
+        val intent = Intent(this, activity)
+        if (bundle != null) {
+            intent.putExtra("bundle", bundle)
+        }
+        startActivity(intent)
+    }
+
+    open fun jumpToClassForResult(activity: Class<*>?, bundle: Bundle?, requestCode: Int) {
+        val intent = Intent(this, activity)
+        if (bundle != null) {
+            intent.putExtra("bundle", bundle)
+        }
+        startActivityForResult(intent, requestCode)
     }
 }
