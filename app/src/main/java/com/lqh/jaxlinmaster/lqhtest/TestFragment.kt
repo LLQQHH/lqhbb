@@ -28,7 +28,7 @@ class TestFragment() : BaseLazyFragmentForViewpagerX() {
     }
 
 
-    override fun requestData(isFirstLoad: Boolean) {
+    override fun lazyInit(isFirstLoad: Boolean) {
         LogUtils.e("当前$title", "isFirstLoad"+isFirstLoad);
     }
 

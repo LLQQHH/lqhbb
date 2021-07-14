@@ -1,19 +1,19 @@
 package com.lqh.jaxlinmaster.lqhbase
 
-/**
- * Created by Linqh on 2021/6/24.
-@describe:
- *此方案是针对Androidx之后的Viewpager以及2的懒加载,就是使用BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT这种方式
- * 这个切换切换相邻tabitem,最开始的tabitem会执行onpause,而BEHAVIOR_SET_USER_VISIBLE_HINT不会
- */
+import android.os.Bundle
 
-abstract class BaseLazyFragmentForViewpagerX :LqhBaseFragment(){
+//这个只兼容使用show和hide方法加载fragment,模式为BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+//外面的Transaction执行操作的时候要发生变化！
+abstract class BaseLazyFragmentForHideX : LqhBaseFragment() {
     private var isFirstLoad = true // 是否第一次加载
     override fun onResume() {
         super.onResume()
         // 将数据加载逻辑放到onResume()方法中
-        lazyInit(isFirstLoad)
-        isFirstLoad = false
+        if (!isHidden){//加这个判断是因为fragment嵌套fragment会导致所以子Fragment调用onResume,所以添加isHidden判断
+            lazyInit(isFirstLoad)
+            isFirstLoad = false
+        }
+
     }
 
     override fun onDestroy() {
@@ -26,4 +26,5 @@ abstract class BaseLazyFragmentForViewpagerX :LqhBaseFragment(){
     override fun onPause() {
         super.onPause()
     }
+
 }

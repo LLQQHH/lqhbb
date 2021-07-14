@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.homepager.DialogAllActivity
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForHide
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpager
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpagerX
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_a.*
@@ -29,8 +31,8 @@ class FragmentA() : BaseLazyFragmentForViewpagerX() {
     }
 
 
-    override fun requestData(isFirstLoad: Boolean) {
-        LogUtils.e("当前$title", "isFirstLoad"+isFirstLoad);
+    override fun lazyInit(isFirstLoad: Boolean) {
+        LogUtils.e("当前$title", "isFirstLoad:"+isFirstLoad);
     }
 
     override fun initView(layout: View) {
@@ -71,6 +73,7 @@ class FragmentA() : BaseLazyFragmentForViewpagerX() {
 
     override fun onResume() {
         super.onResume()
+        LogUtils.e("当前$title", "在onResume中判断isHidden"+isHidden)
         LogUtils.e("当前$title", "onResume")
     }
 
@@ -100,6 +103,7 @@ class FragmentA() : BaseLazyFragmentForViewpagerX() {
     }
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
+        title=arguments?.getString("title")
         //居然有时候获取不到
         LogUtils.e("当前$title", "isVisibleToUser:$isVisibleToUser")
     }
@@ -107,5 +111,10 @@ class FragmentA() : BaseLazyFragmentForViewpagerX() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         LogUtils.e("当前$title", "onHiddenChanged:$hidden")
+        LogUtils.e("当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
     }
+
+//     override fun invisibleInit(isSetUserVisibleHint: Boolean){
+//        LogUtils.e("当前$title", "invisibleInit:"+isSetUserVisibleHint)
+//    }
 }

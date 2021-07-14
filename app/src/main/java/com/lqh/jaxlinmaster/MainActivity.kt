@@ -5,14 +5,12 @@ import android.util.SparseArray
 import android.view.Gravity
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.*
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.lqh.*
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpagerX
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseActivity
+import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
 import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
@@ -26,11 +24,12 @@ class MainActivity : LqhBaseActivity() {
     private val TAG_POSITONSTR = arrayOf("A", "B", "C", "D", "E")
     private val titles = arrayOf("A标题", "B标题", "C标题", "D标题", "E标题")
     private var fragmentSparseArray = SparseArray<Fragment>()
-    private var fragmentList = mutableListOf<BaseLazyFragmentForViewpagerX>()
+    private var fragmentList = mutableListOf<LqhBaseFragment>()
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView(savedInstanceState: Bundle?) {
+        LogUtils.e("当前activity", "onCreate");
 //        if (savedInstanceState != null) {
 //            currentPosition = savedInstanceState.getInt(TAG_CURPOS)
 //            TAG_POSITONSTR.forEachIndexed { index, s ->
@@ -111,7 +110,7 @@ class MainActivity : LqhBaseActivity() {
 
         var testFragmentPagerAdapter = TestFragmentPagerAdapter(
             supportFragmentManager,
-            FragmentPagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT,
+            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
             fragmentList
         )
         viewpager.adapter = testFragmentPagerAdapter
@@ -142,12 +141,12 @@ class MainActivity : LqhBaseActivity() {
     //动态替换fragment
 //    private fun changeFragment(showPosition: Int) {
 //        val beginTransaction = supportFragmentManager.beginTransaction()
-//        var fromFragment = fragmentSparseArray.get(currentPosition)
+//        var fromFragment = fragmentList.get(currentPosition)
 //        if (fromFragment != null && fromFragment.isAdded) {
 //            LogUtils.e("fragment","添加过")
 //            beginTransaction.hide(fromFragment)
 //        }
-//        val toFragment = fragmentSparseArray.get(showPosition)
+//        val toFragment = fragmentList.get(showPosition)
 //        if (toFragment != null) {
 //            if (!toFragment.isAdded) {
 //                beginTransaction.add(R.id.frame_layout, toFragment, TAG_POSITONSTR[showPosition]).commitAllowingStateLoss()
@@ -170,10 +169,10 @@ class MainActivity : LqhBaseActivity() {
     internal class TestFragmentPagerAdapter(
         fm: FragmentManager,
         behavior: Int,
-        fragments: MutableList<BaseLazyFragmentForViewpagerX>?
+        fragments: MutableList<LqhBaseFragment>?
     ) :
-        FragmentPagerAdapter(fm, behavior) {
-        private var fragments: MutableList<BaseLazyFragmentForViewpagerX>? = null
+        FragmentStatePagerAdapter(fm, behavior) {
+        private var fragments: MutableList<LqhBaseFragment>? = null
         override fun getItem(position: Int): Fragment {
             return fragments!![position]
         }
@@ -210,14 +209,21 @@ class MainActivity : LqhBaseActivity() {
         }
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        //第一种方案防止重建,直接取消的保存的fragment
-////        val beginTransaction = supportFragmentManager.beginTransaction()
-////            fragmentSparseArray.forEach { key, value ->
-////                beginTransaction.remove(value)
-////            }
-////        beginTransaction.commitAllowingStateLoss()
+    override fun onSaveInstanceState(outState: Bundle) {
+        //第一种方案防止重建,直接取消的保存的fragment
+//        val beginTransaction = supportFragmentManager.beginTransaction()
+//            fragmentSparseArray.forEach { key, value ->
+//                beginTransaction.remove(value)
+//            }
+//        beginTransaction.commitAllowingStateLoss()
+//第二种方案
 //        outState.putInt(TAG_CURPOS, currentPosition);
-//        super.onSaveInstanceState(outState)
-//    }
+        super.onSaveInstanceState(outState)
+        LogUtils.e("当前activity", "onSaveInstanceState");
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        LogUtils.e("当前activity", "onRestoreInstanceState");
+    }
 }
