@@ -6,7 +6,7 @@ import android.view.View
 import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForHide
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpager
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpagerX
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_test.*
 
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_test.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class FragmentD() : BaseLazyFragmentForViewpagerX() {
+class FragmentD() : BaseLazyFragmentForX() {
 
     private var title: String?=null
     companion object{
@@ -38,76 +38,76 @@ class FragmentD() : BaseLazyFragmentForViewpagerX() {
     override fun getLayoutId(): Int = R.layout.fragment_d
 
     override fun lazyInit(isFirstLoad: Boolean) {
-        LogUtils.e("当前$title", "isFirstLoad:"+isFirstLoad);
+        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad);
     }
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         title=arguments?.getString("title")
-        LogUtils.e("当前$title", "onAttach")
+        LogUtils.e("主当前$title", "onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        LogUtils.e("当前$title", "onCreate")
+        LogUtils.e("主当前$title", "onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LogUtils.e("当前$title", "onViewCreated")
+        LogUtils.e("主当前$title", "onViewCreated")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        LogUtils.e("当前$title", "onActivityCreated")
+        LogUtils.e("主当前$title", "onActivityCreated")
     }
 
     override fun onStart() {
         super.onStart()
-        LogUtils.e("当前$title", "onStart")
+        LogUtils.e("主当前$title", "onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        LogUtils.e("当前$title", "在onResume中判断isHidden"+isHidden)
-        LogUtils.e("当前$title", "onResume")
+        LogUtils.e("主当前$title", "在onResume中判断isHidden"+isHidden)
+        LogUtils.e("主当前$title", "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        LogUtils.e("当前$title", "onPause")
+        LogUtils.e("主当前$title", "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        LogUtils.e("当前$title", "onStop")
+        LogUtils.e("主当前$title", "onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        LogUtils.e("当前$title", "onDestroyView")
+        LogUtils.e("主当前$title", "onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        LogUtils.e("当前$title", "onDestroy")
+        LogUtils.e("主当前$title", "onDestroy")
     }
 
     override fun onDetach() {
         super.onDetach()
-        LogUtils.e("当前$title", "onDetach")
+        LogUtils.e("主当前$title", "onDetach")
     }
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         title=arguments?.getString("title")
         super.setUserVisibleHint(isVisibleToUser)
-        LogUtils.e("当前$title", "isVisibleToUser:$isVisibleToUser")
+        LogUtils.e("主当前$title", "isVisibleToUser:$isVisibleToUser")
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        LogUtils.e("当前$title", "onHiddenChanged:$hidden")
-        LogUtils.e("当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
+        LogUtils.e("主当前$title", "onHiddenChanged:$hidden")
+        LogUtils.e("主当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
     }
 }

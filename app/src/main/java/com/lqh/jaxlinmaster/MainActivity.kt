@@ -6,15 +6,15 @@ import android.view.Gravity
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.*
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.lqh.*
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpagerX
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseActivity
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
 import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
-import com.lqh.jaxlinmaster.lqhtest.TestFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -61,7 +61,7 @@ class MainActivity : LqhBaseActivity() {
         buildLqhBottomItemView.gravity = Gravity.CENTER
         lqhBottomTab.addTab(buildLqhBottomItemView)
         lqhBottomTab.setSelectItem(currentPosition)
-        //changeFragment(currentPosition)
+        changeFragment(currentPosition,false)
         lqhBottomTab.addOnTabSelectedListener(object : LqhBottomTab.OnTabSelectedListener {
             override fun onTabSelected(position: Int) {
                 LogUtils.e("选中" + position)
@@ -80,7 +80,7 @@ class MainActivity : LqhBaseActivity() {
                         ivDesk.setImageResource(R.drawable.ic_main_index)
                     }
                 }
-                //changeFragment(position)
+                changeFragment(position,false)
             }
 
             override fun onTabUnselected(position: Int) {
@@ -108,13 +108,13 @@ class MainActivity : LqhBaseActivity() {
 
         })
 
-        var testFragmentPagerAdapter = TestFragmentPagerAdapter(
-            supportFragmentManager,
-            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
-            fragmentList
-        )
-        viewpager.adapter = testFragmentPagerAdapter
-        lqhBottomTab.setViewPager(viewpager)
+//        var testFragmentPagerAdapter = TestFragmentPagerAdapter(
+//            supportFragmentManager,
+//            FragmentPagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT,
+//            fragmentList
+//        )
+//        viewpager.adapter = testFragmentPagerAdapter
+//        lqhBottomTab.setViewPager(viewpager)
 //        var testFragmentPagerAdapter2 = TestFragmentStateAdapter(this, fragmentList)
 //
 //        viewpager2.adapter = testFragmentPagerAdapter2
@@ -139,28 +139,36 @@ class MainActivity : LqhBaseActivity() {
     }
 
     //动态替换fragment
-//    private fun changeFragment(showPosition: Int) {
-//        val beginTransaction = supportFragmentManager.beginTransaction()
-//        var fromFragment = fragmentList.get(currentPosition)
-//        if (fromFragment != null && fromFragment.isAdded) {
-//            LogUtils.e("fragment","添加过")
-//            beginTransaction.hide(fromFragment)
-//        }
-//        val toFragment = fragmentList.get(showPosition)
-//        if (toFragment != null) {
-//            if (!toFragment.isAdded) {
-//                beginTransaction.add(R.id.frame_layout, toFragment, TAG_POSITONSTR[showPosition]).commitAllowingStateLoss()
-//            } else {
-//                beginTransaction.show(toFragment).commitAllowingStateLoss()
-//            }
-//        }
-//        currentPosition = showPosition
-//        lqhBottomTab.post {
-//            LogUtils.e("当前有几个Fragment", "" + supportFragmentManager.fragments.size)
-//        }
-//
-//
-//    }
+    private fun changeFragment(showPosition: Int,isforX:Boolean) {
+        val beginTransaction = supportFragmentManager.beginTransaction()
+        beginTransaction.apply {
+            var fromFragment = fragmentList[currentPosition]
+            var toFragment = fragmentList[showPosition]
+            if (fromFragment != null&&fromFragment!=toFragment && fromFragment.isAdded) {
+                LogUtils.e("fragment","添加过")
+                hide(fromFragment)
+                if (isforX){
+                    setMaxLifecycle(fromFragment, Lifecycle.State.STARTED)
+                }
+            }
+            if (toFragment != null) {
+                if (!toFragment.isAdded) {
+                    add(R.id.frame_layout, toFragment, TAG_POSITONSTR[showPosition])
+
+                } else {
+                    show(toFragment)
+                }
+                if (isforX){
+                    setMaxLifecycle(toFragment, Lifecycle.State.RESUMED)
+                }
+            }
+
+        }.commitAllowingStateLoss()
+        currentPosition = showPosition
+        lqhBottomTab.post {
+            LogUtils.e("当前有几个Fragment", "" + supportFragmentManager.fragments.size)
+        }
+    }
 
     override fun initData(savedInstanceState: Bundle?) {
     }
@@ -171,7 +179,7 @@ class MainActivity : LqhBaseActivity() {
         behavior: Int,
         fragments: MutableList<LqhBaseFragment>?
     ) :
-        FragmentStatePagerAdapter(fm, behavior) {
+        FragmentPagerAdapter(fm, behavior) {
         private var fragments: MutableList<LqhBaseFragment>? = null
         override fun getItem(position: Int): Fragment {
             return fragments!![position]
@@ -192,10 +200,10 @@ class MainActivity : LqhBaseActivity() {
 
     internal class TestFragmentStateAdapter(
         fragmentActivity: FragmentActivity,
-        fragments: List<BaseLazyFragmentForViewpagerX>?
+        fragments: List<BaseLazyFragmentForX>?
     ) :
         FragmentStateAdapter(fragmentActivity) {
-        private var fragments: List<BaseLazyFragmentForViewpagerX>? = null
+        private var fragments: List<BaseLazyFragmentForX>? = null
         override fun createFragment(position: Int): Fragment {
             return fragments!![position]
         }

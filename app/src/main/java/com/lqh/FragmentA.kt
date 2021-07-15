@@ -1,13 +1,19 @@
 package com.lqh
 
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyLoadFragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Lifecycle
+import com.google.android.material.tabs.TabLayout
 import com.lqh.jaxlinmaster.R
-import com.lqh.jaxlinmaster.homepager.DialogAllActivity
+import com.lqh.jaxlinmaster.homepager.*
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForHide
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpager
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpagerX
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentStateForHide
+import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_a.*
 
@@ -17,9 +23,14 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class FragmentA() : BaseLazyFragmentForViewpagerX() {
-
+class FragmentA() : BaseLazyFragmentStateForHide() {
+    var currentPosition: Int = 0
+    val TAG_CURPOS = "tag_curpos"
+    private val TAG_POSITONSTR = arrayOf("subA", "subB", "subC", "subD", "subE")
+    private val titles = arrayOf("home_A标题", "home_B标题", "home_C标题", "home_D标题")
+     var tabTitles = arrayOf("tabA", "tabB", "tabC", "tabD")
     private var title: String?=null
+    private var fragmentList = mutableListOf<LqhBaseFragment>()
     companion object{
         fun newInstance(title: String): FragmentA {
             var testFragment = FragmentA()
@@ -31,9 +42,9 @@ class FragmentA() : BaseLazyFragmentForViewpagerX() {
     }
 
 
-    override fun lazyInit(isFirstLoad: Boolean) {
-        LogUtils.e("当前$title", "isFirstLoad:"+isFirstLoad);
-    }
+//    override fun lazyInit(isFirstLoad: Boolean) {
+//        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad)
+//    }
 
     override fun initView(layout: View) {
 
@@ -41,80 +52,190 @@ class FragmentA() : BaseLazyFragmentForViewpagerX() {
         tv_go.setOnClickListener {
             jumpToClass(DialogAllActivity::class.java,null)
         }
+        initFragment()
+        for (item in tabTitles){
+            tab.addTab(tab.newTab().setText(item))
+        }
+        changeFragment(0,false)
+        tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(p0: TabLayout.Tab) {
+                changeFragment(p0.position,false)
+            }
+
+            override fun onTabUnselected(p0: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(p0: TabLayout.Tab?) {
+
+            }
+
+        })
+//        var testFragmentPagerAdapter = TestFragmentPagerAdapter(
+//            childFragmentManager,
+//            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
+//            fragmentList
+//        )
+//        viewpager.adapter = testFragmentPagerAdapter
+//        tab.setupWithViewPager(viewpager)
+    }
+    private fun changeFragment(showPosition: Int,isforX:Boolean) {
+        val beginTransaction = childFragmentManager.beginTransaction()
+        beginTransaction.apply {
+            var fromFragment = fragmentList[currentPosition]
+            var toFragment = fragmentList[showPosition]
+            if (fromFragment != null&&fromFragment!=toFragment && fromFragment.isAdded) {
+                LogUtils.e("fragment","添加过")
+                hide(fromFragment)
+                if (isforX){
+                    setMaxLifecycle(fromFragment, Lifecycle.State.STARTED)
+                }
+            }
+            if (toFragment != null) {
+                if (!toFragment.isAdded) {
+                    add(R.id.frame_layout, toFragment, TAG_POSITONSTR[showPosition])
+
+                } else {
+                    show(toFragment)
+                }
+                if (isforX){
+                    setMaxLifecycle(toFragment, Lifecycle.State.RESUMED)
+                }
+            }
+
+        }.commitAllowingStateLoss()
+
+
+
+        currentPosition = showPosition
+        tab.post {
+            LogUtils.e("主当前子fragment有几个Fragment", "" + childFragmentManager.fragments.size)
+        }
+    }
+    private fun initFragment() {
+        fragmentList.add(HomeFragmentA.newInstance(titles[0]))
+        fragmentList.add(HomeFragmentB.newInstance(titles[1]))
+        fragmentList.add(HomeFragmentC.newInstance(titles[2]))
+        fragmentList.add(HomeFragmentD.newInstance(titles[3]))
+
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_a
     override fun onAttach(context: Context) {
         super.onAttach(context)
         title=arguments?.getString("title")
-        LogUtils.e("当前$title", "onAttach")
+        LogUtils.e("主当前$title", "onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        LogUtils.e("当前$title", "onCreate")
+        LogUtils.e("主当前$title", "onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LogUtils.e("当前$title", "onViewCreated")
+        LogUtils.e("主当前$title", "onViewCreated")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        LogUtils.e("当前$title", "onActivityCreated")
+        LogUtils.e("主当前$title", "onActivityCreated")
     }
 
     override fun onStart() {
         super.onStart()
-        LogUtils.e("当前$title", "onStart")
+        LogUtils.e("主当前$title", "onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        LogUtils.e("当前$title", "在onResume中判断isHidden"+isHidden)
-        LogUtils.e("当前$title", "onResume")
+        LogUtils.e("主当前$title", "在onResume中判断isHidden"+isHidden)
+        LogUtils.e("主当前$title", "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        LogUtils.e("当前$title", "onPause")
+        LogUtils.e("主当前$title", "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        LogUtils.e("当前$title", "onStop")
+        LogUtils.e("主当前$title", "onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        LogUtils.e("当前$title", "onDestroyView")
+        LogUtils.e("主当前$title", "onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        LogUtils.e("当前$title", "onDestroy")
+        LogUtils.e("主当前$title", "onDestroy")
     }
 
     override fun onDetach() {
         super.onDetach()
-        LogUtils.e("当前$title", "onDetach")
+        LogUtils.e("主当前$title", "onDetach")
     }
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         title=arguments?.getString("title")
         //居然有时候获取不到
-        LogUtils.e("当前$title", "isVisibleToUser:$isVisibleToUser")
+        LogUtils.e("主当前$title", "isVisibleToUser:$isVisibleToUser")
+    }
+
+    override fun lazyLoad() {
+        LogUtils.e("主当前$title", "lazyLoad")
+    }
+
+    override fun visibleReLoad() {
+        LogUtils.e("主当前$title", "visibleReLoad")
+    }
+
+    override fun inVisibleRelease() {
+        LogUtils.e("主当前$title", "inVisibleRelease")
+    }
+
+    override fun resume() {
+        LogUtils.e("主当前$title", "resume")
+    }
+
+    override fun pause() {
+        LogUtils.e("主当前$title", "pause")
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        LogUtils.e("当前$title", "onHiddenChanged:$hidden")
-        LogUtils.e("当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
+        LogUtils.e("主当前$title", "onHiddenChanged:$hidden")
+        LogUtils.e("主当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
     }
 
 //     override fun invisibleInit(isSetUserVisibleHint: Boolean){
-//        LogUtils.e("当前$title", "invisibleInit:"+isSetUserVisibleHint)
+//        LogUtils.e("主当前$title", "invisibleInit:"+isSetUserVisibleHint)
 //    }
+
+    inner class TestFragmentPagerAdapter(
+    fm: FragmentManager,
+    behavior: Int,
+    fragments: MutableList<LqhBaseFragment>?
+) :
+    FragmentStatePagerAdapter(fm, behavior) {
+    private var fragments: MutableList<LqhBaseFragment>? = null
+    override fun getItem(position: Int): Fragment {
+        return fragments!![position]
+    }
+
+    override fun getCount(): Int {
+        return fragments?.size ?: 0
+    }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        return tabTitles[position]
+    }
+
+    init {
+        this.fragments = fragments
+    }
+}
 }
