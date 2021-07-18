@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment
  *
  */
 //@CreateUidAnnotation(uid = "10100")
+interface OnFragmentVisibilityStateChangedListener {
+    fun OnFragmentVisibilityStateChanged(visible: Boolean)
+}
 abstract class LqhBaseFragment: Fragment() {
     protected var layout: View? = null
     private  var hasLayout:Boolean=false

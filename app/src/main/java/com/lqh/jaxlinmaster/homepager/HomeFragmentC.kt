@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpager
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_a.*
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class HomeFragmentC() : BaseLazyFragmentForX() {
+class HomeFragmentC() : BaseLazyFragmentForViewpager() {
 
     private var title: String?=null
     companion object{
@@ -101,6 +102,7 @@ class HomeFragmentC() : BaseLazyFragmentForX() {
         title=arguments?.getString("title")
         //居然有时候获取不到
         LogUtils.e("当前$title", "isVisibleToUser:$isVisibleToUser")
+        LogUtils.e("当前$title", "在setUserVisibleHint中判断isHidden"+isHidden)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {

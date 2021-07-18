@@ -7,35 +7,35 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:clipChildren="false">
-<!--    <androidx.viewpager.widget.ViewPager-->
-<!--        android:visibility="visible"-->
-<!--        android:id="@+id/viewpager"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_above="@+id/lin_lqhBottomTab"-->
-<!--        />-->
-    <FrameLayout
+    <androidx.viewpager.widget.ViewPager
+        android:visibility="visible"
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/lin_lqhBottomTab">
-        <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-<!--        <androidx.viewpager2.widget.ViewPager2-->
-<!--            android:visibility="visible"-->
-<!--            android:id="@+id/viewpager2"-->
+        android:layout_above="@+id/lin_lqhBottomTab"
+        />
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_above="@+id/lin_lqhBottomTab">-->
+<!--        <FrameLayout-->
+<!--            android:id="@+id/frame_layout"-->
 <!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            />-->
-<!--        <com.zhpan.indicator.IndicatorView-->
-<!--            android:id="@+id/indicator_view"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="bottom"-->
-<!--            android:layout_margin="@dimen/dp_10"-->
-<!--            android:visibility="gone"/>-->
-    </FrameLayout>
+<!--            android:layout_height="match_parent"/>-->
+<!--&lt;!&ndash;        <androidx.viewpager2.widget.ViewPager2&ndash;&gt;-->
+<!--&lt;!&ndash;            android:visibility="visible"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/viewpager2"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            />&ndash;&gt;-->
+<!--&lt;!&ndash;        <com.zhpan.indicator.IndicatorView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/indicator_view"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_gravity="bottom"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_margin="@dimen/dp_10"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:visibility="gone"/>&ndash;&gt;-->
+<!--    </FrameLayout>-->
 
     <LinearLayout
         android:id="@+id/lin_lqhBottomTab"

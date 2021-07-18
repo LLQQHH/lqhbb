@@ -1,19 +1,17 @@
 package com.lqh
 
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyLoadFragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.tabs.TabLayout
 import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.homepager.*
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForHide
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentStateForHide
-import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
+import com.lqh.jaxlinmaster.lqhbase.*
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_a.*
 
@@ -23,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class FragmentA() : BaseLazyFragmentStateForHide() {
+class FragmentA() : BaseLazyFragmentForViewpager() {
     var currentPosition: Int = 0
     val TAG_CURPOS = "tag_curpos"
     private val TAG_POSITONSTR = arrayOf("subA", "subB", "subC", "subD", "subE")
@@ -42,9 +40,9 @@ class FragmentA() : BaseLazyFragmentStateForHide() {
     }
 
 
-//    override fun lazyInit(isFirstLoad: Boolean) {
-//        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad)
-//    }
+    override fun lazyInit(isFirstLoad: Boolean) {
+        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad)
+    }
 
     override fun initView(layout: View) {
 
@@ -56,10 +54,10 @@ class FragmentA() : BaseLazyFragmentStateForHide() {
         for (item in tabTitles){
             tab.addTab(tab.newTab().setText(item))
         }
-        changeFragment(0,false)
+        //changeFragment(0,false)
         tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(p0: TabLayout.Tab) {
-                changeFragment(p0.position,false)
+                //changeFragment(p0.position,false)
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
@@ -71,47 +69,47 @@ class FragmentA() : BaseLazyFragmentStateForHide() {
             }
 
         })
-//        var testFragmentPagerAdapter = TestFragmentPagerAdapter(
-//            childFragmentManager,
-//            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
-//            fragmentList
-//        )
-//        viewpager.adapter = testFragmentPagerAdapter
-//        tab.setupWithViewPager(viewpager)
+        var testFragmentPagerAdapter = TestFragmentPagerAdapter(
+            childFragmentManager,
+            FragmentPagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT,
+            fragmentList
+        )
+        viewpager.adapter = testFragmentPagerAdapter
+        tab.setupWithViewPager(viewpager)
     }
-    private fun changeFragment(showPosition: Int,isforX:Boolean) {
-        val beginTransaction = childFragmentManager.beginTransaction()
-        beginTransaction.apply {
-            var fromFragment = fragmentList[currentPosition]
-            var toFragment = fragmentList[showPosition]
-            if (fromFragment != null&&fromFragment!=toFragment && fromFragment.isAdded) {
-                LogUtils.e("fragment","添加过")
-                hide(fromFragment)
-                if (isforX){
-                    setMaxLifecycle(fromFragment, Lifecycle.State.STARTED)
-                }
-            }
-            if (toFragment != null) {
-                if (!toFragment.isAdded) {
-                    add(R.id.frame_layout, toFragment, TAG_POSITONSTR[showPosition])
-
-                } else {
-                    show(toFragment)
-                }
-                if (isforX){
-                    setMaxLifecycle(toFragment, Lifecycle.State.RESUMED)
-                }
-            }
-
-        }.commitAllowingStateLoss()
-
-
-
-        currentPosition = showPosition
-        tab.post {
-            LogUtils.e("主当前子fragment有几个Fragment", "" + childFragmentManager.fragments.size)
-        }
-    }
+//    private fun changeFragment(showPosition: Int,isforX:Boolean) {
+//        val beginTransaction = childFragmentManager.beginTransaction()
+//        beginTransaction.apply {
+//            var fromFragment = fragmentList[currentPosition]
+//            var toFragment = fragmentList[showPosition]
+//            if (fromFragment != null&&fromFragment!=toFragment && fromFragment.isAdded) {
+//                LogUtils.e("fragment","添加过")
+//                hide(fromFragment)
+//                if (isforX){
+//                    setMaxLifecycle(fromFragment, Lifecycle.State.STARTED)
+//                }
+//            }
+//            if (toFragment != null) {
+//                if (!toFragment.isAdded) {
+//                    add(R.id.frame_layout, toFragment, TAG_POSITONSTR[showPosition])
+//
+//                } else {
+//                    show(toFragment)
+//                }
+//                if (isforX){
+//                    setMaxLifecycle(toFragment, Lifecycle.State.RESUMED)
+//                }
+//            }
+//
+//        }.commitAllowingStateLoss()
+//
+//
+//
+//        currentPosition = showPosition
+//        tab.post {
+//            LogUtils.e("主当前子fragment有几个Fragment", "" + childFragmentManager.fragments.size)
+//        }
+//    }
     private fun initFragment() {
         fragmentList.add(HomeFragmentA.newInstance(titles[0]))
         fragmentList.add(HomeFragmentB.newInstance(titles[1]))
@@ -185,25 +183,25 @@ class FragmentA() : BaseLazyFragmentStateForHide() {
         LogUtils.e("主当前$title", "isVisibleToUser:$isVisibleToUser")
     }
 
-    override fun lazyLoad() {
-        LogUtils.e("主当前$title", "lazyLoad")
-    }
-
-    override fun visibleReLoad() {
-        LogUtils.e("主当前$title", "visibleReLoad")
-    }
-
-    override fun inVisibleRelease() {
-        LogUtils.e("主当前$title", "inVisibleRelease")
-    }
-
-    override fun resume() {
-        LogUtils.e("主当前$title", "resume")
-    }
-
-    override fun pause() {
-        LogUtils.e("主当前$title", "pause")
-    }
+//    override fun lazyLoad() {
+//        LogUtils.e("主当前$title", "lazyLoad")
+//    }
+//
+//    override fun visibleReLoad() {
+//        LogUtils.e("主当前$title", "visibleReLoad")
+//    }
+//
+//    override fun inVisibleRelease() {
+//        LogUtils.e("主当前$title", "inVisibleRelease")
+//    }
+//
+//    override fun resume() {
+//        LogUtils.e("主当前$title", "resume")
+//    }
+//
+//    override fun pause() {
+//        LogUtils.e("主当前$title", "pause")
+//    }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)

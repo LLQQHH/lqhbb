@@ -1,18 +1,24 @@
 package com.lqh.jaxlinmaster.lqhbase
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 
 //这个只兼容Viewpager,模式为BEHAVIOR_SET_USER_VISIBLE_HINT
-//因为setUserVisibleHint有可能在其他生命周期前执行,所以要先判断有没有初始化
-abstract class BaseLazyFragmentForViewpager : LqhBaseFragment() {
+//因为setUserVisibleHint有可能在其他生命周期前执行,而且fragment第一次初始化也会调用,所以要先判断有没有初始化
+abstract class BaseLazyFragmentForViewpager : LqhBaseFragment(),IPareVisibilityObserver {
     protected var isCanVisible = false
-    private var isPrepared = false
+    private var isLayoutInitialized = false
     private var isFirst = true
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        isLayoutInitialized = true
+    }
 
     override fun onResume() {
         super.onResume()
-        isPrepared = true
         judgeLazyLoad()
     }
 
@@ -22,7 +28,7 @@ abstract class BaseLazyFragmentForViewpager : LqhBaseFragment() {
     }
     override fun onDestroy() {
         super.onDestroy()
-        isPrepared = false
+        isLayoutInitialized = false
         isCanVisible=false
         isFirst = true //有待商榷
     }
@@ -32,23 +38,51 @@ abstract class BaseLazyFragmentForViewpager : LqhBaseFragment() {
         isCanVisible = isVisibleToUser
         judgeLazyLoad()
         //准备好,但是不可见的时候
-        if (isPrepared&&!isCanVisible){
+        if (isLayoutInitialized&&!isCanVisible){
             invisibleInit(true)
+        }
+        dispatchVisibleToChild(isCanVisible)
+    }
+
+    private fun dispatchVisibleToChild(isCanVisible: Boolean) {
+        if (isDetached || !isAdded) {
+            return
+        }
+        val fragments = childFragmentManager.fragments
+        if (fragments.isEmpty()) {
+            return
+        }
+        fragments.forEach {
+            if (it is IPareVisibilityObserver){
+                it.onParentFragmentHiddenChanged(isCanVisible)
+            }
         }
     }
 
     //懒加载
     private fun judgeLazyLoad() {
-        if (!isPrepared || !isCanVisible) {
-            return
+        if (isLayoutInitialized&&isCanVisible){
+            lazyInit(isFirst)
+            isFirst = false
         }
-        lazyInit(isFirst)
-        isFirst = false
+
     }
 
     protected abstract fun lazyInit(isFirstLoad: Boolean)
 
     protected open fun invisibleInit(isSetUserVisibleHint: Boolean){
         LogUtils.e("当前", "invisibleInit:"+isSetUserVisibleHint)
+    }
+    //记得重写这个然后调用super
+    override fun onParentFragmentHiddenChanged(expected: Boolean) {
+        if (isDetached || !isAdded) {
+            return
+        }
+        val superVisible = super.isVisible()
+        val hintVisible = userVisibleHint
+        val visible = superVisible && hintVisible
+        if (visible!=expected){
+            dispatchVisibleToChild(expected)
+        }
     }
 }

@@ -23,7 +23,7 @@ class MainActivity : LqhBaseActivity() {
     val TAG_CURPOS = "tag_curpos"
     private val TAG_POSITONSTR = arrayOf("A", "B", "C", "D", "E")
     private val titles = arrayOf("A标题", "B标题", "C标题", "D标题", "E标题")
-    private var fragmentSparseArray = SparseArray<Fragment>()
+    //private var fragmentSparseArray = SparseArray<Fragment>()
     private var fragmentList = mutableListOf<LqhBaseFragment>()
 
     override fun getLayoutId(): Int = R.layout.activity_main
@@ -61,7 +61,7 @@ class MainActivity : LqhBaseActivity() {
         buildLqhBottomItemView.gravity = Gravity.CENTER
         lqhBottomTab.addTab(buildLqhBottomItemView)
         lqhBottomTab.setSelectItem(currentPosition)
-        changeFragment(currentPosition,false)
+        //changeFragment(currentPosition,false)
         lqhBottomTab.addOnTabSelectedListener(object : LqhBottomTab.OnTabSelectedListener {
             override fun onTabSelected(position: Int) {
                 LogUtils.e("选中" + position)
@@ -80,7 +80,7 @@ class MainActivity : LqhBaseActivity() {
                         ivDesk.setImageResource(R.drawable.ic_main_index)
                     }
                 }
-                changeFragment(position,false)
+                //changeFragment(position,false)
             }
 
             override fun onTabUnselected(position: Int) {
@@ -108,13 +108,13 @@ class MainActivity : LqhBaseActivity() {
 
         })
 
-//        var testFragmentPagerAdapter = TestFragmentPagerAdapter(
-//            supportFragmentManager,
-//            FragmentPagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT,
-//            fragmentList
-//        )
-//        viewpager.adapter = testFragmentPagerAdapter
-//        lqhBottomTab.setViewPager(viewpager)
+        var testFragmentPagerAdapter = TestFragmentPagerAdapter(
+            supportFragmentManager,
+            FragmentPagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT,
+            fragmentList
+        )
+        viewpager.adapter = testFragmentPagerAdapter
+        lqhBottomTab.setViewPager(viewpager)
 //        var testFragmentPagerAdapter2 = TestFragmentStateAdapter(this, fragmentList)
 //
 //        viewpager2.adapter = testFragmentPagerAdapter2
@@ -139,36 +139,36 @@ class MainActivity : LqhBaseActivity() {
     }
 
     //动态替换fragment
-    private fun changeFragment(showPosition: Int,isforX:Boolean) {
-        val beginTransaction = supportFragmentManager.beginTransaction()
-        beginTransaction.apply {
-            var fromFragment = fragmentList[currentPosition]
-            var toFragment = fragmentList[showPosition]
-            if (fromFragment != null&&fromFragment!=toFragment && fromFragment.isAdded) {
-                LogUtils.e("fragment","添加过")
-                hide(fromFragment)
-                if (isforX){
-                    setMaxLifecycle(fromFragment, Lifecycle.State.STARTED)
-                }
-            }
-            if (toFragment != null) {
-                if (!toFragment.isAdded) {
-                    add(R.id.frame_layout, toFragment, TAG_POSITONSTR[showPosition])
-
-                } else {
-                    show(toFragment)
-                }
-                if (isforX){
-                    setMaxLifecycle(toFragment, Lifecycle.State.RESUMED)
-                }
-            }
-
-        }.commitAllowingStateLoss()
-        currentPosition = showPosition
-        lqhBottomTab.post {
-            LogUtils.e("当前有几个Fragment", "" + supportFragmentManager.fragments.size)
-        }
-    }
+//    private fun changeFragment(showPosition: Int,isforX:Boolean) {
+//        val beginTransaction = supportFragmentManager.beginTransaction()
+//        beginTransaction.apply {
+//            var fromFragment = fragmentList[currentPosition]
+//            var toFragment = fragmentList[showPosition]
+//            if (fromFragment != null&&fromFragment!=toFragment && fromFragment.isAdded) {
+//                LogUtils.e("fragment","添加过")
+//                hide(fromFragment)
+//                if (isforX){
+//                    setMaxLifecycle(fromFragment, Lifecycle.State.STARTED)
+//                }
+//            }
+//            if (toFragment != null) {
+//                if (!toFragment.isAdded) {
+//                    add(R.id.frame_layout, toFragment, TAG_POSITONSTR[showPosition])
+//
+//                } else {
+//                    show(toFragment)
+//                }
+//                if (isforX){
+//                    setMaxLifecycle(toFragment, Lifecycle.State.RESUMED)
+//                }
+//            }
+//
+//        }.commitAllowingStateLoss()
+//        currentPosition = showPosition
+//        lqhBottomTab.post {
+//            LogUtils.e("当前有几个Fragment", "" + supportFragmentManager.fragments.size)
+//        }
+//    }
 
     override fun initData(savedInstanceState: Bundle?) {
     }
