@@ -21,11 +21,11 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class FragmentA() : BaseLazyFragmentForViewpager() {
+class FragmentA() : LqhBaseFragment() {
     var currentPosition: Int = 0
     val TAG_CURPOS = "tag_curpos"
     private val TAG_POSITONSTR = arrayOf("subA", "subB", "subC", "subD", "subE")
-    private val titles = arrayOf("home_A标题", "home_B标题", "home_C标题", "home_D标题")
+    private val titles = arrayOf("FA_subA标题", "FA_subB标题", "FA_subC标题", "FA_subD标题")
      var tabTitles = arrayOf("tabA", "tabB", "tabC", "tabD")
     private var title: String?=null
     private var fragmentList = mutableListOf<LqhBaseFragment>()
@@ -40,10 +40,14 @@ class FragmentA() : BaseLazyFragmentForViewpager() {
     }
 
 
-    override fun lazyInit(isFirstLoad: Boolean) {
-        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad)
-    }
+//    override fun lazyInit(isFirstLoad: Boolean) {
+//        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad)
+//    }
 
+//    override fun invisibleInit(isSetUserVisibleHint: Boolean) {
+//        super.invisibleInit(isSetUserVisibleHint)
+//        LogUtils.e("主当前$title", "invisibleInit是否由isSetUserVisibleHint触发:"+isSetUserVisibleHint)
+//    }
     override fun initView(layout: View) {
 
         tv_title.text =title
@@ -155,6 +159,7 @@ class FragmentA() : BaseLazyFragmentForViewpager() {
     override fun onPause() {
         super.onPause()
         LogUtils.e("主当前$title", "onPause")
+        LogUtils.e("主当前$title", "在onPause中判断isHidden"+isHidden)
     }
 
     override fun onStop() {
@@ -181,27 +186,9 @@ class FragmentA() : BaseLazyFragmentForViewpager() {
         title=arguments?.getString("title")
         //居然有时候获取不到
         LogUtils.e("主当前$title", "isVisibleToUser:$isVisibleToUser")
+        LogUtils.e("主当前$title", "在setUserVisibleHint中判断isHidden"+isHidden)
     }
 
-//    override fun lazyLoad() {
-//        LogUtils.e("主当前$title", "lazyLoad")
-//    }
-//
-//    override fun visibleReLoad() {
-//        LogUtils.e("主当前$title", "visibleReLoad")
-//    }
-//
-//    override fun inVisibleRelease() {
-//        LogUtils.e("主当前$title", "inVisibleRelease")
-//    }
-//
-//    override fun resume() {
-//        LogUtils.e("主当前$title", "resume")
-//    }
-//
-//    override fun pause() {
-//        LogUtils.e("主当前$title", "pause")
-//    }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)

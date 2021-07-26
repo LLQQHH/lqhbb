@@ -1,12 +1,13 @@
-package com.lqh.jaxlinmaster.lqhbase
+package com.lqh.jaxlinmaster.deprecatedfile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 
 //这个只兼容Viewpager,模式为BEHAVIOR_SET_USER_VISIBLE_HINT
 //因为setUserVisibleHint有可能在其他生命周期前执行,而且fragment第一次初始化也会调用,所以要先判断有没有初始化
-abstract class BaseLazyFragmentForViewpager : LqhBaseFragment(),IPareVisibilityObserver {
+@Deprecated("无法兼容多层嵌套")
+abstract class BaseLazyFragmentForViewpager : LqhBaseFragment(), IPareVisibilityObserver {
     protected var isCanVisible = false
     private var isLayoutInitialized = false
     private var isFirst = true
@@ -25,6 +26,11 @@ abstract class BaseLazyFragmentForViewpager : LqhBaseFragment(),IPareVisibilityO
     override fun onPause() {
         super.onPause()
         invisibleInit(false)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        isLayoutInitialized=false
     }
     override fun onDestroy() {
         super.onDestroy()

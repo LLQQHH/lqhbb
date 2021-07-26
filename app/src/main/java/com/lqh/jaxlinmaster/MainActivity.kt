@@ -22,7 +22,7 @@ class MainActivity : LqhBaseActivity() {
     var currentPosition: Int = 0
     val TAG_CURPOS = "tag_curpos"
     private val TAG_POSITONSTR = arrayOf("A", "B", "C", "D", "E")
-    private val titles = arrayOf("A标题", "B标题", "C标题", "D标题", "E标题")
+    private val titles = arrayOf("FA标题", "FB标题", "FC标题", "FD标题", "FE标题")
     //private var fragmentSparseArray = SparseArray<Fragment>()
     private var fragmentList = mutableListOf<LqhBaseFragment>()
 

@@ -1,11 +1,13 @@
-package com.lqh.jaxlinmaster.lqhbase
+package com.lqh.jaxlinmaster.deprecatedfile
 
 import android.os.Bundle
+import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 
 //这个只兼容使用show和hide方法加载fragment,模式为BEHAVIOR_SET_USER_VISIBLE_HINT
 //第一次add然后show这个fragment并不会执行onHiddenChanged但是isHide是false
 //通过实验知道onHiddenChanged和其他声明周期不会同时执行,而且执行onHiddenChanged肯定当前fragment已经实例化过了
 //onHiddenChange切换的时候才会调用
+@Deprecated("无法兼容多层嵌套")
 abstract class BaseLazyFragmentForHide : LqhBaseFragment() {
     private var isLayoutInitialized = false
     private var isFirst = true

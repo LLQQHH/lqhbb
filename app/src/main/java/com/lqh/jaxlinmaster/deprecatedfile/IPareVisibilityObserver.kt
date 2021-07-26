@@ -1,4 +1,4 @@
-package com.lqh.jaxlinmaster.lqhbase
+package com.lqh.jaxlinmaster.deprecatedfile
 
 /**
  * Created by Linqh on 2021/7/18.

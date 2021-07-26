@@ -4,8 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpager
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
+import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_a.*
 
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class HomeFragmentA() : BaseLazyFragmentForViewpager() {
+class HomeFragmentA() : LqhBaseFragment() {
 
     private var title: String?=null
     companion object{
@@ -29,9 +28,9 @@ class HomeFragmentA() : BaseLazyFragmentForViewpager() {
     }
 
 
-    override fun lazyInit(isFirstLoad: Boolean) {
-        LogUtils.e("当前$title", "isFirstLoad:"+isFirstLoad);
-    }
+//    override fun lazyInit(isFirstLoad: Boolean) {
+//        LogUtils.e("当前$title", "isFirstLoad:"+isFirstLoad);
+//    }
 
     override fun initView(layout: View) {
 
@@ -76,6 +75,7 @@ class HomeFragmentA() : BaseLazyFragmentForViewpager() {
     override fun onPause() {
         super.onPause()
         LogUtils.e("当前$title", "onPause")
+        LogUtils.e("当前$title", "在onPause中判断isHidden"+isHidden)
     }
 
     override fun onStop() {
@@ -102,7 +102,7 @@ class HomeFragmentA() : BaseLazyFragmentForViewpager() {
         title=arguments?.getString("title")
         //居然有时候获取不到
         LogUtils.e("当前$title", "isVisibleToUser:$isVisibleToUser")
-        LogUtils.e("当前$title", "在setUserVisibleHint中判断isHidden"+isHidden)
+        LogUtils.e("当前$title", "在setUserVisibleHint判断isHidden"+isHidden)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -111,8 +111,9 @@ class HomeFragmentA() : BaseLazyFragmentForViewpager() {
         LogUtils.e("当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
     }
 
-    override fun onParentFragmentHiddenChanged(expected: Boolean) {
-        super.onParentFragmentHiddenChanged(expected)
-        LogUtils.e("当前$title", "onParentFragmentHiddenChanged"+expected)
-    }
+//    override fun onParentFragmentHiddenChanged(expected: Boolean) {
+//        super.onParentFragmentHiddenChanged(expected)
+//        LogUtils.e("当前$title", "onParentFragmentHiddenChanged"+expected)
+//    }
+
 }

@@ -4,8 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpager
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
+import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_a.*
 
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class HomeFragmentB() : BaseLazyFragmentForViewpager() {
+class HomeFragmentB() : LqhBaseFragment() {
 
     private var title: String?=null
     companion object{
@@ -29,9 +28,9 @@ class HomeFragmentB() : BaseLazyFragmentForViewpager() {
     }
 
 
-    override fun lazyInit(isFirstLoad: Boolean) {
-        LogUtils.e("当前$title", "isFirstLoad:"+isFirstLoad);
-    }
+//    override fun lazyInit(isFirstLoad: Boolean) {
+//        LogUtils.e("当前$title", "isFirstLoad:"+isFirstLoad);
+//    }
 
     override fun initView(layout: View) {
 

@@ -1,11 +1,13 @@
-package com.lqh.jaxlinmaster.lqhbase
+package com.lqh.jaxlinmaster.deprecatedfile
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.Nullable
+import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 
 //这个只兼容Viewpager,模式为BEHAVIOR_SET_USER_VISIBLE_HINT，有多种状态
-abstract class BaseLazyLoadFragment : LqhBaseFragment() {
-    protected var TAG = BaseLazyLoadFragment::class.java.simpleName + this.toString()
+@Deprecated("无法兼容多层嵌套")
+abstract class BaseLazyFragmentStateForViewpager : LqhBaseFragment() {
+    protected var TAG = BaseLazyFragmentStateForViewpager::class.java.simpleName + this.toString()
 
     //布局是否初始化完成
     private var isLayoutInitialized = false

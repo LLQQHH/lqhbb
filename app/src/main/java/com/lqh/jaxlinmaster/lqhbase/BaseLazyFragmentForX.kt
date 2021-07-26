@@ -1,5 +1,7 @@
 package com.lqh.jaxlinmaster.lqhbase
 
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
+
 /**
  * Created by Linqh on 2021/6/24.
 @describe:
@@ -18,7 +20,7 @@ abstract class BaseLazyFragmentForX :LqhBaseFragment(){
     override fun onResume() {
         super.onResume()
         // 将数据加载逻辑放到onResume()方法中
-        lazyInit(isFirstLoad)
+        onFragmentLazyInit(isFirstLoad)
         isFirstLoad = false
     }
 
@@ -27,9 +29,11 @@ abstract class BaseLazyFragmentForX :LqhBaseFragment(){
         super.onDestroy()
     }
     //懒加载
-    protected abstract fun lazyInit(isFirstLoad: Boolean)
+    protected abstract fun onFragmentLazyInit(isFirstLoad: Boolean)
     //可以再onpause里面执行暂停操作
     override fun onPause() {
         super.onPause()
+        onFragmentPause()
     }
+    protected abstract  fun onFragmentPause()
 }

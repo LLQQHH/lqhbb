@@ -4,9 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForHide
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForViewpager
-import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
+import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_test.*
 
@@ -16,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_test.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class FragmentE() : BaseLazyFragmentForX() {
+class FragmentE() : LqhBaseFragment() {
 
     private var title: String?=null
     companion object{
@@ -37,9 +35,9 @@ class FragmentE() : BaseLazyFragmentForX() {
 
     override fun getLayoutId(): Int = R.layout.fragment_e
 
-    override fun lazyInit(isFirstLoad: Boolean) {
-        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad);
-    }
+//    override fun lazyInit(isFirstLoad: Boolean) {
+//        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad);
+//    }
 
 
     override fun onAttach(context: Context) {
