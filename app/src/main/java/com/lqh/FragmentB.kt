@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class FragmentB() : LqhBaseFragment() {
+class FragmentB() : BaseLazyFragmentForSupport() {
     var currentPosition: Int = 0
     val TAG_CURPOS = "tag_curpos"
     private val TAG_POSITONSTR = arrayOf("subA", "subB", "subC", "subD", "subE")
@@ -40,14 +40,7 @@ class FragmentB() : LqhBaseFragment() {
     }
 
 
-//    override fun lazyInit(isFirstLoad: Boolean) {
-//        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad)
-//    }
-//
-//    override fun invisibleInit(isSetUserVisibleHint: Boolean) {
-//        super.invisibleInit(isSetUserVisibleHint)
-//        LogUtils.e("主当前$title", "invisibleInit是否由isSetUserVisibleHint触发:"+isSetUserVisibleHint)
-//    }
+
     override fun initView(layout: View) {
 
         tv_title.text =title
@@ -222,5 +215,12 @@ class FragmentB() : LqhBaseFragment() {
         init {
             this.fragments = fragments
         }
+    }
+    override fun onFragmentPause() {
+        LogUtils.e("主当前$title", "不可见onFragmentPause")
+    }
+
+    override fun onFragmentLazyInit(IsFirstVisible: Boolean) {
+        LogUtils.e("主当前$title", "可见isFirstLoad:"+IsFirstVisible)
     }
 }

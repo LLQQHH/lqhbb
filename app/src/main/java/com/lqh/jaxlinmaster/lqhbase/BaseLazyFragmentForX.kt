@@ -28,12 +28,12 @@ abstract class BaseLazyFragmentForX :LqhBaseFragment(){
         isFirstLoad = true
         super.onDestroy()
     }
-    //懒加载
-    protected abstract fun onFragmentLazyInit(isFirstLoad: Boolean)
     //可以再onpause里面执行暂停操作
     override fun onPause() {
         super.onPause()
         onFragmentPause()
     }
+    //懒加载
+    protected abstract fun onFragmentLazyInit(isFirstLoad: Boolean)
     protected abstract  fun onFragmentPause()
 }

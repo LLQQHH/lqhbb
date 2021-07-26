@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForSupport
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_a.*
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class HomeFragmentA() : LqhBaseFragment() {
+class HomeFragmentA() : BaseLazyFragmentForSupport() {
 
     private var title: String?=null
     companion object{
@@ -28,9 +29,7 @@ class HomeFragmentA() : LqhBaseFragment() {
     }
 
 
-//    override fun lazyInit(isFirstLoad: Boolean) {
-//        LogUtils.e("当前$title", "isFirstLoad:"+isFirstLoad);
-//    }
+
 
     override fun initView(layout: View) {
 
@@ -110,10 +109,13 @@ class HomeFragmentA() : LqhBaseFragment() {
         LogUtils.e("当前$title", "onHiddenChanged:$hidden")
         LogUtils.e("当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
     }
+    override fun onFragmentPause() {
+        LogUtils.e("当前$title", "不可见onFragmentPause")
+    }
 
-//    override fun onParentFragmentHiddenChanged(expected: Boolean) {
-//        super.onParentFragmentHiddenChanged(expected)
-//        LogUtils.e("当前$title", "onParentFragmentHiddenChanged"+expected)
-//    }
+    override fun onFragmentLazyInit(IsFirstVisible: Boolean) {
+        LogUtils.e("当前$title", "可见isFirstLoad:"+IsFirstVisible)
+    }
+
 
 }

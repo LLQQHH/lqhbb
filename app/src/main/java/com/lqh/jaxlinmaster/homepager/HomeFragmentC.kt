@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForSupport
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_a.*
@@ -14,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class HomeFragmentC() : LqhBaseFragment() {
+class HomeFragmentC() : BaseLazyFragmentForSupport() {
 
     private var title: String?=null
     companion object{
@@ -27,10 +29,6 @@ class HomeFragmentC() : LqhBaseFragment() {
         }
     }
 
-
-//    override fun lazyInit(isFirstLoad: Boolean) {
-//        LogUtils.e("当前$title", "isFirstLoad:"+isFirstLoad);
-//    }
 
     override fun initView(layout: View) {
 
@@ -110,7 +108,11 @@ class HomeFragmentC() : LqhBaseFragment() {
         LogUtils.e("当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
     }
 
-//     override fun invisibleInit(isSetUserVisibleHint: Boolean){
-//        LogUtils.e("当前$title", "invisibleInit:"+isSetUserVisibleHint)
-//    }
+    override fun onFragmentPause() {
+        LogUtils.e("当前$title", "不可见onFragmentPause")
+    }
+
+    override fun onFragmentLazyInit(IsFirstVisible: Boolean) {
+        LogUtils.e("当前$title", "可见isFirstLoad:"+IsFirstVisible)
+    }
 }

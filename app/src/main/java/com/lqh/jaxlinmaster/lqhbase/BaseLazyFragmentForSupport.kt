@@ -200,18 +200,13 @@ abstract class BaseLazyFragmentForSupport : LqhBaseFragment() {
 
 
 
-    fun onFragmentPause() {
-        LogUtils.e("$TAG  对用户不可见")
-    }
-
+   abstract fun onFragmentPause()
     /**
      * 添加是否是第一次可见的标识
      *
      * @param IsFirstVisible true 是第一次可见 == onFirstVisible  false 去除第一次回调
      */
-    fun onFragmentLazyInit(IsFirstVisible: Boolean) {
-
-    }
+    abstract fun onFragmentLazyInit(IsFirstVisible: Boolean)
     override fun onDestroyView() {
         super.onDestroyView()
     }

@@ -28,9 +28,7 @@ class TestFragment() : BaseLazyFragmentForX() {
     }
 
 
-    override fun lazyInit(isFirstLoad: Boolean) {
-        LogUtils.e("当前$title", "isFirstLoad"+isFirstLoad);
-    }
+
 
     override fun initView(layout: View) {
         title=arguments?.getString("title")
@@ -91,5 +89,12 @@ class TestFragment() : BaseLazyFragmentForX() {
     override fun onDetach() {
         super.onDetach()
         LogUtils.e("当前$title", "onDetach")
+    }
+    override fun onFragmentPause() {
+        LogUtils.e("主当前$title", "onFragmentPause")
+    }
+
+    override fun onFragmentLazyInit(IsFirstVisible: Boolean) {
+        LogUtils.e("主当前$title", "isFirstLoad:"+IsFirstVisible)
     }
 }

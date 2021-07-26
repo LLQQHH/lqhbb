@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForSupport
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_test.*
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_test.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class FragmentE() : LqhBaseFragment() {
+class FragmentE() : BaseLazyFragmentForSupport() {
 
     private var title: String?=null
     companion object{
@@ -35,9 +36,7 @@ class FragmentE() : LqhBaseFragment() {
 
     override fun getLayoutId(): Int = R.layout.fragment_e
 
-//    override fun lazyInit(isFirstLoad: Boolean) {
-//        LogUtils.e("主当前$title", "isFirstLoad:"+isFirstLoad);
-//    }
+
 
 
     override fun onAttach(context: Context) {
@@ -107,5 +106,12 @@ class FragmentE() : LqhBaseFragment() {
         super.onHiddenChanged(hidden)
         LogUtils.e("主当前$title", "onHiddenChanged:$hidden")
         LogUtils.e("主当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
+    }
+    override fun onFragmentPause() {
+        LogUtils.e("主当前$title", "不可见onFragmentPause")
+    }
+
+    override fun onFragmentLazyInit(IsFirstVisible: Boolean) {
+        LogUtils.e("主当前$title", "可见isFirstLoad:"+IsFirstVisible)
     }
 }
