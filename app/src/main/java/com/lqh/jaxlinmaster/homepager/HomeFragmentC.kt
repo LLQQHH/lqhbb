@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class HomeFragmentC() : BaseLazyFragmentForSupport() {
+class HomeFragmentC() : BaseLazyFragmentForX() {
 
     private var title: String?=null
     companion object{

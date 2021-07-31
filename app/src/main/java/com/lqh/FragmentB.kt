@@ -13,7 +13,7 @@ import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.homepager.*
 import com.lqh.jaxlinmaster.lqhbase.*
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
-import kotlinx.android.synthetic.main.fragment_a.*
+import kotlinx.android.synthetic.main.fragment_b.*
 
 /**
  * Created by Linqh on 2021/6/24.
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class FragmentB() : BaseLazyFragmentForSupport() {
+class FragmentB() : BaseLazyFragmentForX() {
     var currentPosition: Int = 0
     val TAG_CURPOS = "tag_curpos"
     private val TAG_POSITONSTR = arrayOf("subA", "subB", "subC", "subD", "subE")
@@ -68,7 +68,7 @@ class FragmentB() : BaseLazyFragmentForSupport() {
         })
         var testFragmentPagerAdapter = TestFragmentPagerAdapter(
             childFragmentManager,
-            FragmentPagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT,
+            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
             fragmentList
         )
         viewpager.adapter = testFragmentPagerAdapter
@@ -115,7 +115,7 @@ class FragmentB() : BaseLazyFragmentForSupport() {
 
     }
 
-    override fun getLayoutId(): Int = R.layout.fragment_a
+    override fun getLayoutId(): Int = R.layout.fragment_b
     override fun onAttach(context: Context) {
         super.onAttach(context)
         title=arguments?.getString("title")

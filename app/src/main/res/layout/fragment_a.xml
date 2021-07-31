@@ -22,14 +22,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/iv_1"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:scaleType="centerCrop"/>
+    <ImageView
+        android:id="@+id/iv_2"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:scaleType="centerCrop"/>
+    <TextView
+        android:id="@+id/tv_save"
+        android:text="存图片到本地"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"/>
+<!--    <com.google.android.material.tabs.TabLayout-->
+<!--        android:id="@+id/tab"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+<!--    <androidx.viewpager.widget.ViewPager-->
+<!--        android:id="@+id/viewpager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
 <!--    <FrameLayout-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->

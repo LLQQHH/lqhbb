@@ -217,6 +217,9 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
                 ivIcon?.setImageDrawable(normalIcon)
             }
         }
+        if (customLayout!=null){
+            customLayout!!.isSelected=isSelected
+        }
     }
     class Builder(var context: Context) {
         var textColorNormal: Int = 0

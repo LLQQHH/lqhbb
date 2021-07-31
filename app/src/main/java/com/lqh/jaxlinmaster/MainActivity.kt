@@ -1,11 +1,19 @@
 package com.lqh.jaxlinmaster
 
+import android.content.ContentUris
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
-import android.util.SparseArray
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.lqh.*
@@ -16,6 +24,8 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
 import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.net.URI
 
 
 class MainActivity : LqhBaseActivity() {
@@ -23,36 +33,59 @@ class MainActivity : LqhBaseActivity() {
     val TAG_CURPOS = "tag_curpos"
     private val TAG_POSITONSTR = arrayOf("A", "B", "C", "D", "E")
     private val titles = arrayOf("FA标题", "FB标题", "FC标题", "FD标题", "FE标题")
+
     //private var fragmentSparseArray = SparseArray<Fragment>()
     private var fragmentList = mutableListOf<LqhBaseFragment>()
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView(savedInstanceState: Bundle?) {
-        LogUtils.e("当前activity", "onCreate");
-//        if (savedInstanceState != null) {
-//            currentPosition = savedInstanceState.getInt(TAG_CURPOS)
-//            TAG_POSITONSTR.forEachIndexed { index, s ->
-//                val findFragmentByTag =
-//                    supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[index])
-//                if (findFragmentByTag != null) {
-//                    fragmentSparseArray.put(index, findFragmentByTag)
-//                }
-//                //防止其他界面fragment还没有开始添加到supportFragmentManager中
-//                titles.forEachIndexed { index, s ->
-//                    if (fragmentSparseArray.get(index) == null) {
-//                        fragmentSparseArray.put(index, TestFragment.newInstance(s))
-//                    }
-//                }
-//            }
-//        } else {
-//            titles.forEachIndexed { index, s ->
-//                var lqhBaseLazyFragmentForX = TestFragment.newInstance(s)
-//                //fragmentList.add(lqhBaseLazyFragmentForX)
-//                fragmentSparseArray.put(index, lqhBaseLazyFragmentForX)
-//            }
-//        }
-        initFragment()
+        LogUtils.e("当前activity", "onCreate")
+        LogUtils.e("目录外部公有getExternalStorageDirectory:",Environment.getExternalStorageDirectory().absolutePath)
+        LogUtils.e("目录外部公有getExternalStoragePublicDirectory_PICTURES:",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath)
+        LogUtils.e("目录外部公有getExternalStoragePublicDirectory_DCIM:",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath)
+        LogUtils.e("目录外部公有getDataDirectory:",Environment.getDataDirectory().absolutePath)
+        LogUtils.e("目录外部公有getDownloadCacheDirectory:",Environment.getDownloadCacheDirectory().absolutePath)
+        LogUtils.e("目录外部公有getRootDirectory:",Environment.getRootDirectory().absolutePath)
+        LogUtils.e("目录外部专有getExternalFilesDir:",getExternalFilesDir(Environment.DIRECTORY_MUSIC)!!.absolutePath)
+        LogUtils.e("目录外部专有getExternalCacheDir:",externalCacheDir!!.absolutePath)
+        LogUtils.e("目录内部getFilesDir:",filesDir!!.absolutePath)
+        LogUtils.e("目录内部getCacheDir:",cacheDir!!.absolutePath)
+        cacheDir
+        val externalFilesDirs = getExternalFilesDirs("")
+        externalFilesDirs?.forEachIndexed { index, file ->
+            file?.let {
+                LogUtils.e("目录内部getExternalFilesDirs:","index:$index+,${it!!.absolutePath}")
+            }
+        }
+        var pathStr=filesDir.absolutePath+File.separator+"text.txt"
+        var  file=File(pathStr)
+        var uriFromPath= Uri.parse(pathStr)
+        var uriFromFile= Uri.fromFile(file)
+        val pathFromUri: String? = uriFromFile.path
+        var fileFromUri =File(URI(uriFromFile.toString()))
+        LogUtils.e("file_path地址:",file.path)
+        LogUtils.e("uriFromPath地址:",uriFromPath.toString())
+        LogUtils.e("pathFromUri地址:",pathFromUri.toString())
+        LogUtils.e("uriFromFile地址:",uriFromFile.toString())
+        LogUtils.e("fileFromUri地址:",fileFromUri.path)
+        if (savedInstanceState != null) {
+            currentPosition = savedInstanceState.getInt(TAG_CURPOS)
+            var fragmentA :FragmentA?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[0]) as FragmentA?
+            var fragmentB :FragmentB?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[1]) as FragmentB?
+            var fragmentC :FragmentC?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[2]) as FragmentC?
+            var fragmentD :FragmentD?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[3]) as FragmentD?
+            var fragmentE :FragmentE?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[4]) as FragmentE?
+            fragmentList.add(fragmentA ?:FragmentA.newInstance(titles[0]))
+            fragmentList.add(fragmentB ?:FragmentB.newInstance(titles[1]))
+            fragmentList.add(fragmentC ?:FragmentC.newInstance(titles[2]))
+            fragmentList.add(fragmentD ?:FragmentD.newInstance(titles[3]))
+            fragmentList.add(fragmentE ?:FragmentE.newInstance(titles[4]))
+        }
+        else {
+            initFragment()
+        }
+        //initFragment()
         val buildLqhBottomItemView = LqhBottomItemView.Builder(this)
             .setItemText("测试4")
             .setNormalIcon(ContextCompat.getDrawable(this, R.drawable.ic_main_my_normalcy))
@@ -60,8 +93,6 @@ class MainActivity : LqhBaseActivity() {
             .build()
         buildLqhBottomItemView.gravity = Gravity.CENTER
         lqhBottomTab.addTab(buildLqhBottomItemView)
-        lqhBottomTab.setSelectItem(currentPosition)
-        changeFragment(currentPosition,false)
         lqhBottomTab.addOnTabSelectedListener(object : LqhBottomTab.OnTabSelectedListener {
             override fun onTabSelected(position: Int) {
                 LogUtils.e("选中" + position)
@@ -80,7 +111,7 @@ class MainActivity : LqhBaseActivity() {
                         ivDesk.setImageResource(R.drawable.ic_main_index)
                     }
                 }
-                changeFragment(position,false)
+                changeFragment(position, true)
             }
 
             override fun onTabUnselected(position: Int) {
@@ -107,7 +138,11 @@ class MainActivity : LqhBaseActivity() {
             }
 
         })
-
+        if (currentPosition != 0) {
+            lqhBottomTab.setSelectItem(currentPosition)
+        } else {
+            changeFragment(currentPosition, true)
+        }
 //        var testFragmentPagerAdapter = TestFragmentPagerAdapter(
 //            supportFragmentManager,
 //            FragmentPagerAdapter.BEHAVIOR_SET_USER_VISIBLE_HINT,
@@ -131,34 +166,33 @@ class MainActivity : LqhBaseActivity() {
     }
 
     private fun initFragment() {
-            fragmentList.add(FragmentA.newInstance(titles[0]))
-            fragmentList.add(FragmentB.newInstance(titles[1]))
-            fragmentList.add(FragmentC.newInstance(titles[2]))
-            fragmentList.add(FragmentD.newInstance(titles[3]))
-            fragmentList.add(FragmentE.newInstance(titles[4]))
+        fragmentList.add(FragmentA.newInstance(titles[0]))
+        fragmentList.add(FragmentB.newInstance(titles[1]))
+        fragmentList.add(FragmentC.newInstance(titles[2]))
+        fragmentList.add(FragmentD.newInstance(titles[3]))
+        fragmentList.add(FragmentE.newInstance(titles[4]))
     }
 
     //动态替换fragment
-    private fun changeFragment(showPosition: Int,isforX:Boolean) {
+    private fun changeFragment(showPosition: Int, isforX: Boolean) {
         val beginTransaction = supportFragmentManager.beginTransaction()
         beginTransaction.apply {
             var fromFragment = fragmentList[currentPosition]
             var toFragment = fragmentList[showPosition]
-            if (fromFragment != null&&fromFragment!=toFragment && fromFragment.isAdded) {
-                LogUtils.e("fragment","添加过")
+            if (fromFragment != null && fromFragment != toFragment && fromFragment.isAdded) {
+                LogUtils.e("fragment", "添加过")
                 hide(fromFragment)
-                if (isforX){
+                if (isforX) {
                     setMaxLifecycle(fromFragment, Lifecycle.State.STARTED)
                 }
             }
             if (toFragment != null) {
                 if (!toFragment.isAdded) {
                     add(R.id.frame_layout, toFragment, TAG_POSITONSTR[showPosition])
-
                 } else {
                     show(toFragment)
                 }
-                if (isforX){
+                if (isforX) {
                     setMaxLifecycle(toFragment, Lifecycle.State.RESUMED)
                 }
             }
@@ -218,14 +252,15 @@ class MainActivity : LqhBaseActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        //第一种方案防止重建,直接取消的保存的fragment
+        //第一种方案防止重建,直接取消的保存的fragment,这种方案不好，因为按home键返回到桌面，即使不会内存补足，也会走这个方法,但是你把他移除了
+        //重新进来又没有走oncreate,所以导致界面空白，这种方案不行
 //        val beginTransaction = supportFragmentManager.beginTransaction()
-//            fragmentSparseArray.forEach { key, value ->
-//                beginTransaction.remove(value)
-//            }
+//        fragmentList.forEach {
+//            beginTransaction.remove(it)
+//        }
 //        beginTransaction.commitAllowingStateLoss()
 //第二种方案
-//        outState.putInt(TAG_CURPOS, currentPosition);
+        outState.putInt(TAG_CURPOS, currentPosition);
         super.onSaveInstanceState(outState)
         LogUtils.e("当前activity", "onSaveInstanceState");
     }
@@ -234,4 +269,6 @@ class MainActivity : LqhBaseActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         LogUtils.e("当前activity", "onRestoreInstanceState");
     }
+
+
 }

@@ -54,6 +54,8 @@ class LqhBottomTab @JvmOverloads constructor(
             R.styleable.LqhBottomTab_lqhtab_item_textSizeSelected,
             UIUtils.dp2Px(mContext, 14)
         )
+        //默认选中的position
+        mCurrentItem=ta.getInteger(R.styleable.LqhBottomTab_lqhtab_item_defaultSelectPosition,0)
         var iconMargin =
             ta.getDimensionPixelSize(R.styleable.LqhBottomTab_lqhtab_item_iconMargin, 0)
         var iconWidth =
@@ -119,6 +121,9 @@ class LqhBottomTab @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
         initChild()
+        if (mCurrentItem in 0 until childCount) {
+            changeSelected(-1, mCurrentItem)
+        }
     }
 
     //初始化开始
@@ -134,9 +139,7 @@ class LqhBottomTab @JvmOverloads constructor(
                 childView.setOnClickListener(LqhOnClickListener(i))
             }
         }
-        if (mCurrentItem == -1) {
-            changeSelected(mCurrentItem, 0)
-        }
+
     }
 
     inner class LqhOnClickListener(private val clickPosition: Int) : OnClickListener {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForSupport
+import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.fragment_a.*
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_a.*
  *
  */
 //@CreateUidAnnotation(uid = "10100")
-class HomeFragmentA() : BaseLazyFragmentForSupport() {
+class HomeFragmentA() : BaseLazyFragmentForX() {
 
     private var title: String?=null
     companion object{

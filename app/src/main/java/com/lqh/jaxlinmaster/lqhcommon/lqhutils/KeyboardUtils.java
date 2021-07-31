@@ -61,6 +61,38 @@ public final class KeyboardUtils {
         imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
     }
 
+    public static void showKeyboardDelay(View view, int delayTime) {
+        showKeyboardDelay(view,delayTime,true);
+    }
+    public static void showKeyboardDelay(View view, int delayTime, boolean isNeedPost) {
+        if (view==null) return;
+        if (isNeedPost) {
+            view.post(() -> {
+                if (delayTime > 0) {
+                    view.postDelayed(() -> {
+                        view.requestFocus();
+                        if(view instanceof EditText){
+                            ((EditText) view).setSelection(((EditText) view).getText().toString().length());
+                        }
+                        KeyboardUtils.showSoftInput(view);
+                    }, delayTime);
+                } else {
+                    view.requestFocus();
+                    if(view instanceof EditText){
+                        ((EditText) view).setSelection(((EditText) view).getText().toString().length());
+                    }
+                    KeyboardUtils.showSoftInput(view);
+                }
+            });
+        } else {
+            view.requestFocus();
+            if(view instanceof EditText){
+                ((EditText) view).setSelection(((EditText) view).getText().toString().length());
+            }
+            KeyboardUtils.showSoftInput(view);
+        }
+    }
+
     /**
      * Hide the soft input.动态隐藏软键盘
      *

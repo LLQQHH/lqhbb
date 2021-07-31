@@ -5,13 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    >
     <TextView
+        android:padding="@dimen/dp_16"
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/sp_14"
         android:textColor="@color/black"
         tools:text="HelloWorld!"
-       />
+        />
+    <TextView
+        android:id="@+id/tv_go"
+        android:text="点击跳转"
+        android:padding="@dimen/dp_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <!--    <FrameLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--      >-->
+    <!--        <FrameLayout-->
+    <!--            android:id="@+id/frame_layout"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"/>-->
+    <!--    </FrameLayout>-->
 </LinearLayout>

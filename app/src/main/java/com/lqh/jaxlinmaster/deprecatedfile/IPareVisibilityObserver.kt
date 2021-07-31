@@ -6,6 +6,7 @@ package com.lqh.jaxlinmaster.deprecatedfile
  *
  */
 //@CreateUidAnnotation(uid = "10100")
+@Deprecated("")
 interface IPareVisibilityObserver {
     fun onParentFragmentHiddenChanged(isVisibleToUser:Boolean)
 }

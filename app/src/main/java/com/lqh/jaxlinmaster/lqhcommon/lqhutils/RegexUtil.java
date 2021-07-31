@@ -28,7 +28,7 @@ public class RegexUtil {
      */
     public static String formatPhoneNum(String phoneNum) {
         String regex = "(\\+86)|[^0-9]";
-        Pattern pattern = Pattern.compile(regex );
+        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(phoneNum);
         return matcher.replaceAll("");
     }
@@ -84,23 +84,6 @@ public class RegexUtil {
         Matcher matcher = pattern.matcher(input);
         //这样返回的就是非数字
         return matcher.replaceAll("");
-    }
-
-    /**
-     * @param str
-     * @return 是否为数字（包括整数和小数）
-     */
-    public static boolean isNumeric(String str) {
-        if(StringUtils.isEmpty(str)){
-            return false;
-        }
-        //Pattern pattern = Pattern.compile("-?[0-9]+.?[0-9]+");//这个有问题，一位的整数不能通过
-        Pattern pattern = Pattern.compile("^(\\-|\\+)?\\d+(\\.\\d+)?$");//这个是对的
-        Matcher isNum = pattern.matcher(str);
-        if (!isNum.matches()) {
-            return false;
-        }
-        return true;
     }
 
     /**是否为数字
@@ -206,12 +189,13 @@ public class RegexUtil {
 
     public static void main(String[] args) {
 
-        System.out.println(isFloat("500"));
-        System.out.println(isFloat("50.0"));
-        System.out.println(isFloat("1"));
-        System.out.println(isFloat("-0.5"));
-        System.out.println(isFloat("0."));
-        System.out.println(isFloat(".5"));
+//        System.out.println(isFloat("500"));
+//        System.out.println(isFloat("50.0"));
+//        System.out.println(isFloat("1"));
+//        System.out.println(isFloat("-0.5"));
+//        System.out.println(isFloat("0."));
+//        System.out.println(isFloat(".5"));
+//        System.out.println(isFloat("-1.5"));
     }
 
 
