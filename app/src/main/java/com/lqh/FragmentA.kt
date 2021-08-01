@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import androidx.annotation.DrawableRes
@@ -22,9 +23,7 @@ import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_a.*
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
 
 
 /**
@@ -132,6 +131,7 @@ class FragmentA : BaseLazyFragmentForX() {
     }
 
     var avatarBitmap: Bitmap? = null
+    var savePhotoPrivateFile: String? = null
     override fun onFragmentLazyInit(IsFirstVisible: Boolean) {
         LogUtils.e("主当前$title", "可见isFirstLoad:" + IsFirstVisible)
         if (IsFirstVisible) {
@@ -154,69 +154,54 @@ class FragmentA : BaseLazyFragmentForX() {
                 }
                 Glide.with(context!!).load(pathStr).apply(requestOptions).into(iv_2)
             }
-            tv_save.setOnClickListener {
-                savePhotoAlbum(avatarBitmap!!, "test12.jpeg")
+            tv_saveBitmapToPicture.setOnClickListener {
+                savePhotoAlbum(avatarBitmap!!,Environment.DIRECTORY_PICTURES+ File.separator + "lqhPictures", "${System.currentTimeMillis()}+test12.jpeg")
             }
-        }
-    }
-
-    private fun savePhotoAlbum(src: Bitmap, fileName: String) {
-        //Androidq以上
-        var fileDirPath = Environment.DIRECTORY_PICTURES + File.separator + "lqhPictures"
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val contentValues = ContentValues()
-            //test1
-            contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-            contentValues.put(MediaStore.Images.Media.DESCRIPTION, fileName)
-            contentValues.put(MediaStore.Images.Media.TITLE, fileName)
-            contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, fileDirPath)
-            val contentResolver: ContentResolver = context!!.contentResolver
-            //拿到uri
-            val uri =
-                contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-            try {
-                val outputStream = contentResolver.openOutputStream(uri!!)
-                src.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-                outputStream!!.flush()
-                outputStream.close()
-                ToastUtils.show("保存成功")
-            } catch (e: IOException) {
-                e.printStackTrace()
-                ToastUtils.show("保存失败")
+            tv_saveBitMapToLocal.setOnClickListener {
+                savePhotoPrivateFile = savePhotoPrivateFile(avatarBitmap)
             }
-        } else {
-            try {
-                val fileDir = File(Environment.getExternalStorageDirectory().absolutePath,fileDirPath)
-                LogUtils.e("跟目录",fileDir.absolutePath)
-                if (!fileDir.exists()) {
-                    val mkdirs = fileDir.mkdirs()
-                    if (mkdirs){
-                        LogUtils.e("跟目录","创建成功")
-                    }else{
-                        LogUtils.e("跟目录","创建失败")
-                    }
-
+            tv_saveStrPicToLocal.setOnClickListener {
+                if (!savePhotoPrivateFile.isNullOrEmpty()) {
+                    savePhotoAlbum(File(savePhotoPrivateFile!!),Environment.DIRECTORY_PICTURES+ File.separator + "lqhPictures",null)
                 }
-                val file = File(fileDir, fileName)
-                LogUtils.e("跟目录的子目录",file.absolutePath)
-                val outputStream = FileOutputStream(file)
-                src.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-                outputStream.flush()
-                outputStream.close()
-                activity!!.sendBroadcast(
-                    Intent(
-                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                        Uri.fromFile(file)
-                    )
-                )
-                ToastUtils.show("保存成功")
-            } catch (e: IOException) {
-                ToastUtils.show("保存失败")
+
             }
         }
-
     }
+
+    private fun savePhotoPrivateFile(src: Bitmap?): String? {
+        if (src == null) {
+            return null
+        }
+        val fileDir =
+            File(context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!.absolutePath + File.separator + "lqhPictures")
+        if (!fileDir.exists()) {
+            val mkdirs = fileDir.mkdirs()
+            if (mkdirs) {
+                LogUtils.e("跟目录", "创建成功")
+            } else {
+                LogUtils.e("跟目录", "创建失败")
+            }
+        }
+        var outputStream: OutputStream? = null
+        try {
+            val pathName = System.currentTimeMillis().toString() + "_" + "test.jpeg"
+            val file = File(fileDir, pathName)
+            LogUtils.e("保存到的目录位置", file.absolutePath)
+            outputStream = FileOutputStream(file)
+            src.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            ToastUtils.show("保存到私有目录成功")
+            return file.absolutePath;
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            closeIO(outputStream)
+        }
+        return null
+    }
+
+
 
     private var pathUri: Uri? = null
     private var pathStr: String? = null
@@ -294,6 +279,148 @@ class FragmentA : BaseLazyFragmentForX() {
             cursor!!.close()
         }
     }
+
+    private fun savePhotoAlbum(src: Bitmap, fileDirPath: String, fileName: String) {
+        //Androidq以上
+        //var fileDirPath = Environment.DIRECTORY_PICTURES+ File.separator + "lqhPictures"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            var outputStream:OutputStream?=null
+            val contentValues = ContentValues()
+            contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+            contentValues.put(MediaStore.Images.Media.DESCRIPTION, fileName)
+            contentValues.put(MediaStore.Images.Media.TITLE, fileName)
+            contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, fileDirPath)
+            val contentResolver: ContentResolver = context!!.contentResolver
+            //拿到uri
+            val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            try {
+                outputStream = contentResolver.openOutputStream(uri!!)
+                src.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                outputStream?.flush()
+                ToastUtils.show("保存成功")
+            } catch (e: IOException) {
+                e.printStackTrace()
+                ToastUtils.show("保存失败")
+            }finally {
+                closeIO(outputStream)
+            }
+        } else {
+            try {
+                val fileDir = File(Environment.getExternalStorageDirectory().absolutePath, fileDirPath)
+                if (!fileDir.exists()) {
+                    fileDir.mkdirs()
+                }
+                val file = File(fileDir, fileName)
+                val outputStream = FileOutputStream(file)
+                src.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                outputStream.flush()
+                outputStream.close()
+                activity!!.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file))
+                )
+                ToastUtils.show("保存成功")
+            } catch (e: IOException) {
+                ToastUtils.show("保存失败")
+            }
+        }
+    }
+    //把本地图片地址存到图库,比如glide的图片缓存地址,这里先说下，这个地址是app的私有地址,因为如果这个地址是公有的，那么在q以下就直接通知刷新就行了
+    private fun savePhotoAlbum(srcFile: File?,fileDirPath:String,fileName: String?) {
+        if (srcFile == null || !srcFile.exists() || srcFile.length() == 0L) {
+            LogUtils.e("文件不存在")
+            return
+        }
+        //val fileDirPath = Environment.DIRECTORY_PICTURES + File.separator + "lqhPictures"
+        var pathName:String?=fileName
+        if (TextUtils.isEmpty(pathName)){
+            var nameSrc = srcFile.name
+            if (nameSrc.length > 200) {
+                //最长不能超过256
+                nameSrc = nameSrc.substring(200)
+            }
+            pathName = System.currentTimeMillis().toString() + "_" + nameSrc
+        }
+
+        //val pathName = System.currentTimeMillis().toString() + "_" + nameSrc
+        var os: OutputStream? = null
+        var its: InputStream? = null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val contentValues = ContentValues()
+            contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, pathName)
+            contentValues.put(MediaStore.Images.Media.DESCRIPTION, pathName)
+            contentValues.put(MediaStore.Images.Media.TITLE, pathName)
+            contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, fileDirPath)
+            //开始写入
+            try {
+                val contentResolver: ContentResolver = context!!.contentResolver
+                val uri = contentResolver.insert(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    contentValues
+                )
+                os = contentResolver.openOutputStream(uri!!)
+                its = BufferedInputStream(FileInputStream(srcFile))
+                var read = 0
+                val buffer = ByteArray(4096)
+                while (its.read(buffer).also { read = it } != -1) {
+                    os!!.write(buffer, 0, read)
+                }
+                os!!.flush()
+                ToastUtils.show("保存成功")
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } finally {
+                closeIO(os, its)
+            }
+        } else {
+            //不是Android q就复制到图片目录
+            val fileDir = File(Environment.getExternalStorageDirectory().absolutePath, fileDirPath)
+            if (!fileDir.exists()) {
+                val mkdirs = fileDir.mkdirs()
+                if (mkdirs) {
+                    LogUtils.e("跟目录", "创建成功")
+                } else {
+                    LogUtils.e("跟目录", "创建失败")
+                }
+            }
+            val filePath = File(fileDir, pathName)
+            try {
+                os = BufferedOutputStream(FileOutputStream(filePath))
+                its = BufferedInputStream(FileInputStream(srcFile))
+                var read = 0
+                val buffer = ByteArray(4096)
+                while (its.read(buffer).also { read = it } != -1) {
+                    os.write(buffer, 0, read)
+                }
+                os.flush()
+                context!!.sendBroadcast(
+                    Intent(
+                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                        Uri.fromFile(filePath)
+                    )
+                )
+                ToastUtils.show("保存成功")
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } finally {
+                closeIO(os, its)
+            }
+        }
+    }
+
+    fun closeIO(vararg closeables: Closeable?) {
+        if (closeables == null) return
+        for (closeable in closeables) {
+            if (closeable != null) {
+                try {
+                    closeable.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
 
     fun getBitmap(@DrawableRes resId: Int): Bitmap? {
         val drawable: Drawable = ContextCompat.getDrawable(context!!, resId) ?: return null

@@ -32,12 +32,30 @@
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_100"
         android:scaleType="centerCrop"/>
-    <TextView
-        android:id="@+id/tv_save"
-        android:text="存图片到本地"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"/>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_saveBitmapToPicture"
+            android:text="存图片到图库"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"/>
+        <TextView
+            android:id="@+id/tv_saveBitMapToLocal"
+            android:text="存图片到私有路径"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"/>
+        <TextView
+            android:id="@+id/tv_saveStrPicToLocal"
+            android:text="私有路径图片保存图库"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"/>
+    </LinearLayout>
+
 <!--    <com.google.android.material.tabs.TabLayout-->
 <!--        android:id="@+id/tab"-->
 <!--        android:layout_width="match_parent"-->
