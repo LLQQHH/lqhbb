@@ -1,4 +1,4 @@
-package com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab
+package com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab
 
 import android.content.Context
 import android.graphics.drawable.Drawable

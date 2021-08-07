@@ -154,6 +154,11 @@ class FragmentA : BaseLazyFragmentForX() {
                 }
                 Glide.with(context!!).load(pathStr).apply(requestOptions).into(iv_2)
             }
+            tv_saveBitmapToPicture.setOnClickListener(object :View.OnClickListener{
+                override fun onClick(v: View?) {
+
+                }
+            })
             tv_saveBitmapToPicture.setOnClickListener {
                 savePhotoAlbum(avatarBitmap!!,Environment.DIRECTORY_PICTURES+ File.separator + "lqhPictures", "${System.currentTimeMillis()}+test12.jpeg")
             }

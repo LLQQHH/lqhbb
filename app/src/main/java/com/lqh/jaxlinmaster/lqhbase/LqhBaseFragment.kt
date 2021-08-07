@@ -2,10 +2,14 @@ package com.lqh.jaxlinmaster.lqhbase
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.lqh.jaxlinmaster.constants.Constants
+import java.util.*
+import kotlin.math.pow
 
 /**
  * Created by Linqh on 2021/6/24.
@@ -50,7 +54,7 @@ abstract class LqhBaseFragment: Fragment() {
     open fun jumpToClass(activity: Class<*>?, bundle: Bundle?) {
         val intent = Intent(context, activity)
         if (bundle != null) {
-            intent.putExtra("bundle", bundle)
+            intent.putExtra(Constants.String.BUNDLE, bundle)
         }
         startActivity(intent)
     }
@@ -58,8 +62,15 @@ abstract class LqhBaseFragment: Fragment() {
     open fun jumpToClassForResult(activity: Class<*>?, bundle: Bundle?, requestCode: Int) {
         val intent = Intent(context, activity)
         if (bundle != null) {
-            intent.putExtra("bundle", bundle)
+            intent.putExtra(Constants.String.BUNDLE, bundle)
         }
         startActivityForResult(intent, requestCode)
+    }
+    //为了防止混乱用activity来做
+    open fun jumpToClassForResult(activity: Class<*>?, bundle: Bundle?,onActivityCallback: LqhBaseActivity.OnActivityCallback?) {
+        var parentActivity = getActivity()
+        if (parentActivity is LqhBaseActivity){
+            parentActivity.jumpToClassForResult(activity,bundle,onActivityCallback)
+        }
     }
 }

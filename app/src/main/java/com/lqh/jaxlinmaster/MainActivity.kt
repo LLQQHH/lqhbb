@@ -1,12 +1,8 @@
 package com.lqh.jaxlinmaster
 
-import android.content.ContentUris
-import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
-import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
@@ -20,8 +16,8 @@ import com.lqh.*
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseActivity
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
-import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomItemView
-import com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhBottomTab
+import com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
+import com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomTab
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File

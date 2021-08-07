@@ -8,5 +8,29 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bbl_999999">#999999</color>
-    <color name="bbl_ff0000">#ff0000</color>
+
+
+    <!--    这个一般是输入后的文字颜色-->
+    <color name="title_color">#222326</color>
+    <!--    这个一般是提示文字的颜色-->
+    <color name="hint_color">#a9abad</color>
+    <!--    subtitle的颜色-->
+    <color name="sub_title_color">#737575</color>
+    <!--    小分割线-->
+    <color name="line_color">#d1d4d9</color>
+    <!--    大分割线-->
+    <color name="line_big_color">#f2f4f5</color>
+    <color name="add_color">#f39700</color>
+
+    <color name="red_beautiful_color">#dd3838</color>
+    <color name="green_beautiful_color">#259B24</color>
+    <color name="blue_beautiful_color">#137FFA</color>
+    <color name="yellow_beautiful_color">#ddca38</color>
+
+    <color name="red_color">#ff0000</color>
+    <color name="green_color">#00ff00</color>
+    <color name="blue_color">#0000ff</color>
+    <color name="cyan_color">#00ffff</color>
+    <color name="yellow_color">#ffff00</color>
+    <color name="white_color">#ffffff</color>
 </resources>

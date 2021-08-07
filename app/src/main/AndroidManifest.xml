@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lqh.jaxlinmaster">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 这里com.xiaomi.mipushdemo改成app的包名 -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 读取联系人权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 悬浮窗权限 -->
@@ -32,9 +33,9 @@
     <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
     <uses-permission android:name="cn.baiduyo.baiduyo.push.permission.MESSAGE" /> <!-- 兼容 Flyme3 的权限配置 -->
     <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
-
     <uses-permission android:name="cn.baiduyo.baiduyo.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+
     <application
         android:name="com.lqh.LqhAppApplication"
         android:allowBackup="true"
@@ -43,7 +44,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JaxlinMaster">
-        <activity android:name=".homepager.DialogAllActivity"></activity>
+        <activity android:name=".homepager.StateActivity"></activity>
+        <activity android:name=".homepager.DialogAllActivity" />
         <activity android:name=".lqhtest.LqhTestActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -51,4 +51,9 @@
         <attr name="unr_unNumber" format="integer"/>
         <attr name="unr_minNumber" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="LqhStateView">
+        <attr name="Lqh_emptyResource" format="reference" />
+        <attr name="Lqh_retryResource" format="reference" />
+        <attr name="Lqh_loadingResource" format="reference" />
+    </declare-styleable>
 </resources>

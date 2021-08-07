@@ -1,4 +1,4 @@
-package com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab
+package com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab
 
 import android.content.Context
 import android.util.AttributeSet
@@ -44,7 +44,7 @@ class LqhBottomTab @JvmOverloads constructor(
         )
         var textColorSelected = ta.getColor(
             R.styleable.LqhBottomTab_lqhtab_item_textColorSelected,
-            UIUtils.getColor(mContext, R.color.bbl_ff0000)
+            UIUtils.getColor(mContext, R.color.red_color)
         )
         var textSizeNormal = ta.getDimensionPixelSize(
             R.styleable.LqhBottomTab_lqhtab_item_textSizeNormal,

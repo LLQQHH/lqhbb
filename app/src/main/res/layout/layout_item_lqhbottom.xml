@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             tools:src="@drawable/ic_main_msg_normalcy"
             android:layout_marginTop="@dimen/dp_2"/>
-        <com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab.LqhUnreadView
+        <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhUnreadView
             android:includeFontPadding="false"
             android:layout_toRightOf="@+id/iv_icon"
             android:layout_marginStart="-2dp"

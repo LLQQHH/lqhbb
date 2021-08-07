@@ -1,4 +1,4 @@
-package com.lqh.jaxlinmaster.lqhcommon.lqhbottomtab
+package com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab
 
 import androidx.viewpager2.widget.ViewPager2
 
