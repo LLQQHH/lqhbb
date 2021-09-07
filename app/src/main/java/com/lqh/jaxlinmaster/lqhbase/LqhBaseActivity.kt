@@ -4,10 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.SparseArray
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.constants.Constants
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.KeyboardUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StatusBarUtil
 import java.util.*
 import kotlin.math.pow
 
@@ -24,10 +27,20 @@ abstract class LqhBaseActivity:AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         beforeOnCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
+        beforeContentView()
         setContentView(getLayoutId())
+        initStatusBar()
         bind = ButterKnife.bind(this)
         initView(savedInstanceState)
         initData(savedInstanceState)
+    }
+
+    open fun beforeContentView() {
+
+    }
+
+    open fun initStatusBar() {
+        StatusBarUtil.setStatusBarColor(this,ContextCompat.getColor(this,R.color.red_beautiful_color))
     }
 
     abstract fun initView(savedInstanceState: Bundle?)

@@ -1,100 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.drawerlayout.widget.DrawerLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:clipChildren="false">
-<!--    <androidx.viewpager.widget.ViewPager-->
-<!--        android:visibility="visible"-->
-<!--        android:id="@+id/viewpager"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_above="@+id/lin_lqhBottomTab"-->
-<!--        />-->
-    <FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/lin_lqhBottomTab">
-        <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-<!--        <androidx.viewpager2.widget.ViewPager2-->
-<!--            android:visibility="visible"-->
-<!--            android:id="@+id/viewpager2"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            />-->
-<!--        <com.zhpan.indicator.IndicatorView-->
-<!--            android:id="@+id/indicator_view"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="bottom"-->
-<!--            android:layout_margin="@dimen/dp_10"-->
-<!--            android:visibility="gone"/>-->
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/lin_lqhBottomTab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        tools:context=".MainActivity"
         android:orientation="vertical"
-        android:layout_alignParentBottom="true"
         android:clipChildren="false">
-        <View
+        <!--    <androidx.viewpager.widget.ViewPager-->
+        <!--        android:visibility="visible"-->
+        <!--        android:id="@+id/viewpager"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="match_parent"-->
+        <!--        android:layout_above="@+id/lin_lqhBottomTab"-->
+        <!--        />-->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:background="@color/bbl_999999"/>
-        <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomTab
-            android:background="@color/white"
-            android:id="@+id/lqhBottomTab"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/lin_lqhBottomTab">
+            <FrameLayout
+                android:id="@+id/frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <!--        <androidx.viewpager2.widget.ViewPager2-->
+            <!--            android:visibility="visible"-->
+            <!--            android:id="@+id/viewpager2"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="match_parent"-->
+            <!--            />-->
+            <!--        <com.zhpan.indicator.IndicatorView-->
+            <!--            android:id="@+id/indicator_view"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_gravity="bottom"-->
+            <!--            android:layout_margin="@dimen/dp_10"-->
+            <!--            android:visibility="gone"/>-->
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/lin_lqhBottomTab"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
-            android:orientation="horizontal"
-            android:clipChildren="false"
-            >
-            <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                app:lqhitem_itemText="测试1"
-                app:lqhitem_textColorSelected="@android:color/holo_blue_bright"
-                app:lqhitem_iconNormal="@drawable/ic_main_msg_normalcy"
-                app:lqhitem_iconSelected="@drawable/ic_main_msg_pitchon"
-                />
-            <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
-                app:lqhitem_iconNormal="@drawable/ic_main_address_normalcy"
-                app:lqhitem_iconSelected="@drawable/ic_main_address_pitchon"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:lqhitem_itemText="测试2"
-                app:lqhitem_customLayoutId="@layout/layout_item_lqhbottom_custom_in"
-                android:gravity="center"
-                />
-            <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:clipChildren="false">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="@color/bbl_999999"/>
+            <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomTab
+                android:background="@color/white"
+                android:id="@+id/lqhBottomTab"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
                 android:clipChildren="false"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:lqhitem_customLayoutId="@layout/layout_item_lqhbottom_custom_out"
-                android:gravity="center"
-                />
-            <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
-                app:lqhitem_iconNormal="@drawable/ic_main_address_normalcy"
-                app:lqhitem_iconSelected="@drawable/ic_main_address_pitchon"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:lqhitem_itemText="测试3"
-                android:gravity="center"
-                />
-        </com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomTab>
+                >
+                <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    app:lqhitem_itemText="测试1"
+                    app:lqhitem_textColorSelected="@android:color/holo_blue_bright"
+                    app:lqhitem_iconNormal="@drawable/ic_main_msg_normalcy"
+                    app:lqhitem_iconSelected="@drawable/ic_main_msg_pitchon"
+                    />
+                <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
+                    app:lqhitem_iconNormal="@drawable/ic_main_address_normalcy"
+                    app:lqhitem_iconSelected="@drawable/ic_main_address_pitchon"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:lqhitem_itemText="测试2"
+                    app:lqhitem_customLayoutId="@layout/layout_item_lqhbottom_custom_in"
+                    android:gravity="center"
+                    />
+                <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
+                    android:clipChildren="false"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:lqhitem_customLayoutId="@layout/layout_item_lqhbottom_custom_out"
+                    android:gravity="center"
+                    />
+                <com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
+                    app:lqhitem_iconNormal="@drawable/ic_main_address_normalcy"
+                    app:lqhitem_iconSelected="@drawable/ic_main_address_pitchon"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:lqhitem_itemText="测试3"
+                    android:gravity="center"
+                    />
+            </com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomTab>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/dp_20"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red_beautiful_color"
+                android:text="我是测试"/>
+        </LinearLayout>
     </LinearLayout>
 
-
-</RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

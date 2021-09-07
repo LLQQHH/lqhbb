@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.core.util.forEach
+import androidx.fragment.app.Fragment
 import com.lqh.jaxlinmaster.R
 
 /**
@@ -95,6 +96,14 @@ open class LqhStateView @JvmOverloads constructor(
         @JvmStatic
         fun inject(viewId: Int, activity: Activity): LqhStateView {
             val oldView = activity.findViewById<View?>(viewId)
+            if (oldView != null) {
+                return inject(oldView)
+            }
+            throw ClassCastException("viewId must be available")
+        }
+        @JvmStatic
+        fun inject(viewId: Int, fragment: Fragment): LqhStateView {
+            val oldView = fragment.view?.findViewById<View?>(viewId)
             if (oldView != null) {
                 return inject(oldView)
             }

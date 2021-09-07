@@ -11,5 +11,6 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.RegexUtil;
 public class Lqhtest {
     public static void main(String[] args) {
        System.out.println("0.0是不是float:"+RegexUtil.isFloat("0.0"));
+
     }
 }

@@ -160,40 +160,4 @@ public final class KeyboardUtils {
             KeyboardUtils.showSoftInput(view);
         }
     }
-
-
-    /**
-     * Fix the leaks of soft input.
-     *
-     * @param activity The activity.
-     */
-    public static void fixSoftInputLeaks(@NonNull final Activity activity) {
-        fixSoftInputLeaks(activity.getWindow());
-    }
-
-    /**
-     * Fix the leaks of soft input.
-     *
-     * @param window The window.
-     */
-    public static void fixSoftInputLeaks(@NonNull final Window window) {
-        InputMethodManager imm =
-                (InputMethodManager) Utils.getApp().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm == null) return;
-        String[] leakViews = new String[]{"mLastSrvView", "mCurRootView", "mServedView", "mNextServedView"};
-        for (String leakView : leakViews) {
-            try {
-                Field leakViewField = InputMethodManager.class.getDeclaredField(leakView);
-                if (!leakViewField.isAccessible()) {
-                    leakViewField.setAccessible(true);
-                }
-                Object obj = leakViewField.get(imm);
-                if (!(obj instanceof View)) continue;
-                View view = (View) obj;
-                if (view.getRootView() == window.getDecorView().getRootView()) {
-                    leakViewField.set(imm, null);
-                }
-            } catch (Throwable ignore) {/**/}
-        }
-    }
 }

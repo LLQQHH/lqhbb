@@ -1,11 +1,17 @@
 package com.lqh.jaxlinmaster
 
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.Gravity
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -16,9 +22,10 @@ import com.lqh.*
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseActivity
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StatusBarUtil
 import com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
 import com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomTab
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.net.URI
@@ -36,6 +43,7 @@ class MainActivity : LqhBaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView(savedInstanceState: Bundle?) {
+        StatusBarUtil.setStatusBarLightMode(this,true)
         LogUtils.e("当前activity", "onCreate")
         LogUtils.e("目录外部公有getExternalStorageDirectory:",Environment.getExternalStorageDirectory().absolutePath)
         LogUtils.e("目录外部公有getExternalStoragePublicDirectory_PICTURES:",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath)
@@ -266,5 +274,14 @@ class MainActivity : LqhBaseActivity() {
         LogUtils.e("当前activity", "onRestoreInstanceState");
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
+    override fun initStatusBar() {
+
+    }
+
+    override fun finish() {
+        super.finish()
+       //overridePendingTransition(R.anim.test_in,R.anim.test_out)
+    }
 
 }

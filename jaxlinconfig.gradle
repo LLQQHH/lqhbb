@@ -1,9 +1,9 @@
 ext{
     jaxandroid=[
-            compileSdkVersion  :  29,
-            buildToolsVersion  :  '29',
-            minSdkVersion      :   20,
-            targetSdkVersion   :  29,
+            compileSdkVersion  :  30,
+            buildToolsVersion  :  '30',
+            minSdkVersion      :   19,
+            targetSdkVersion   :  30,
             versionReleaseCode         :  1,
             versionDebugCode         :  1,
             versionReleaseName         :  "1.0.1",

@@ -1,0 +1,91 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="appTheme" parent="Theme.AppCompat.Light.NoActionBar">
+<!--        <item name="windowNoTitle">true</item>-->
+        <!-- Primary brand color. -->
+<!--应用的主要色调,actionBar默认使用该颜色,Toolbar导航栏的底色-->
+<!--        <item name="colorPrimary">@color/purple_500</item>-->
+<!--        应用的主要暗色调,statusBarColor默认使用该颜色-->
+<!--        <item name="colorPrimaryDark">@color/red_beautiful_color</item>-->
+        <!--  状态栏颜色,默认使用colorPrimaryDark -->
+<!--        <item name="android:statusBarColor" tools:targetApi="l">@color/red_beautiful_color</item>-->
+        <!-- Secondary brand color. -->
+<!--        这个会改变progressBar的圈圈的颜色,没设置这个的话colorSecondary来决定-->
+<!--        <item name="colorAccent">@color/red_beautiful_color</item>-->
+<!--        <item name="android:windowBackground">@color/c_f2f4f5</item>-->
+    </style>
+    <!--自定义布局的dialog-->
+    <style name="CommonDialog" parent="android:style/Theme.Dialog">
+        <!-- 背景颜色及透明程度 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 是否有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 是否浮现在activity之上,会造成macth_parent失效-->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否变暗 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFrame">@null</item>
+    </style>
+
+    <style name="LoadDialog" parent="Theme.AppCompat.Dialog">
+        <!--        &lt;!&ndash; 背景颜色及透明程度 &ndash;&gt;-->
+        <!--        <item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--        &lt;!&ndash; 是否有标题 &ndash;&gt;-->
+        <!--        <item name="android:windowNoTitle">true</item>-->
+        <!--        &lt;!&ndash; 是否变暗 &ndash;&gt;-->
+        <!--        <item name="android:backgroundDimEnabled">false</item>-->
+        <!-- 背景颜色及透明程度 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 是否有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 是否浮现在activity之上,会造成macth_parent失效-->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否变暗 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFrame">@null</item>
+
+    </style>
+    <style name="theme_Dialog_From_Bottom" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/dialog_animation_bottom</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="dialog_animation_bottom" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/push_up_up</item>
+        <item name="android:windowExitAnimation">@anim/push_up_down</item>
+    </style>
+    <style name="OpenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--设置窗口不透明 -->
+<!--        <item name="android:windowBackground"></item>-->
+<!--        <item name="android:windowIsTranslucent">false</item>-->
+<!--        &lt;!&ndash; 设置window过度效果 禁用窗口的预览动画 &ndash;&gt;-->
+<!--        <item name="android:windowDisablePreview">false</item>-->
+<!--&lt;!&ndash;        还要这个&ndash;&gt;-->
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--&lt;!&ndash;        设置全屏&ndash;&gt;-->
+<!--        <item name="android:windowFullscreen">true</item>-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        <item name="android:windowActionBar">false</item>-->
+<!--        &lt;!&ndash; Android 21 异性屏适配 可以达到全面屏的效果 &ndash;&gt;-->
+<!--        &lt;!&ndash; 设置statusBarColor 为透明&ndash;&gt;-->
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>-->
+<!--        &lt;!&ndash; 在5.0后，增加了一个windowDrawsSystemBarBackgrounds属性，用来标志此窗口是否负责绘制系统栏背景，-->
+<!--              我们把它设成false，这样当它绘制windowBackground的时候，就会在NavigationBar之上。&ndash;&gt;-->
+<!--        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">false</item>-->
+<!--        &lt;!&ndash; Android P 异性屏适配 可以达到全面屏的效果 &ndash;&gt;-->
+<!--        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="p">shortEdges</item>-->
+    </style>
+    <style name="ImageTranslucentTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- 设置statusBarColor 为透明-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>

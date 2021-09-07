@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.lqh.jaxlinmaster.R
+import com.lqh.jaxlinmaster.homepager.StateActivity
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.ToastUtils
@@ -137,7 +138,7 @@ class FragmentA : BaseLazyFragmentForX() {
         if (IsFirstVisible) {
             avatarBitmap = getBitmap(R.drawable.default_avatar)
 
-            queryImages()
+            //queryImages()
             if (pathUri != null) {
                 var requestOptions = RequestOptions().let {
                     it.placeholder(R.drawable.default_avatar)
@@ -170,6 +171,11 @@ class FragmentA : BaseLazyFragmentForX() {
                     savePhotoAlbum(File(savePhotoPrivateFile!!),Environment.DIRECTORY_PICTURES+ File.separator + "lqhPictures",null)
                 }
 
+            }
+            tv_go.setOnClickListener {
+                var intent=Intent(activity, StateActivity::class.java)
+                startActivity(intent)
+                //activity?.overridePendingTransition(R.anim.anim_activity_translate_to_in,R.anim.anim_activity_translate_to_out)
             }
         }
     }
