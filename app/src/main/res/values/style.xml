@@ -27,6 +27,19 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowFrame">@null</item>
     </style>
+    <style name="Theme_Dialog_Scale" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/dialog_animationalpha_scale</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="dialog_animationalpha_scale" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/scale_in</item>
+        <item name="android:windowExitAnimation">@anim/scale_out</item>
+    </style>
 
     <style name="LoadDialog" parent="Theme.AppCompat.Dialog">
         <!--        &lt;!&ndash; 背景颜色及透明程度 &ndash;&gt;-->
@@ -47,6 +60,9 @@
         <item name="android:windowFrame">@null</item>
 
     </style>
+<!--    <item name="android:windowIsFloating">true</item> 居然会导致dialog无法设置导航栏颜色，
+而且会影响布局MATCH_PARENT,无法铺满，因为源码里面把window设置成wrap！得手动设置宽高lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+lp.height = WindowManager.LayoutParams.MATCH_PARENT;,如果为false,则会为match,但是可能导致点击外面无法关闭-->
     <style name="theme_Dialog_From_Bottom" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -55,6 +71,7 @@
         <item name="android:windowAnimationStyle">@style/dialog_animation_bottom</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="dialogPreferredPadding">0dp</item>
     </style>
     <style name="dialog_animation_bottom" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/push_up_up</item>

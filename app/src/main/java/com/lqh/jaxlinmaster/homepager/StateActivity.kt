@@ -1,6 +1,7 @@
 package com.lqh.jaxlinmaster.homepager
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,10 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StatusBarUtil
 import com.lqh.jaxlinmaster.lqhtest.LqhTestActivity
 import kotlinx.android.synthetic.main.activity_state.*
+import android.view.WindowManager
+import com.lqh.jaxlinmaster.dialog.CenterDialog
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.ScreenUtil
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.SizeUtils
 
 
 class StateActivity : LqhBaseActivity() {
@@ -33,20 +38,54 @@ class StateActivity : LqhBaseActivity() {
 
         LogUtils.e("当前systemUiVisibility",""+window.decorView.systemUiVisibility)
         tv_showFull.setOnClickListener {
-            StatusBarUtil.setFullScreenReal(this,null)
+            StatusBarUtil.setFullScreenReal(this,null,false)
         }
         tv_showStatusBarIn.setOnClickListener {
-            StatusBarUtil.setStatusBarColorForOffset(this,ContextCompat.getColor(this,R.color.teal_200),null,true)
+            val window = getWindow()
+            window.statusBarColor =ContextCompat.getColor(this, R.color.green_color)
+            val option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            val vis = window.decorView.systemUiVisibility
+            val total=vis or option
+            window.decorView.systemUiVisibility = total
+            //StatusBarUtil.setStatusBarColorForOffset(this,ContextCompat.getColor(this,R.color.teal_200),null,true)
             LogUtils.e("当前systemUiVisibility1",""+window.decorView.systemUiVisibility)
         }
         tv_showStatusBarNotIn.setOnClickListener {
-            StatusBarUtil.setStatusBarColor(this,ContextCompat.getColor(this,R.color.green_beautiful_color))
-            StatusBarUtil.hideCreateStatusBarView(this)
+            val window = getWindow()
+            //去除statusbar不填充的标志
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor =ContextCompat.getColor(this, R.color.green_beautiful_color)
+            val option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            val vis = window.decorView.systemUiVisibility
+            val total=vis and option.inv()
+
+            window.getDecorView().setSystemUiVisibility(total)
+
+//            StatusBarUtil.setStatusBarColor(this,ContextCompat.getColor(this,R.color.green_beautiful_color))
+//            StatusBarUtil.hideCreateStatusBarView(this)
             LogUtils.e("当前systemUiVisibility2",""+window.decorView.systemUiVisibility)
         }
-        tv_showNav.setOnClickListener {
-            StatusBarUtil.setNavBarColor(this,ContextCompat.getColor(this,R.color.blue_beautiful_color),false)
+        tv_showNavIn.setOnClickListener {
+            val option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            window.navigationBarColor=ContextCompat.getColor(this,R.color.cyan_color)
+            val vis = window.decorView.systemUiVisibility
+            val total=vis or option
+            window.decorView.systemUiVisibility = total
             LogUtils.e("当前systemUiVisibility3",""+window.decorView.systemUiVisibility)
+        }
+        tv_showNaNotInv.setOnClickListener {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.navigationBarColor=ContextCompat.getColor(this,R.color.blue_beautiful_color)
+            val option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            val vis = window.decorView.systemUiVisibility
+            val total=vis and option.inv()
+            window.decorView.systemUiVisibility =total
+
+            LogUtils.e("当前systemUiVisibility4",""+window.decorView.systemUiVisibility)
+        }
+        tv_showDialog.setOnClickListener {
+            var dialog=CenterDialog(this,R.layout.dialog_test,R.style.theme_Dialog_From_Bottom)
+            dialog.show()
         }
     }
 
@@ -55,7 +94,8 @@ class StateActivity : LqhBaseActivity() {
             var intent=Intent(this,LqhTestActivity::class.java)
             //val toBundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle()
             ActivityCompat.startActivity(this,intent,null)
-            overridePendingTransition(R.anim.anim_activity_translate_to_in,R.anim.anim_activity_translate_y_no_anim)
+            overridePendingTransition(com.lqh.jaxlinmaster.R.anim.anim_activity_translate_to_in,
+                com.lqh.jaxlinmaster.R.anim.anim_activity_translate_y_no_anim)
         }
     }
     override fun beforeContentView() {
@@ -74,7 +114,7 @@ class StateActivity : LqhBaseActivity() {
 //        getWindow().setReturnTransition(returnTransition)
     }
 
-    override fun getLayoutId(): Int=R.layout.activity_state
+    override fun getLayoutId(): Int= com.lqh.jaxlinmaster.R.layout.activity_state
     override fun finish() {
         super.finish()
         //overridePendingTransition(R.anim.anim_activity_translate_back_in,R.anim.anim_activity_translate_back_out)
@@ -82,6 +122,11 @@ class StateActivity : LqhBaseActivity() {
 
     @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
     override fun initStatusBar() {
+//        val option = View.INVISIBLE
+//        val vis = window.decorView.systemUiVisibility
+//        window.decorView.systemUiVisibility = option or vis
+//        StatusBarUtil.setStatusBarColorForOffset(this,ContextCompat.getColor(this,R.color.red_color),null)
+//        StatusBarUtil.setNavBarColor(this,ContextCompat.getColor(this,R.color.transparent_color),true)
     //StatusBarUtil.setStatusBarColor(this,ContextCompat.getColor(this,R.color.red_color))
 //        window.decorView.setOnApplyWindowInsetsListener(object: View.OnApplyWindowInsetsListener{
 //            override fun onApplyWindowInsets(v: View, insets: WindowInsets): WindowInsets {

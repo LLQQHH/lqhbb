@@ -3,9 +3,11 @@ package com.lqh.jaxlinmaster.lqhcommon.lqhutils;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -18,13 +20,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 /**
  * Created by Linqh on 2021/8/10.
  *
- * @describe:说明一下为什么我要用
+ * @describe:
  */
 //@CreateUidAnnotation(uid = "10100")
 public class StatusBarUtil {
     //这个是库里面自动添加的和状态栏一样高的View的Tag
     private static final String TAG_STATUS_BAR = "TAG_STATUS_BAR";
-    //这个是标记自己添加的和状态栏一样高的View
+    //这个是标记自己添加的和状态栏一样高的View,0为padding，1为margin
     private static final int TAG_KEY_HAVE_SET_OFFSET = -123;
 
     public static void setStatusBarColor(Activity activity, @ColorInt int color) {
@@ -39,7 +41,6 @@ public class StatusBarUtil {
      * @param isDecor  和状态栏大小一样的View的父布局在哪里
      */
     public static void setStatusBarColor(Activity activity, @ColorInt int color, boolean isDecor) {
-        activity.getWindow().getDecorView().setSystemUiVisibility(0);
         fitsNotchScreen(activity);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -82,7 +83,7 @@ public class StatusBarUtil {
         setViewOffsetStatusBarHeight(needOffsetView, isPadding);
     }
 
-    /**
+    /**现在暂时只做到5.0，而且不添加View
      * @param activity
      * @param color
      * @param isInvade 是否要入侵到导航栏
@@ -94,15 +95,15 @@ public class StatusBarUtil {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setNavigationBarColor(color);
-//            int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION ;
-//            int vis = window.getDecorView().getSystemUiVisibility();
-//            window.getDecorView().setSystemUiVisibility(option | vis);
-//            if (isInvade) {
-//                window.getDecorView().setSystemUiVisibility(option | vis);
-//            } else {
-//                window.getDecorView().setSystemUiVisibility(option & ~vis);
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION ;
+            int vis = window.getDecorView().getSystemUiVisibility();
+            if (isInvade) {
+                //发现这个会导致StatusBar也跟着入侵
+                window.getDecorView().setSystemUiVisibility(option | vis);
+            }
+//            else {
+//                window.getDecorView().setSystemUiVisibility(option & (~vis));
 //            }
-
         }
     }
 
@@ -235,7 +236,7 @@ public class StatusBarUtil {
      * @param activity
      * @param needOffsetView
      */
-    public static void setFullScreenReal(Activity activity, View needOffsetView) {
+    public static void setFullScreenReal(Activity activity, View needOffsetView,boolean isPadding) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
         fitsNotchScreen(activity);
         Window window = activity.getWindow();
@@ -254,7 +255,7 @@ public class StatusBarUtil {
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
         hideCreateStatusBarView(activity);
-        setViewOffsetStatusBarHeight(needOffsetView, true);
+        setViewOffsetStatusBarHeight(needOffsetView, isPadding);
     }
 
     /**
@@ -305,7 +306,7 @@ public class StatusBarUtil {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
         if (needOffsetView != null) {
             Object haveSetOffset = needOffsetView.getTag(TAG_KEY_HAVE_SET_OFFSET);
-            if (haveSetOffset != null && (Boolean) haveSetOffset) {
+            if (haveSetOffset != null &&( (Integer) haveSetOffset==0|| (Integer) haveSetOffset==1)) {
                 return;
             }
             int statusBarHeight = getStatusBarHeight();
@@ -315,12 +316,12 @@ public class StatusBarUtil {
                 int paddingRight = needOffsetView.getPaddingRight();
                 int paddingBottom = needOffsetView.getPaddingBottom();
                 needOffsetView.setPadding(paddingLeft, paddingTop + statusBarHeight, paddingRight, paddingBottom);
-                needOffsetView.setTag(TAG_KEY_HAVE_SET_OFFSET, true);
+                needOffsetView.setTag(TAG_KEY_HAVE_SET_OFFSET, 0);
             } else {
                 ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) needOffsetView.getLayoutParams();
                 layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + statusBarHeight,
                         layoutParams.rightMargin, layoutParams.bottomMargin);
-                needOffsetView.setTag(TAG_KEY_HAVE_SET_OFFSET, true);
+                needOffsetView.setTag(TAG_KEY_HAVE_SET_OFFSET, 1);
             }
         }
     }
@@ -436,5 +437,123 @@ public class StatusBarUtil {
     public static int getColorWithAlpha(@ColorInt int baseColor,
                                         @FloatRange(from = 0, to = 1) float alpha) {
         return (baseColor & 0x00ffffff) | ((int) (alpha * 255.0f + 0.5f) << 24);
+    }
+    public static class LqhSoftHideKeyBoardUtil {
+        public static void assistActivity(Activity activity) {
+            new LqhSoftHideKeyBoardUtil(activity);
+        }
+
+        //跟视图
+        private ViewGroup rootView;
+        private View changeView;
+        private int initPaddingLeft;
+        private int initPaddingTop;
+        private int initPaddingRight;
+        private int initPaddingBottom;
+        private int lastVisiableRootLayoutHeight;//纪录上一次的可见布局
+        private KeyBoardChangeListener keyBoardChangeListener;
+
+        public void setKeyBoardChangeListener(KeyBoardChangeListener keyBoardChangeListener) {
+            this.keyBoardChangeListener = keyBoardChangeListener;
+        }
+        public interface KeyBoardChangeListener{
+            void keyBoardChange(boolean isShowKeyboard,int keyboardHeight);
+        }
+
+        private LqhSoftHideKeyBoardUtil(Activity activity) {
+            this(activity, null);
+        }
+
+        private LqhSoftHideKeyBoardUtil(Activity activity, View changeView) {
+            //找到Activity的contentView，它其实是一个DecorView的子View,它是FrameLayout
+            rootView = (activity.getWindow().getDecorView()).findViewById(android.R.id.content);
+            this.changeView = changeView;
+            if (this.changeView != null) {
+                initPaddingLeft = this.changeView.getPaddingLeft();
+                initPaddingTop = this.changeView.getPaddingTop();
+                initPaddingRight = this.changeView.getPaddingRight();
+                initPaddingBottom = this.changeView.getPaddingBottom();
+            }
+            rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (!checkFitsSystemWindows(rootView)) {
+                        int currentVisibleRootLayoutHeight = computeCanVisibleHeight();
+                        if (lastVisiableRootLayoutHeight != currentVisibleRootLayoutHeight) {
+                            //获取rootView高度
+                            int rootLayoutHeight = rootView.getHeight();
+                            //取差值得到差值,认为是弹起键盘的高度
+                            int keyBoardHeight = rootLayoutHeight - currentVisibleRootLayoutHeight;
+                            if (keyBoardHeight > rootLayoutHeight / 4) {
+                                if (changeView != null) {
+                                    changeView.setPadding(
+                                            initPaddingLeft,
+                                            initPaddingTop,
+                                            initPaddingRight,
+                                            keyBoardHeight + initPaddingBottom
+                                    );
+                                }
+                                if(keyBoardChangeListener!=null){
+                                    keyBoardChangeListener.keyBoardChange(true,keyBoardHeight);
+                                }
+                            } else {
+                                if (changeView != null) {
+                                    changeView.setPadding(
+                                            initPaddingLeft,
+                                            initPaddingTop,
+                                            initPaddingRight,
+                                            initPaddingBottom
+                                    );
+                                }
+                                if(keyBoardChangeListener!=null){
+                                    keyBoardChangeListener.keyBoardChange(false,0);
+                                }
+                            }
+
+                        }
+                        lastVisiableRootLayoutHeight = currentVisibleRootLayoutHeight;
+                    }
+                }
+            });
+        }
+
+
+        private int computeCanVisibleHeight() {
+            Rect r = new Rect();
+            rootView.getWindowVisibleDisplayFrame(r);
+            // rect.top其实是状态栏的高度，如果是全屏主题，直接 r.top就是0所以直接return rect.bottom就可以了
+            return r.bottom - r.top; // r.height()
+        }
+
+        /**
+         * 检查布局根节点是否使用了android:fitsSystemWindows="true"属性
+         * Check fits system windows boolean.
+         *
+         * @param view the view
+         * @return the boolean
+         */
+        public static boolean checkFitsSystemWindows(View view) {
+            if (view == null) {
+                return false;
+            }
+            if (view.getFitsSystemWindows()) {
+                return true;
+            }
+            if (view instanceof ViewGroup) {
+                ViewGroup viewGroup = (ViewGroup) view;
+                for (int i = 0, count = viewGroup.getChildCount(); i < count; i++) {
+                    View childView = viewGroup.getChildAt(i);
+                    if (childView instanceof DrawerLayout) {
+                        if (checkFitsSystemWindows(childView)) {
+                            return true;
+                        }
+                    }
+                    if (childView.getFitsSystemWindows()) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

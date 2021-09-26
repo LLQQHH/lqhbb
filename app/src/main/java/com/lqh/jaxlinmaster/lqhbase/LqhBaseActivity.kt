@@ -40,7 +40,7 @@ abstract class LqhBaseActivity:AppCompatActivity(){
     }
 
     open fun initStatusBar() {
-        StatusBarUtil.setStatusBarColor(this,ContextCompat.getColor(this,R.color.red_beautiful_color))
+        //StatusBarUtil.setStatusBarColor(this,ContextCompat.getColor(this,R.color.red_beautiful_color))
     }
 
     abstract fun initView(savedInstanceState: Bundle?)

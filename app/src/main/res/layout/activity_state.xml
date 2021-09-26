@@ -56,8 +56,26 @@
                 />
             <TextView
                 android:padding="@dimen/dp_10"
-                android:id="@+id/tv_showNav"
-                android:text="点我设定导航栏"
+                android:id="@+id/tv_showNavIn"
+                android:text="点我设定导航栏入侵"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/red_beautiful_color"
+                />
+            <TextView
+                android:padding="@dimen/dp_10"
+                android:id="@+id/tv_showNaNotInv"
+                android:text="点我设定导航栏不入侵"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_20"
+                android:textColor="@color/red_beautiful_color"
+                />
+            <TextView
+                android:padding="@dimen/dp_10"
+                android:id="@+id/tv_showDialog"
+                android:text="点我展示对话框"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_20"
