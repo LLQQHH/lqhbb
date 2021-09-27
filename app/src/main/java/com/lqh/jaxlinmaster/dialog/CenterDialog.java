@@ -110,19 +110,12 @@ public class CenterDialog extends Dialog {
                 LogUtils.e("间距左Stable",""+insets.getStableInsetLeft());
                 LogUtils.e("间距右",""+insets.getSystemWindowInsetRight());
                 LogUtils.e("间距右Stable",""+insets.getStableInsetRight());
+                WindowManager.LayoutParams  layoutParams = (WindowManager.LayoutParams) window.getDecorView().getLayoutParams();
+                LogUtils.e("layoutParams_horizontalMargin",""+layoutParams.horizontalMargin);
+                LogUtils.e("layoutParams_width",""+layoutParams.width);
                 return insets;
             }
         });
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                reflectValue(window.getDecorView(),"mFloatingInsets");
-                reflectValue(window.getDecorView(),"mDrawingBounds");
-                reflectValue(window.getDecorView(),"mBackgroundPadding");
-                reflectValue(window.getDecorView(),"mFramePadding");
-                reflectValue(window.getDecorView(),"mFrameOffsets");
-            }
-        },2000);
 
 // 设置页面全屏显示
 //        final View decorView = window.getDecorView();
@@ -213,19 +206,6 @@ public class CenterDialog extends Dialog {
         if (childView != null) {
             childView.setEnabled(enable);
             childView.setAlpha(enable ? enableAlpha : unableAlpha);
-        }
-    }
-    private void reflectValue(View decor ,String filedName){
-
-        LogUtils.e("decor","=========="+decor.getClass().getName());
-        try {
-            Field filed=decor.getClass().getDeclaredField(filedName);
-            filed.setAccessible(true);
-            Rect rect= (Rect)(filed.get(decor));
-            LogUtils.e("filedName"+filedName,"=========="+rect.toShortString());
-        } catch (Exception e) {
-            LogUtils.e("filedName"+filedName+"Err","=========="+e.toString());
-            e.printStackTrace();
         }
     }
 }

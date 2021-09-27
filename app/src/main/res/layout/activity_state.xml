@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_below="@+id/tv_top">
+            android:layout_below="@+id/tv_top"
+            android:id="@+id/lin_top">
             <TextView
                 android:padding="@dimen/dp_10"
                 android:id="@+id/tv_showFull"
@@ -83,7 +84,7 @@
                 />
         </LinearLayout>
         <TextView
-            android:layout_centerInParent="true"
+           android:layout_below="@+id/lin_top"
             android:background="@color/blue_beautiful_color"
             android:id="@+id/tv_anim"
             android:text="点击动画"

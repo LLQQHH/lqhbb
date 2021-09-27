@@ -1,11 +1,14 @@
 package com.lqh.jaxlinmaster.homepager
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,10 +18,6 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StatusBarUtil
 import com.lqh.jaxlinmaster.lqhtest.LqhTestActivity
 import kotlinx.android.synthetic.main.activity_state.*
-import android.view.WindowManager
-import com.lqh.jaxlinmaster.dialog.CenterDialog
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.ScreenUtil
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.SizeUtils
 
 
 class StateActivity : LqhBaseActivity() {
@@ -84,8 +83,14 @@ class StateActivity : LqhBaseActivity() {
             LogUtils.e("当前systemUiVisibility4",""+window.decorView.systemUiVisibility)
         }
         tv_showDialog.setOnClickListener {
-            var dialog=CenterDialog(this,R.layout.dialog_test,R.style.theme_Dialog_From_Bottom)
-            dialog.show()
+//            var dialog=CenterDialog(this,R.layout.dialog_test,R.style.theme_Dialog_From_Bottom)
+//            dialog.show()
+            val dialog = AlertDialog.Builder(this)
+                .setView(LayoutInflater.from(this).inflate(R.layout.dialog_test, null))
+                .show()
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+            dialog.window?.decorView?.setBackgroundColor(Color.RED)
+            dialog.window?.decorView?.setPadding(0,0,0,0)
         }
     }
 

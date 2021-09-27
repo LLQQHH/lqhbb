@@ -63,7 +63,7 @@
 <!--    <item name="android:windowIsFloating">true</item> 居然会导致dialog无法设置导航栏颜色，
 而且会影响布局MATCH_PARENT,无法铺满，因为源码里面把window设置成wrap！得手动设置宽高lp.width = WindowManager.LayoutParams.MATCH_PARENT;
 lp.height = WindowManager.LayoutParams.MATCH_PARENT;,如果为false,则会为match,但是可能导致点击外面无法关闭-->
-    <style name="theme_Dialog_From_Bottom" parent="@android:style/Theme.Dialog">
+    <style name="theme_Dialog_From_Bottom" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
