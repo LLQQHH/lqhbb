@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
-import androidx.core.util.forEach
 import androidx.fragment.app.Fragment
 import com.lqh.jaxlinmaster.R
 

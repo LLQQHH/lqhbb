@@ -15,7 +15,7 @@ import java.io.Serializable;
  *     desc  : 克隆相关工具类
  * </pre>
  */
-public final class CloneUtils {
+public final class CloneUtil {
 
     public static <T> T deepClone(final Serializable data) {
         if (data == null) return null;

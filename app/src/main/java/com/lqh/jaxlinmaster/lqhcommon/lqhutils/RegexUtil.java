@@ -16,7 +16,7 @@ public class RegexUtil {
      */
     public static boolean isPhoneNumber(String mobileNumber){
         String telRegex = "[1][3456789]\\d{9}";
-        if (StringUtils.isEmpty(mobileNumber)) {
+        if (StringUtil.isEmpty(mobileNumber)) {
             return false;
         }
         return mobileNumber.matches(telRegex);
@@ -91,7 +91,7 @@ public class RegexUtil {
      * @return
      */
     public static boolean isNumber(String str){
-        if(StringUtils.isEmpty(str)){
+        if(StringUtil.isEmpty(str)){
             return  false;
         }
         Pattern pattern = Pattern.compile("[0-9]*");
@@ -105,7 +105,7 @@ public class RegexUtil {
      * @return true是数字，可以是小数
      */
     public static boolean judgeTextIsDigit(String s){
-        if (StringUtils.isEmpty(s)){
+        if (StringUtil.isEmpty(s)){
             return false;
         }
         int pointCount = 0;
@@ -139,7 +139,7 @@ public class RegexUtil {
      * @return
      */
     public static boolean isFloat(String str) {
-        if(StringUtils.isEmpty(str)){
+        if(StringUtil.isEmpty(str)){
             return  false;
         }
         Pattern pattern = Pattern.compile("((-+)?+[1-9]+[0-9]*|-?+0)(\\.[\\d]+)?");
@@ -179,7 +179,7 @@ public class RegexUtil {
      * @return
      */
     public static boolean is16Color(String color){
-        if (StringUtils.isEmpty(color)){
+        if (StringUtil.isEmpty(color)){
             return false;
         }
         String colorRegex = "^#[0-9a-fA-F]{6}$";

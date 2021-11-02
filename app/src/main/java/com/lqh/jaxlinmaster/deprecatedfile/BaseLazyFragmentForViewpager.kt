@@ -2,7 +2,7 @@ package com.lqh.jaxlinmaster.deprecatedfile
 
 import android.os.Bundle
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtil
 
 //这个只兼容Viewpager,模式为BEHAVIOR_SET_USER_VISIBLE_HINT
 //因为setUserVisibleHint有可能在其他生命周期前执行,而且fragment第一次初始化也会调用,所以要先判断有没有初始化
@@ -77,7 +77,7 @@ abstract class BaseLazyFragmentForViewpager : LqhBaseFragment(), IPareVisibility
     protected abstract fun lazyInit(isFirstLoad: Boolean)
 
     protected open fun invisibleInit(isSetUserVisibleHint: Boolean){
-        LogUtils.e("当前", "invisibleInit:"+isSetUserVisibleHint)
+        LogUtil.e("当前", "invisibleInit:"+isSetUserVisibleHint)
     }
     //记得重写这个然后调用super
     override fun onParentFragmentHiddenChanged(expected: Boolean) {

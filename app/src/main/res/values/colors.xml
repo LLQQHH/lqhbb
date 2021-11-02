@@ -34,6 +34,7 @@
     <color name="cyan_color">#00ffff</color>
     <color name="yellow_color">#ffff00</color>
     <color name="white_color">#ffffff</color>
+    <color name="black_color">#000000</color>
     <color name="transparent_color">#00000000</color>
     <color name="translucent_color">#7F000000</color>
 </resources>

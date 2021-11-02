@@ -1,4 +1,4 @@
-package com.lqh
+package com.lqh.jaxlinmaster
 
 import android.content.Context
 import android.os.Bundle
@@ -7,12 +7,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Lifecycle
 import com.google.android.material.tabs.TabLayout
-import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.homepager.*
 import com.lqh.jaxlinmaster.lqhbase.*
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtil
 import kotlinx.android.synthetic.main.fragment_b.*
 
 /**
@@ -119,74 +117,74 @@ class FragmentB() : BaseLazyFragmentForX() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         title=arguments?.getString("title")
-        LogUtils.e("主当前$title", "onAttach")
+        LogUtil.e("主当前$title", "onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        LogUtils.e("主当前$title", "onCreate")
+        LogUtil.e("主当前$title", "onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LogUtils.e("主当前$title", "onViewCreated")
+        LogUtil.e("主当前$title", "onViewCreated")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        LogUtils.e("主当前$title", "onActivityCreated")
+        LogUtil.e("主当前$title", "onActivityCreated")
     }
 
     override fun onStart() {
         super.onStart()
-        LogUtils.e("主当前$title", "onStart")
+        LogUtil.e("主当前$title", "onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        LogUtils.e("主当前$title", "在onResume中判断isHidden"+isHidden)
-        LogUtils.e("主当前$title", "onResume")
+        LogUtil.e("主当前$title", "在onResume中判断isHidden"+isHidden)
+        LogUtil.e("主当前$title", "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        LogUtils.e("主当前$title", "onPause")
-        LogUtils.e("主当前$title", "在onPause中判断isHidden"+isHidden)
+        LogUtil.e("主当前$title", "onPause")
+        LogUtil.e("主当前$title", "在onPause中判断isHidden"+isHidden)
     }
 
     override fun onStop() {
         super.onStop()
-        LogUtils.e("主当前$title", "onStop")
+        LogUtil.e("主当前$title", "onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        LogUtils.e("主当前$title", "onDestroyView")
+        LogUtil.e("主当前$title", "onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        LogUtils.e("主当前$title", "onDestroy")
+        LogUtil.e("主当前$title", "onDestroy")
     }
 
     override fun onDetach() {
         super.onDetach()
-        LogUtils.e("主当前$title", "onDetach")
+        LogUtil.e("主当前$title", "onDetach")
     }
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         title=arguments?.getString("title")
         //居然有时候获取不到
-        LogUtils.e("主当前$title", "isVisibleToUser:$isVisibleToUser")
-        LogUtils.e("主当前$title", "在setUserVisibleHint中判断isHidden"+isHidden)
+        LogUtil.e("主当前$title", "isVisibleToUser:$isVisibleToUser")
+        LogUtil.e("主当前$title", "在setUserVisibleHint中判断isHidden"+isHidden)
     }
 
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        LogUtils.e("主当前$title", "onHiddenChanged:$hidden")
-        LogUtils.e("主当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
+        LogUtil.e("主当前$title", "onHiddenChanged:$hidden")
+        LogUtil.e("主当前$title", "在onHiddenChanged中判断isHidden"+isHidden)
     }
 
 //     override fun invisibleInit(isSetUserVisibleHint: Boolean){
@@ -217,10 +215,10 @@ class FragmentB() : BaseLazyFragmentForX() {
         }
     }
     override fun onFragmentPause() {
-        LogUtils.e("主当前$title", "不可见onFragmentPause")
+        LogUtil.e("主当前$title", "不可见onFragmentPause")
     }
 
     override fun onFragmentLazyInit(IsFirstVisible: Boolean) {
-        LogUtils.e("主当前$title", "可见isFirstLoad:"+IsFirstVisible)
+        LogUtil.e("主当前$title", "可见isFirstLoad:"+IsFirstVisible)
     }
 }

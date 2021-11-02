@@ -23,7 +23,7 @@ import com.lqh.jaxlinmaster.R;
  * 解决：1.用自定义View，然后判断当前是否在后台，在后台的话，就不弹Toast
  * 2.用开源库
  */
-public class ToastUtils {
+public class ToastUtil {
     private static final Handler TOAST_HANDLER = new Handler(Looper.getMainLooper());
     private static Toast toast;
 
@@ -47,7 +47,7 @@ public class ToastUtils {
 
 
     public static void show(final CharSequence text, final int duration) {
-        if (StringUtils.isEmpty(text)) {
+        if (StringUtil.isEmpty(text)) {
             return;
         }
         runOnUiThread(() -> {
@@ -73,7 +73,7 @@ public class ToastUtils {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             runnable.run();
         } else {
-            ToastUtils.TOAST_HANDLER.post(runnable);
+            ToastUtil.TOAST_HANDLER.post(runnable);
         }
     }
 }

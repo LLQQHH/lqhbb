@@ -3,13 +3,8 @@ package com.lqh.jaxlinmaster.lqhcommon.lqhutils;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import androidx.annotation.NonNull;
-
-import java.lang.reflect.Field;
 
 
 /**
@@ -20,8 +15,8 @@ import java.lang.reflect.Field;
  *     desc  : utils about keyboard
  * </pre>
  */
-public final class KeyboardUtils {
-    private KeyboardUtils() {
+public final class KeyboardUtil {
+    private KeyboardUtil() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
@@ -74,14 +69,14 @@ public final class KeyboardUtils {
                         if(view instanceof EditText){
                             ((EditText) view).setSelection(((EditText) view).getText().toString().length());
                         }
-                        KeyboardUtils.showSoftInput(view);
+                        KeyboardUtil.showSoftInput(view);
                     }, delayTime);
                 } else {
                     view.requestFocus();
                     if(view instanceof EditText){
                         ((EditText) view).setSelection(((EditText) view).getText().toString().length());
                     }
-                    KeyboardUtils.showSoftInput(view);
+                    KeyboardUtil.showSoftInput(view);
                 }
             });
         } else {
@@ -89,7 +84,7 @@ public final class KeyboardUtils {
             if(view instanceof EditText){
                 ((EditText) view).setSelection(((EditText) view).getText().toString().length());
             }
-            KeyboardUtils.showSoftInput(view);
+            KeyboardUtil.showSoftInput(view);
         }
     }
 
@@ -142,14 +137,14 @@ public final class KeyboardUtils {
                         if (view instanceof EditText) {
                             ((EditText) view).setSelection(((EditText) view).getText().toString().length());
                         }
-                        KeyboardUtils.showSoftInput(view);
+                        KeyboardUtil.showSoftInput(view);
                     }, delayTime);
                 } else {
                     view.requestFocus();
                     if (view instanceof EditText) {
                         ((EditText) view).setSelection(((EditText) view).getText().toString().length());
                     }
-                    KeyboardUtils.showSoftInput(view);
+                    KeyboardUtil.showSoftInput(view);
                 }
             });
         } else {
@@ -157,7 +152,7 @@ public final class KeyboardUtils {
             if (view instanceof EditText) {
                 ((EditText) view).setSelection(((EditText) view).getText().toString().length());
             }
-            KeyboardUtils.showSoftInput(view);
+            KeyboardUtil.showSoftInput(view);
         }
     }
 }

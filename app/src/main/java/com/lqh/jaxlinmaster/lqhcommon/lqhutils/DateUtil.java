@@ -1,7 +1,6 @@
 package com.lqh.jaxlinmaster.lqhcommon.lqhutils;
 
 import android.annotation.SuppressLint;
-import android.text.TextUtils;
 
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.constant.TimeConstants;
 
@@ -15,7 +14,7 @@ import java.util.Locale;
  *
  * @author lqh
  */
-public class DateUtils {
+public class DateUtil {
 
     /**
      * 日期类型 *
@@ -49,7 +48,7 @@ public class DateUtils {
             "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座"
     };
     private static final int[]    ZODIAC_FLAGS = {20, 19, 21, 21, 21, 22, 23, 23, 23, 24, 23, 22};
-    private DateUtils() {
+    private DateUtil() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
@@ -418,7 +417,7 @@ public class DateUtils {
         long now = System.currentTimeMillis();
         long span = now - millis;
         if (span < 0)
-            return DateUtils.millisToString(millis,DateUtils.yyyyMMddHHmm);
+            return DateUtil.millisToString(millis, DateUtil.yyyyMMddHHmm);
         if (span < TimeConstants.SEC) {
             return "刚刚";
         } else if (span < TimeConstants.MIN) {
@@ -430,11 +429,11 @@ public class DateUtils {
         long wee = getZeroToday();
         if (millis >= wee) {
 
-            return String.format("今天%s", DateUtils.millisToString(millis,DateUtils.HH_mm));
+            return String.format("今天%s", DateUtil.millisToString(millis, DateUtil.HH_mm));
         } else if (millis >= wee - TimeConstants.DAY) {
-            return String.format("昨天%s", DateUtils.millisToString(millis,DateUtils.HH_mm));
+            return String.format("昨天%s", DateUtil.millisToString(millis, DateUtil.HH_mm));
         } else {
-            return DateUtils.millisToString(millis,DateUtils.yyyyMMddHHmm);
+            return DateUtil.millisToString(millis, DateUtil.yyyyMMddHHmm);
         }
     }
 }

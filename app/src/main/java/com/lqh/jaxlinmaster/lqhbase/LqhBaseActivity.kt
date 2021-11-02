@@ -4,13 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.SparseArray
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.constants.Constants
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.KeyboardUtils
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StatusBarUtil
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.KeyboardUtil
 import java.util.*
 import kotlin.math.pow
 
@@ -58,7 +55,7 @@ abstract class LqhBaseActivity:AppCompatActivity(){
     open fun jumpToClass(activity: Class<*>?, bundle: Bundle?) {
         val intent = Intent(this, activity)
         if (bundle != null) {
-            intent.putExtra(Constants.String.BUNDLE, bundle)
+            intent.putExtra(Constants.Strings.BUNDLE, bundle)
         }
         startActivity(intent)
     }
@@ -66,7 +63,7 @@ abstract class LqhBaseActivity:AppCompatActivity(){
     open fun jumpToClassForResult(activity: Class<*>?, bundle: Bundle?, requestCode: Int) {
         val intent = Intent(this, activity)
         if (bundle != null) {
-            intent.putExtra(Constants.String.BUNDLE, bundle)
+            intent.putExtra(Constants.Strings.BUNDLE, bundle)
         }
         startActivityForResult(intent, requestCode)
     }
@@ -82,7 +79,7 @@ abstract class LqhBaseActivity:AppCompatActivity(){
         }
         val intent = Intent(this, activity)
         if (bundle != null) {
-            intent.putExtra(Constants.String.BUNDLE, bundle)
+            intent.putExtra(Constants.Strings.BUNDLE, bundle)
         }
         startActivityForResult(intent, requestCode)
     }
@@ -90,7 +87,7 @@ abstract class LqhBaseActivity:AppCompatActivity(){
 
     override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
         // 隐藏软键，避免内存泄漏
-        KeyboardUtils.hideSoftInput(this)
+        KeyboardUtil.hideSoftInput(this)
         // 查看源码得知 startActivity 最终也会调用 startActivityForResult
         super.startActivityForResult(intent, requestCode, options)
     }
@@ -118,7 +115,7 @@ abstract class LqhBaseActivity:AppCompatActivity(){
 
     override fun finish() {
         //隐藏软键，避免内存泄漏
-        KeyboardUtils.hideSoftInput(this)
+        KeyboardUtil.hideSoftInput(this)
         super.finish()
     }
 }

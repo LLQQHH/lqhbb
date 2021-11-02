@@ -1,17 +1,17 @@
 package com.lqh.jaxlinmaster.lqhtest
 
-import android.content.Intent
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.Window
 import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
+import com.google.gson.Gson
 import com.lqh.jaxlinmaster.R
+import com.lqh.jaxlinmaster.constants.Constants
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseActivity
-import kotlinx.android.synthetic.main.activity_lqh_test.*
+import kotlinx.android.synthetic.main.activity_lqh_test_a.*
+import java.io.Serializable
 
 
-class LqhTestActivity : LqhBaseActivity() {
+class LqhTestAActivity : LqhBaseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         //ViewCompat.setTransitionName(tv_test,"test")
 
@@ -21,9 +21,19 @@ class LqhTestActivity : LqhBaseActivity() {
         tv_test.setOnClickListener {
             ActivityCompat.finishAfterTransition(this)
         }
+        tv_test1.setOnClickListener {
+            //        String s = testMap.toString();
+            //val dataJson = "{\"Rate\" : 1.0, \"extend\" : {\"number\" : 30, \"amount\" : 120.3}}"
+            val dataJson = "{\"Rate\" : 1.0, \"extend\" : {\"number\" : 30, \"amount\" : 120.3, \"extendChild\" : {\"numberChild\" : 10, \"amountChild\" : 110.3}}}"
+            val gson = Gson()
+            val data = gson.fromJson(dataJson, Lqhtest.Data::class.java)
+            var bundle=Bundle()
+            bundle.putSerializable(Constants.Strings.DATA, data)
+            jumpToClass(LqhTestBActivity::class.java,bundle)
+        }
     }
 
-    override fun getLayoutId(): Int=R.layout.activity_lqh_test
+    override fun getLayoutId(): Int=R.layout.activity_lqh_test_a
     override fun finish() {
         super.finish()
         android.R.anim.slide_in_left

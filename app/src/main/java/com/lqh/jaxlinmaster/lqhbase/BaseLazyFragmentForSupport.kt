@@ -3,7 +3,6 @@ package com.lqh.jaxlinmaster.lqhbase
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
 
 /**
  * @author wangshijia

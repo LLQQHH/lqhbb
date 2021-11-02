@@ -1,22 +1,22 @@
 package com.lqh.jaxlinmaster.homepager
 
-import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.lqh.jaxlinmaster.R
+import com.lqh.jaxlinmaster.dialog.CenterDialog
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseActivity
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtil
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StatusBarUtil
-import com.lqh.jaxlinmaster.lqhtest.LqhTestActivity
+import com.lqh.jaxlinmaster.lqhtest.LqhTestAActivity
+import com.lqh.jaxlinmaster.lqhtest.LqhTestBActivity
 import kotlinx.android.synthetic.main.activity_state.*
 
 
@@ -35,7 +35,7 @@ class StateActivity : LqhBaseActivity() {
 //            lqhStateView.showEmpty()
 //        },3000)
 
-        LogUtils.e("当前systemUiVisibility",""+window.decorView.systemUiVisibility)
+        LogUtil.e("当前systemUiVisibility",""+window.decorView.systemUiVisibility)
         tv_showFull.setOnClickListener {
             StatusBarUtil.setFullScreenReal(this,null,false)
         }
@@ -47,7 +47,7 @@ class StateActivity : LqhBaseActivity() {
             val total=vis or option
             window.decorView.systemUiVisibility = total
             //StatusBarUtil.setStatusBarColorForOffset(this,ContextCompat.getColor(this,R.color.teal_200),null,true)
-            LogUtils.e("当前systemUiVisibility1",""+window.decorView.systemUiVisibility)
+            LogUtil.e("当前systemUiVisibility1",""+window.decorView.systemUiVisibility)
         }
         tv_showStatusBarNotIn.setOnClickListener {
             val window = getWindow()
@@ -62,7 +62,7 @@ class StateActivity : LqhBaseActivity() {
 
 //            StatusBarUtil.setStatusBarColor(this,ContextCompat.getColor(this,R.color.green_beautiful_color))
 //            StatusBarUtil.hideCreateStatusBarView(this)
-            LogUtils.e("当前systemUiVisibility2",""+window.decorView.systemUiVisibility)
+            LogUtil.e("当前systemUiVisibility2",""+window.decorView.systemUiVisibility)
         }
         tv_showNavIn.setOnClickListener {
             val option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -70,7 +70,7 @@ class StateActivity : LqhBaseActivity() {
             val vis = window.decorView.systemUiVisibility
             val total=vis or option
             window.decorView.systemUiVisibility = total
-            LogUtils.e("当前systemUiVisibility3",""+window.decorView.systemUiVisibility)
+            LogUtil.e("当前systemUiVisibility3",""+window.decorView.systemUiVisibility)
         }
         tv_showNaNotInv.setOnClickListener {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
@@ -80,23 +80,26 @@ class StateActivity : LqhBaseActivity() {
             val total=vis and option.inv()
             window.decorView.systemUiVisibility =total
 
-            LogUtils.e("当前systemUiVisibility4",""+window.decorView.systemUiVisibility)
+            LogUtil.e("当前systemUiVisibility4",""+window.decorView.systemUiVisibility)
         }
         tv_showDialog.setOnClickListener {
-//            var dialog=CenterDialog(this,R.layout.dialog_test,R.style.theme_Dialog_From_Bottom)
-//            dialog.show()
-            val dialog = AlertDialog.Builder(this)
-                .setView(LayoutInflater.from(this).inflate(R.layout.dialog_test, null))
-                .show()
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-            dialog.window?.decorView?.setBackgroundColor(Color.RED)
-            dialog.window?.decorView?.setPadding(0,0,0,0)
+            var dialog= CenterDialog(this,R.layout.dialog_test,R.style.theme_Dialog_From_Bottom)
+            dialog.show()
+//            val dialog = AlertDialog.Builder(this)
+//                .setView(LayoutInflater.from(this).inflate(R.layout.dialog_test, null))
+//                .show()
+//            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+//            dialog.window?.decorView?.setBackgroundColor(Color.RED)
+//            dialog.window?.decorView?.setPadding(0,0,0,0)
         }
+//        tv_showDialog.postDelayed({
+//                                  this.requestedOrientation=ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        },2000)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
         tv_anim.setOnClickListener {
-            var intent=Intent(this,LqhTestActivity::class.java)
+            var intent=Intent(this,LqhTestAActivity::class.java)
             //val toBundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle()
             ActivityCompat.startActivity(this,intent,null)
             overridePendingTransition(com.lqh.jaxlinmaster.R.anim.anim_activity_translate_to_in,
@@ -149,5 +152,13 @@ class StateActivity : LqhBaseActivity() {
 //            }
 //        })
     }
-
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        LogUtil.e("屏幕", ""+newConfig.orientation);
+        if (newConfig.orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            LogUtil.e("屏幕", "竖屏portrait"); // 竖屏
+        }else if(newConfig.orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+            LogUtil.e("屏幕", "横屏landscape"); // 横屏
+        }
+    }
 }

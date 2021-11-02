@@ -3,7 +3,7 @@ package com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StringUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StringUtil
 import java.util.regex.Pattern
 
 /**
@@ -49,7 +49,7 @@ class UIUtils {
             return ContextCompat.getColor(context,colorId)
         }
         fun isNumber(str: String?): Boolean {
-            if (StringUtils.isEmpty(str)) {
+            if (StringUtil.isEmpty(str)) {
                 return false
             }
             val pattern = Pattern.compile("[-]?[0-9]*")

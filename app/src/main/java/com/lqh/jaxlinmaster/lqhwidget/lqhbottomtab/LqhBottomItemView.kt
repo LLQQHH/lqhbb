@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.lqh.jaxlinmaster.R
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtil
 
 /**
  * Created by Linqh on 2021/5/27.
@@ -37,10 +37,10 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
         selectedIcon=build.selectedIcon
         itemText=build.itemText
         customLayout=build.customLayout
-        LogUtils.e("执行顺序","次constructor")
+        LogUtil.e("执行顺序","次constructor")
     }
     init {
-        LogUtils.e("执行顺序","init")
+        LogUtil.e("执行顺序","init")
         init(attrs)
     }
     var textColorNormal: Int = 0

@@ -29,6 +29,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
+            <TextView
+                android:id="@+id/tv_glide"
+                android:text="点击去Glide"
+                android:padding="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/tv_notification"
+                android:text="点击去通知"
+                android:padding="@dimen/dp_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
             <ImageView
                 android:id="@+id/iv_1"
                 android:layout_width="@dimen/dp_100"
@@ -58,6 +72,12 @@
                 <TextView
                     android:id="@+id/tv_saveStrPicToLocal"
                     android:text="私有路径图片保存图库"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"/>
+                <TextView
+                    android:id="@+id/tv_saveSp"
+                    android:text="sp保存类和设置限制保存时间"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_10"/>

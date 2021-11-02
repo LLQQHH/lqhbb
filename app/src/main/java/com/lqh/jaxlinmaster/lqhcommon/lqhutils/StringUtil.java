@@ -8,9 +8,9 @@ package com.lqh.jaxlinmaster.lqhcommon.lqhutils;
  *     desc  : utils about string
  * </pre>
  */
-public final class StringUtils {
+public final class StringUtil {
 
-    private StringUtils() {
+    private StringUtil() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

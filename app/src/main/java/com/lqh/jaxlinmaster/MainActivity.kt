@@ -5,24 +5,19 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.Gravity
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.lqh.*
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseActivity
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseFragment
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtil
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.StatusBarUtil
 import com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomItemView
 import com.lqh.jaxlinmaster.lqhwidget.lqhbottomtab.LqhBottomTab
@@ -44,22 +39,22 @@ class MainActivity : LqhBaseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         StatusBarUtil.setStatusBarLightMode(this,true)
-        LogUtils.e("当前activity", "onCreate")
-        LogUtils.e("目录外部公有getExternalStorageDirectory:",Environment.getExternalStorageDirectory().absolutePath)
-        LogUtils.e("目录外部公有getExternalStoragePublicDirectory_PICTURES:",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath)
-        LogUtils.e("目录外部公有getExternalStoragePublicDirectory_DCIM:",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath)
-        LogUtils.e("目录外部公有getDataDirectory:",Environment.getDataDirectory().absolutePath)
-        LogUtils.e("目录外部公有getDownloadCacheDirectory:",Environment.getDownloadCacheDirectory().absolutePath)
-        LogUtils.e("目录外部公有getRootDirectory:",Environment.getRootDirectory().absolutePath)
-        LogUtils.e("目录外部专有getExternalFilesDir:",getExternalFilesDir(Environment.DIRECTORY_MUSIC)!!.absolutePath)
-        LogUtils.e("目录外部专有getExternalCacheDir:",externalCacheDir!!.absolutePath)
-        LogUtils.e("目录内部getFilesDir:",filesDir!!.absolutePath)
-        LogUtils.e("目录内部getCacheDir:",cacheDir!!.absolutePath)
+        LogUtil.e("当前activity", "onCreate")
+        LogUtil.e("目录外部公有getExternalStorageDirectory:",Environment.getExternalStorageDirectory().absolutePath)
+        LogUtil.e("目录外部公有getExternalStoragePublicDirectory_PICTURES:",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath)
+        LogUtil.e("目录外部公有getExternalStoragePublicDirectory_DCIM:",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath)
+        LogUtil.e("目录外部公有getDataDirectory:",Environment.getDataDirectory().absolutePath)
+        LogUtil.e("目录外部公有getDownloadCacheDirectory:",Environment.getDownloadCacheDirectory().absolutePath)
+        LogUtil.e("目录外部公有getRootDirectory:",Environment.getRootDirectory().absolutePath)
+        LogUtil.e("目录外部专有getExternalFilesDir:",getExternalFilesDir(Environment.DIRECTORY_MUSIC)!!.absolutePath)
+        LogUtil.e("目录外部专有getExternalCacheDir:",externalCacheDir!!.absolutePath)
+        LogUtil.e("目录内部getFilesDir:",filesDir!!.absolutePath)
+        LogUtil.e("目录内部getCacheDir:",cacheDir!!.absolutePath)
         cacheDir
         val externalFilesDirs = getExternalFilesDirs("")
         externalFilesDirs?.forEachIndexed { index, file ->
             file?.let {
-                LogUtils.e("目录内部getExternalFilesDirs:","index:$index+,${it!!.absolutePath}")
+                LogUtil.e("目录内部getExternalFilesDirs:","index:$index+,${it!!.absolutePath}")
             }
         }
         var pathStr=filesDir.absolutePath+File.separator+"text.txt"
@@ -68,23 +63,23 @@ class MainActivity : LqhBaseActivity() {
         var uriFromFile= Uri.fromFile(file)
         val pathFromUri: String? = uriFromFile.path
         var fileFromUri =File(URI(uriFromFile.toString()))
-        LogUtils.e("file_path地址:",file.path)
-        LogUtils.e("uriFromPath地址:",uriFromPath.toString())
-        LogUtils.e("pathFromUri地址:",pathFromUri.toString())
-        LogUtils.e("uriFromFile地址:",uriFromFile.toString())
-        LogUtils.e("fileFromUri地址:",fileFromUri.path)
+        LogUtil.e("file_path地址:",file.path)
+        LogUtil.e("uriFromPath地址:",uriFromPath.toString())
+        LogUtil.e("pathFromUri地址:",pathFromUri.toString())
+        LogUtil.e("uriFromFile地址:",uriFromFile.toString())
+        LogUtil.e("fileFromUri地址:",fileFromUri.path)
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt(TAG_CURPOS)
-            var fragmentA :FragmentA?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[0]) as FragmentA?
-            var fragmentB :FragmentB?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[1]) as FragmentB?
-            var fragmentC :FragmentC?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[2]) as FragmentC?
-            var fragmentD :FragmentD?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[3]) as FragmentD?
-            var fragmentE :FragmentE?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[4]) as FragmentE?
-            fragmentList.add(fragmentA ?:FragmentA.newInstance(titles[0]))
-            fragmentList.add(fragmentB ?:FragmentB.newInstance(titles[1]))
-            fragmentList.add(fragmentC ?:FragmentC.newInstance(titles[2]))
-            fragmentList.add(fragmentD ?:FragmentD.newInstance(titles[3]))
-            fragmentList.add(fragmentE ?:FragmentE.newInstance(titles[4]))
+            var fragmentA : FragmentA?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[0]) as FragmentA?
+            var fragmentB : FragmentB?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[1]) as FragmentB?
+            var fragmentC : FragmentC?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[2]) as FragmentC?
+            var fragmentD : FragmentD?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[3]) as FragmentD?
+            var fragmentE : FragmentE?= supportFragmentManager.findFragmentByTag(TAG_POSITONSTR[4]) as FragmentE?
+            fragmentList.add(fragmentA ?: FragmentA.newInstance(titles[0]))
+            fragmentList.add(fragmentB ?: FragmentB.newInstance(titles[1]))
+            fragmentList.add(fragmentC ?: FragmentC.newInstance(titles[2]))
+            fragmentList.add(fragmentD ?: FragmentD.newInstance(titles[3]))
+            fragmentList.add(fragmentE ?: FragmentE.newInstance(titles[4]))
         }
         else {
             initFragment()
@@ -99,7 +94,7 @@ class MainActivity : LqhBaseActivity() {
         lqhBottomTab.addTab(buildLqhBottomItemView)
         lqhBottomTab.addOnTabSelectedListener(object : LqhBottomTab.OnTabSelectedListener {
             override fun onTabSelected(position: Int) {
-                LogUtils.e("选中" + position)
+                LogUtil.e("选中" + position)
                 if (position == 2) {
                     val positionTabView = lqhBottomTab.getPositionTabView(position)
                     if (positionTabView?.customLayout != null) {
@@ -119,7 +114,7 @@ class MainActivity : LqhBaseActivity() {
             }
 
             override fun onTabUnselected(position: Int) {
-                LogUtils.e("未选中" + position)
+                LogUtil.e("未选中" + position)
                 if (position == 2) {
                     val positionTabView = lqhBottomTab.getPositionTabView(position)
                     if (positionTabView?.customLayout != null) {
@@ -138,7 +133,7 @@ class MainActivity : LqhBaseActivity() {
             }
 
             override fun onTabReselected(position: Int) {
-                LogUtils.e("重复选中" + position)
+                LogUtil.e("重复选中" + position)
             }
 
         })
@@ -184,7 +179,7 @@ class MainActivity : LqhBaseActivity() {
             var fromFragment = fragmentList[currentPosition]
             var toFragment = fragmentList[showPosition]
             if (fromFragment != null && fromFragment != toFragment && fromFragment.isAdded) {
-                LogUtils.e("fragment", "添加过")
+                LogUtil.e("fragment", "添加过")
                 hide(fromFragment)
                 if (isforX) {
                     setMaxLifecycle(fromFragment, Lifecycle.State.STARTED)
@@ -204,7 +199,7 @@ class MainActivity : LqhBaseActivity() {
         }.commitAllowingStateLoss()
         currentPosition = showPosition
         lqhBottomTab.post {
-            LogUtils.e("当前有几个Fragment", "" + supportFragmentManager.fragments.size)
+            LogUtil.e("当前有几个Fragment", "" + supportFragmentManager.fragments.size)
         }
     }
 
@@ -266,12 +261,12 @@ class MainActivity : LqhBaseActivity() {
 //第二种方案
         outState.putInt(TAG_CURPOS, currentPosition);
         super.onSaveInstanceState(outState)
-        LogUtils.e("当前activity", "onSaveInstanceState");
+        LogUtil.e("当前activity", "onSaveInstanceState");
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        LogUtils.e("当前activity", "onRestoreInstanceState");
+        LogUtil.e("当前activity", "onRestoreInstanceState");
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)

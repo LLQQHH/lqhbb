@@ -1,4 +1,4 @@
-package com.lqh
+package com.lqh.jaxlinmaster
 
 import android.app.Application
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.Utils

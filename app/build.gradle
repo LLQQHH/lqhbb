@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 //打包时间
 def releaseTime() {
@@ -91,13 +92,18 @@ dependencies {
     implementation jaxdependencies.rxandroid
     implementation jaxdependencies.hawk
     implementation jaxdependencies.BaseRecyclerViewAdapterHelper
+    implementation jaxdependencies.gson
     implementation 'com.github.zhpanvip:viewpagerindicator:1.2.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation  jaxdependencies.glide
-    annotationProcessor jaxdependencies.glide_compiler
+    kapt jaxdependencies.glide_compiler
+    implementation  jaxdependencies.glide_transformations
+    implementation jaxdependencies.glide_okhttp3_integration
     implementation  'androidx.vectordrawable:vectordrawable-animated:1.1.0'
     implementation  'androidx.exifinterface:exifinterface:1.2.0'
-    //implementation  jaxdependencies.glide_transformations
+    implementation  'com.alibaba:fastjson:1.2.78'
+    //implementation 'org.apache.commons:commons-lang3:3.7' 替换成下面这个为了StringEscapeUtils.unescapeJson(json)去掉转义反斜杠
+    implementation 'org.apache.commons:commons-text:1.7'
 }

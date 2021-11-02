@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtil
 import kotlinx.android.synthetic.main.fragment_test.*
 
 /**
@@ -38,63 +38,63 @@ class TestFragment() : BaseLazyFragmentForX() {
     override fun getLayoutId(): Int = R.layout.fragment_test
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        LogUtils.e("当前$title", "onAttach")
+        LogUtil.e("当前$title", "onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LogUtils.e("当前$title", "onCreate")
+        LogUtil.e("当前$title", "onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LogUtils.e("当前$title", "onViewCreated")
+        LogUtil.e("当前$title", "onViewCreated")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        LogUtils.e("当前$title", "onActivityCreated")
+        LogUtil.e("当前$title", "onActivityCreated")
     }
 
     override fun onStart() {
         super.onStart()
-        LogUtils.e("当前$title", "onStart")
+        LogUtil.e("当前$title", "onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        LogUtils.e("当前$title", "onResume")
+        LogUtil.e("当前$title", "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        LogUtils.e("当前$title", "onPause")
+        LogUtil.e("当前$title", "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        LogUtils.e("当前$title", "onStop")
+        LogUtil.e("当前$title", "onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        LogUtils.e("当前$title", "onDestroyView")
+        LogUtil.e("当前$title", "onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        LogUtils.e("当前$title", "onDestroy")
+        LogUtil.e("当前$title", "onDestroy")
     }
 
     override fun onDetach() {
         super.onDetach()
-        LogUtils.e("当前$title", "onDetach")
+        LogUtil.e("当前$title", "onDetach")
     }
     override fun onFragmentPause() {
-        LogUtils.e("主当前$title", "onFragmentPause")
+        LogUtil.e("主当前$title", "onFragmentPause")
     }
 
     override fun onFragmentLazyInit(IsFirstVisible: Boolean) {
-        LogUtils.e("主当前$title", "isFirstLoad:"+IsFirstVisible)
+        LogUtil.e("主当前$title", "isFirstLoad:"+IsFirstVisible)
     }
 }

@@ -5,8 +5,8 @@ import android.util.Log;
 /**
  * Created by linqh on 2016-12-26.
  */
-public class LogUtils {
-    private LogUtils()
+public class LogUtil {
+    private LogUtil()
     {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");

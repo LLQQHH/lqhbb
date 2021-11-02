@@ -1,4 +1,4 @@
-package com.lqh
+package com.lqh.jaxlinmaster
 
 import android.content.*
 import android.database.Cursor
@@ -18,11 +18,13 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.lqh.jaxlinmaster.R
+import com.lqh.jaxlinmaster.homepager.GlideActivity
+import com.lqh.jaxlinmaster.homepager.LqhNotificationActivity
+import com.lqh.jaxlinmaster.homepager.SpActivity
 import com.lqh.jaxlinmaster.homepager.StateActivity
 import com.lqh.jaxlinmaster.lqhbase.BaseLazyFragmentForX
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.ToastUtils
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtil
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.ToastUtil
 import kotlinx.android.synthetic.main.fragment_a.*
 import java.io.*
 
@@ -54,87 +56,87 @@ class FragmentA : BaseLazyFragmentForX() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         title = arguments?.getString("title")
-        LogUtils.e("主当前$title", "onAttach")
+        LogUtil.e("主当前$title", "onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        LogUtils.e("主当前$title", "onCreate")
+        LogUtil.e("主当前$title", "onCreate")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LogUtils.e("主当前$title", "onViewCreated")
+        LogUtil.e("主当前$title", "onViewCreated")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        LogUtils.e("主当前$title", "onActivityCreated")
+        LogUtil.e("主当前$title", "onActivityCreated")
     }
 
     override fun onStart() {
         super.onStart()
-        LogUtils.e("主当前$title", "onStart")
+        LogUtil.e("主当前$title", "onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        LogUtils.e("主当前$title", "在onResume中判断isHidden" + isHidden)
-        LogUtils.e("主当前$title", "onResume")
+        LogUtil.e("主当前$title", "在onResume中判断isHidden" + isHidden)
+        LogUtil.e("主当前$title", "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        LogUtils.e("主当前$title", "onPause")
-        LogUtils.e("主当前$title", "在onPause中判断isHidden" + isHidden)
+        LogUtil.e("主当前$title", "onPause")
+        LogUtil.e("主当前$title", "在onPause中判断isHidden" + isHidden)
     }
 
 
     override fun onStop() {
         super.onStop()
-        LogUtils.e("主当前$title", "onStop")
+        LogUtil.e("主当前$title", "onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        LogUtils.e("主当前$title", "onDestroyView")
+        LogUtil.e("主当前$title", "onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        LogUtils.e("主当前$title", "onDestroy")
+        LogUtil.e("主当前$title", "onDestroy")
     }
 
     override fun onDetach() {
         super.onDetach()
-        LogUtils.e("主当前$title", "onDetach")
+        LogUtil.e("主当前$title", "onDetach")
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         title = arguments?.getString("title")
         //居然有时候获取不到
-        LogUtils.e("主当前$title", "isVisibleToUser:$isVisibleToUser")
-        LogUtils.e("主当前$title", "在setUserVisibleHint中判断isHidden" + isHidden)
+        LogUtil.e("主当前$title", "isVisibleToUser:$isVisibleToUser")
+        LogUtil.e("主当前$title", "在setUserVisibleHint中判断isHidden" + isHidden)
     }
 
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        LogUtils.e("主当前$title", "onHiddenChanged:$hidden")
-        LogUtils.e("主当前$title", "在onHiddenChanged中判断isHidden" + isHidden)
+        LogUtil.e("主当前$title", "onHiddenChanged:$hidden")
+        LogUtil.e("主当前$title", "在onHiddenChanged中判断isHidden" + isHidden)
     }
 
 
     override fun onFragmentPause() {
-        LogUtils.e("主当前$title", "不可见onFragmentPause")
+        LogUtil.e("主当前$title", "不可见onFragmentPause")
     }
 
     var avatarBitmap: Bitmap? = null
     var savePhotoPrivateFile: String? = null
     override fun onFragmentLazyInit(IsFirstVisible: Boolean) {
-        LogUtils.e("主当前$title", "可见isFirstLoad:" + IsFirstVisible)
+        LogUtil.e("主当前$title", "可见isFirstLoad:" + IsFirstVisible)
         if (IsFirstVisible) {
             avatarBitmap = getBitmap(R.drawable.default_avatar)
 
@@ -177,6 +179,21 @@ class FragmentA : BaseLazyFragmentForX() {
                 startActivity(intent)
                 //activity?.overridePendingTransition(R.anim.anim_activity_translate_to_in,R.anim.anim_activity_translate_to_out)
             }
+            tv_glide.setOnClickListener {
+                var intent=Intent(activity, GlideActivity::class.java)
+                startActivity(intent)
+                //activity?.overridePendingTransition(R.anim.anim_activity_translate_to_in,R.anim.anim_activity_translate_to_out)
+            }
+            tv_notification.setOnClickListener {
+                var intent=Intent(activity, LqhNotificationActivity::class.java)
+                startActivity(intent)
+                //activity?.overridePendingTransition(R.anim.anim_activity_translate_to_in,R.anim.anim_activity_translate_to_out)
+            }
+            tv_saveSp.setOnClickListener {
+                var intent=Intent(activity, SpActivity::class.java)
+                startActivity(intent)
+                //activity?.overridePendingTransition(R.anim.anim_activity_translate_to_in,R.anim.anim_activity_translate_to_out)
+            }
         }
     }
 
@@ -189,20 +206,20 @@ class FragmentA : BaseLazyFragmentForX() {
         if (!fileDir.exists()) {
             val mkdirs = fileDir.mkdirs()
             if (mkdirs) {
-                LogUtils.e("跟目录", "创建成功")
+                LogUtil.e("跟目录", "创建成功")
             } else {
-                LogUtils.e("跟目录", "创建失败")
+                LogUtil.e("跟目录", "创建失败")
             }
         }
         var outputStream: OutputStream? = null
         try {
             val pathName = System.currentTimeMillis().toString() + "_" + "test.jpeg"
             val file = File(fileDir, pathName)
-            LogUtils.e("保存到的目录位置", file.absolutePath)
+            LogUtil.e("保存到的目录位置", file.absolutePath)
             outputStream = FileOutputStream(file)
             src.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             outputStream.flush()
-            ToastUtils.show("保存到私有目录成功")
+            ToastUtil.show("保存到私有目录成功")
             return file.absolutePath;
         } catch (e: Exception) {
             e.printStackTrace()
@@ -242,7 +259,7 @@ class FragmentA : BaseLazyFragmentForX() {
     private val order = MediaStore.Files.FileColumns._ID + " DESC"
 
     fun queryImages() {
-        LogUtils.e("媒体库query_uri_image", query_uri_image.toString())
+        LogUtil.e("媒体库query_uri_image", query_uri_image.toString())
         val cursor: Cursor? = context!!.contentResolver
             .query(
                 query_uri_image,
@@ -309,10 +326,10 @@ class FragmentA : BaseLazyFragmentForX() {
                 outputStream = contentResolver.openOutputStream(uri!!)
                 src.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
                 outputStream?.flush()
-                ToastUtils.show("保存成功")
+                ToastUtil.show("保存成功")
             } catch (e: IOException) {
                 e.printStackTrace()
-                ToastUtils.show("保存失败")
+                ToastUtil.show("保存失败")
             }finally {
                 closeIO(outputStream)
             }
@@ -329,16 +346,16 @@ class FragmentA : BaseLazyFragmentForX() {
                 outputStream.close()
                 activity!!.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file))
                 )
-                ToastUtils.show("保存成功")
+                ToastUtil.show("保存成功")
             } catch (e: IOException) {
-                ToastUtils.show("保存失败")
+                ToastUtil.show("保存失败")
             }
         }
     }
     //把本地图片地址存到图库,比如glide的图片缓存地址,这里先说下，这个地址是app的私有地址,因为如果这个地址是公有的，那么在q以下就直接通知刷新就行了
     private fun savePhotoAlbum(srcFile: File?,fileDirPath:String,fileName: String?) {
         if (srcFile == null || !srcFile.exists() || srcFile.length() == 0L) {
-            LogUtils.e("文件不存在")
+            LogUtil.e("文件不存在")
             return
         }
         //val fileDirPath = Environment.DIRECTORY_PICTURES + File.separator + "lqhPictures"
@@ -377,7 +394,7 @@ class FragmentA : BaseLazyFragmentForX() {
                     os!!.write(buffer, 0, read)
                 }
                 os!!.flush()
-                ToastUtils.show("保存成功")
+                ToastUtil.show("保存成功")
             } catch (e: IOException) {
                 e.printStackTrace()
             } finally {
@@ -389,9 +406,9 @@ class FragmentA : BaseLazyFragmentForX() {
             if (!fileDir.exists()) {
                 val mkdirs = fileDir.mkdirs()
                 if (mkdirs) {
-                    LogUtils.e("跟目录", "创建成功")
+                    LogUtil.e("跟目录", "创建成功")
                 } else {
-                    LogUtils.e("跟目录", "创建失败")
+                    LogUtil.e("跟目录", "创建失败")
                 }
             }
             val filePath = File(fileDir, pathName)
@@ -410,7 +427,7 @@ class FragmentA : BaseLazyFragmentForX() {
                         Uri.fromFile(filePath)
                     )
                 )
-                ToastUtils.show("保存成功")
+                ToastUtil.show("保存成功")
             } catch (e: IOException) {
                 e.printStackTrace()
             } finally {

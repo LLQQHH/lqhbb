@@ -54,7 +54,7 @@ abstract class LqhBaseFragment: Fragment() {
     open fun jumpToClass(activity: Class<*>?, bundle: Bundle?) {
         val intent = Intent(context, activity)
         if (bundle != null) {
-            intent.putExtra(Constants.String.BUNDLE, bundle)
+            intent.putExtra(Constants.Strings.BUNDLE, bundle)
         }
         startActivity(intent)
     }
@@ -62,7 +62,7 @@ abstract class LqhBaseFragment: Fragment() {
     open fun jumpToClassForResult(activity: Class<*>?, bundle: Bundle?, requestCode: Int) {
         val intent = Intent(context, activity)
         if (bundle != null) {
-            intent.putExtra(Constants.String.BUNDLE, bundle)
+            intent.putExtra(Constants.Strings.BUNDLE, bundle)
         }
         startActivityForResult(intent, requestCode)
     }

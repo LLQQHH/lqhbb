@@ -1,7 +1,5 @@
 package com.lqh.jaxlinmaster.lqhbase
 
-import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtils
-
 /**
  * Created by Linqh on 2021/6/24.
 @describe:
