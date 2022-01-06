@@ -8,6 +8,7 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.lqh.jaxlinmaster.constants.Constants
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.KeyboardUtil
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtil
 import java.util.*
 import kotlin.math.pow
 
@@ -22,6 +23,8 @@ abstract class LqhBaseActivity:AppCompatActivity(){
     private var mActivityCallbacks: SparseArray<OnActivityCallback>? = null
     private  var bind: Unbinder?=null
     override fun onCreate(savedInstanceState: Bundle?) {
+        //getWindow().setBackgroundDrawableResource(R.drawable.shape_activity_bg);
+        LogUtil.e("当前打开Activity:", javaClass.simpleName)
         beforeOnCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
         beforeContentView()
@@ -49,6 +52,7 @@ abstract class LqhBaseActivity:AppCompatActivity(){
 
     abstract fun getLayoutId():Int
     override fun onDestroy() {
+        LogUtil.e("当前关闭Activity:", javaClass.simpleName)
         bind?.unbind()
         super.onDestroy()
     }
@@ -117,5 +121,30 @@ abstract class LqhBaseActivity:AppCompatActivity(){
         //隐藏软键，避免内存泄漏
         KeyboardUtil.hideSoftInput(this)
         super.finish()
+    }
+
+
+
+    override fun onStart() {
+        super.onStart()
+        LogUtil.e("生命周期",this.javaClass.name+":"+"onStart")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        LogUtil.e("生命周期",this.javaClass.name+":"+"onRestart")
+    }
+    override fun onResume() {
+        super.onResume()
+        LogUtil.e("生命周期",this.javaClass.name+":"+"onResume")
+    }
+    override fun onPause() {
+        super.onPause()
+        LogUtil.e("生命周期",this.javaClass.name+":"+"onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LogUtil.e("生命周期",this.javaClass.name+":"+"onStop")
     }
 }

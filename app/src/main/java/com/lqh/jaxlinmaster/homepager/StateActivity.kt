@@ -95,6 +95,7 @@ class StateActivity : LqhBaseActivity() {
 //        tv_showDialog.postDelayed({
 //                                  this.requestedOrientation=ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 //        },2000)
+
     }
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -102,8 +103,10 @@ class StateActivity : LqhBaseActivity() {
             var intent=Intent(this,LqhTestAActivity::class.java)
             //val toBundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle()
             ActivityCompat.startActivity(this,intent,null)
-            overridePendingTransition(com.lqh.jaxlinmaster.R.anim.anim_activity_translate_to_in,
-                com.lqh.jaxlinmaster.R.anim.anim_activity_translate_y_no_anim)
+            overridePendingTransition(R.anim.anim_activity_translate_to_in, R.anim.anim_activity_translate_y_no_anim)
+        }
+        tv_transparent.setOnClickListener {
+                    jumpToClass(TransparentActivity::class.java,null)
         }
     }
     override fun beforeContentView() {

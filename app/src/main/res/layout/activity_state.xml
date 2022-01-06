@@ -83,16 +83,31 @@
                 android:textColor="@color/red_beautiful_color"
                 />
         </LinearLayout>
-        <TextView
-           android:layout_below="@+id/lin_top"
-            android:background="@color/blue_beautiful_color"
-            android:id="@+id/tv_anim"
-            android:text="点击动画"
+        <LinearLayout
+            android:id="@+id/midle"
+            android:layout_below="@+id/lin_top"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:background="@color/blue_beautiful_color"
+                android:id="@+id/tv_anim"
+                android:text="点击动画"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                />
+            <TextView
+                android:background="@color/blue_beautiful_color"
+                android:id="@+id/tv_transparent"
+                android:text="点击去透明activity"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                />
+        </LinearLayout>
+
+
         <TextView
-            android:layout_below="@+id/tv_anim"
+            android:layout_below="@+id/midle"
             android:background="@color/green_beautiful_color"
             android:id="@+id/tv_anim1"
             android:text="点击动画1"

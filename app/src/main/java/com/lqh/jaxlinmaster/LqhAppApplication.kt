@@ -1,6 +1,8 @@
 package com.lqh.jaxlinmaster
 
 import android.app.Application
+import android.content.Context
+import androidx.multidex.MultiDex
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.Utils
 
 /**
@@ -10,6 +12,10 @@ import com.lqh.jaxlinmaster.lqhcommon.lqhutils.Utils
  */
 //@CreateUidAnnotation(uid = "10100")
  class LqhAppApplication:Application(){
+    override fun attachBaseContext(context: Context?) {
+        super.attachBaseContext(context)
+        MultiDex.install(this)
+    }
     override fun onCreate() {
         super.onCreate()
         initData()

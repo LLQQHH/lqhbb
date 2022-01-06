@@ -105,4 +105,11 @@ lp.height = WindowManager.LayoutParams.MATCH_PARENT;,如果为false,则会为mat
         <!-- 设置statusBarColor 为透明-->
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+    <style name="TransparentTheme" parent="appTheme">
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+
+    </style>
 </resources>

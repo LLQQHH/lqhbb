@@ -15,7 +15,7 @@ import androidx.core.app.NotificationCompat
 import com.lqh.jaxlinmaster.MainActivity
 import com.lqh.jaxlinmaster.R
 import com.lqh.jaxlinmaster.lqhbase.LqhBaseActivity
-import com.lqh.jaxlinmaster.lqhcommon.NotificationUtil
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.NotificationUtil
 import kotlinx.android.synthetic.main.activity_lqh_notification.*
 
 

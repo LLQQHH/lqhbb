@@ -1,5 +1,8 @@
 package com.lqh.jaxlinmaster.lqhcommon.lqhutils.gsonutils;
 
+import android.text.TextUtils;
+
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -9,6 +12,8 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.internal.bind.ObjectTypeAdapter;
+import com.google.gson.reflect.TypeToken;
+import com.lqh.jaxlinmaster.lqhcommon.lqhutils.LogUtil;
 import com.lqh.jaxlinmaster.lqhcommon.lqhutils.sputils.SpUtil;
 
 import org.json.JSONException;
@@ -18,6 +23,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,11 +33,20 @@ import java.util.Map;
  * @describe:
  */
 //@CreateUidAnnotation(uid = "10100")
-class GsonUtil {
+public class GsonUtil {
     private static Gson gson;
     public static <T> T parseJsonObject(String json, Class<T> tClass){
       return parseJsonObject(json,tClass,null);
     }
+
+    /**
+     * 把Sting字符串解析成类
+     * @param json Json字符串
+     * @param tClass 想要解析成的类型的class
+     * @param customGson //自定义的Gson
+     * @param <T>
+     * @return 返回对象
+     */
     public static <T> T parseJsonObject(String json, Class<T> tClass,Gson customGson){
         Gson currentGson=getGson();
         if(customGson!=null){
@@ -47,14 +62,6 @@ class GsonUtil {
     }
     /**
      *这个一般用在获取一个Json字符串然后通过自带JsonParser解析Json,然后解析某个字段然后再变成类
-     * 举个例子：JsonParser.parseString(null)会报错记得判断
-     *    JsonObject jsonParent = JsonParser.parseString(json).getAsJsonObject();
-     *                 if(jsonParent!=null){
-     *                     JsonElement jsonElement = jsonParent.get("data");
-     *                     if(jsonElement instanceof JsonArray){
-     *                         List<String> uids = GsonUtil.parseJsonList((JsonArray) jsonElement, String.class);
-     *                     }
-     *                 }
     */
     public static <T> T parseJsonObject(JsonObject json, Class<T> tClass){
         Gson currentGson=getGson();
@@ -67,12 +74,17 @@ class GsonUtil {
         return info;
     }
 
-
-
     public static <T> List<T> parseJsonList(String json, Class<T> tInnerClass){
         return parseJsonList(json,tInnerClass);
     }
 
+    /**把json字符串解析成List
+     * @param json
+     * @param tInnerClass
+     * @param customGson
+     * @param <T>
+     * @return
+     */
     public static <T> List<T> parseJsonList(String json, Class<T> tInnerClass,Gson customGson){
         Gson currentGson=getGson();
         if(customGson!=null){
@@ -129,12 +141,23 @@ class GsonUtil {
     public static <K, V> Map<K, V> parseJsonMap(String json,Class<K> mapClsK, Class<V> mapClsV){
         return parseJsonMap(json,mapClsK,mapClsV,HashMap.class);
     }
-    public static <K, V> Map<K, V> parseJsonMap(String json,Class<K> mapClsK, Class<V> mapClsV,Class<?> mapClsT){
-        return parseJsonMap(json,mapClsK,mapClsV,mapClsT,null);
+    public static <K, V> Map<K, V> parseJsonMap(String json,Class<K> mapClsK, Class<V> mapClsV,Class<?> mapCls){
+        return parseJsonMap(json,mapClsK,mapClsV,mapCls,null);
     }
-    //如果Value是Object类型,解析到对象就直接无效了,对象直接变成LinkTreeMap!,
+
+    /**把Json字符串解析成map
+     * @param json
+     * @param mapClsK map的key是实际类
+     * @param mapClsV map的value是实际类
+     * @param mapCls map实际类
+     * @param customGson
+     * @param <K>
+     * @param <V>
+     * @return 返回map
+     */
+    //如果Value是Object类型,解析到对象就直接无效了,对象直接变成LinkTreeMap!
     // 如果遇到json是Map<String, Object> 这样的格式，那只能用最初的JSONObject(Json)存,然后要什么就取什么,但是一般不会遇到
-    public static <K, V> Map<K, V> parseJsonMap(String json,Class<K> mapClsK, Class<V> mapClsV,Class<?> mapClsT,Gson customGson){
+    public static <K, V> Map<K, V> parseJsonMap(String json,Class<K> mapClsK, Class<V> mapClsV,Class<?> mapCls,Gson customGson){
         Gson currentGson=getGson();
         if(customGson!=null){
             currentGson=customGson;
@@ -142,7 +165,7 @@ class GsonUtil {
         Map<K,V> info = null;
         try {
             // 根据KV生成HashMapType
-            Type hashMapType =new  ParameterizedTypeImpl(mapClsT, new Class[]{mapClsK, mapClsV});
+            Type hashMapType =new  ParameterizedTypeImpl(mapCls, new Class[]{mapClsK, mapClsV});
             info = currentGson.fromJson(json,hashMapType);
         }catch (Exception e){
             e.printStackTrace();
@@ -150,10 +173,17 @@ class GsonUtil {
         return info;
     }
 
-    //这个map也适用
+
     public static String toJson(Object o){
         return toJson(o,null);
     }
+
+    /**把对象转换成Json字符串，适用于所以类
+     * 这个map也适用,Map.toSting 得到的不是Json字符串
+     * @param o 需要转换的对象
+     * @param customGson
+     * @return
+     */
     public static String toJson(Object o,Gson customGson){
         Gson currentGson=getGson();
         if(customGson!=null){
@@ -161,8 +191,37 @@ class GsonUtil {
         }
         return currentGson.toJson(o);
     }
-    //解析局部数据,可以用JsonParser
     //这个主要是要通过key,获取内部的数据,只能获取第一层
+    /*解析局部数据,可以用JsonParser,或者用自带的JSONObject
+     *  举个例子：JsonParser.parseString(null)会报错记得判断
+     *    JsonObject jsonParent = JsonParser.parseString(json).getAsJsonObject();
+     *                 if(jsonParent!=null){
+     *                     JsonElement jsonElement = jsonParent.get("data");
+     *                     if(jsonElement instanceof JsonArray){
+     *                         List<String> uids = GsonUtil.parseJsonList((JsonArray) jsonElement, String.class);
+     *                     }
+     *                 }
+     * ==========================
+     *                  try {
+     *                       JSONObject jsonObject = new JSONObject(body);
+     *                           if (jsonObject.has("data")){
+     *                               JSONObject dataObj = jsonObject.optJSONObject("data");
+     *                               if (dataObj!=null&&dataObj.has("planId")){
+     *                                   int planId = dataObj.getInt("planId");
+     *                               }
+     *                       }
+     *                   } catch (JSONException e) {
+     *                       e.printStackTrace();
+     *                   }
+    * */
+
+    /** 把json字符串的某个key转换成具体的类
+     * @param json  json字符串
+     * @param key
+     * @param tClass
+     * @param <T>
+     * @return
+     */
     public static <T> T parseJsonObjectUserInnerKey(String json,String key, Class<T> tClass){
         try {
             JsonObject jsonParent = JsonParser.parseString(json).getAsJsonObject();
@@ -174,7 +233,7 @@ class GsonUtil {
         return null;
     }
 
-    public static <T> T parseJsonObjectUserInnerKeyOther(String json,String key, Class<T> tClass){
+    public static <T> T parseJsonObjectUserInnerKeyOrigin(String json,String key, Class<T> tClass){
         try {
             JSONObject jsonParent=new JSONObject(json);
             JSONObject jsonChild = jsonParent.getJSONObject(key);
@@ -186,9 +245,16 @@ class GsonUtil {
         return null;
     }
 
+    /**把json字符串的某个key转换成具体的List
+     * @param json
+     * @param key
+     * @param tClass
+     * @param <T>
+     * @return
+     */
     //解析局部数据
     //这个主要是要通过key,获取内部的数据,只能获取第一层
-    public static <T> List<T> parseJsonListUserKey(String json,String key, Class<T> tClass){
+    public static <T> List<T> parseJsonListUserInnerKey(String json,String key, Class<T> tClass){
         try {
             JsonObject jsonParent = JsonParser.parseString(json).getAsJsonObject();
             JsonArray jsonChild = jsonParent.getAsJsonArray(key);
@@ -212,12 +278,76 @@ class GsonUtil {
     //对于解析局部数据由两种方法
     //1.自带的官方new JSONObject(),然后通过opt方法获取字段,如果字段是一个对象，可以变成JSONObject，然后toString(),最后用Gson.fromJson
     //2.用GSon的JsonParser.parseString(json),解析成JsonObject,然后通过get方法获取字段,如果字段是一个对象,直接用Gson.fromJson转换！
+    /**合并两个Json数据
+     * @param srcJsonStr  原来的
+     * @param addJsonStr 需要加进去的
+     * @return
+     */
+    public static String combineJson(String srcJsonStr, String addJsonStr)  {
+        try {
+            JSONObject srcJSONObject=null;
+            JSONObject addJSONObject=null;
+            if(!TextUtils.isEmpty(srcJsonStr)){
+                srcJSONObject = new JSONObject(srcJsonStr);
+            }
+            if(!TextUtils.isEmpty(addJsonStr)){
+                addJSONObject = new JSONObject(addJsonStr);
+            }
+            if(srcJSONObject!=null&&addJSONObject!=null){
+                Iterator<String> itKeys = addJSONObject.keys();
+                String key, value;
+                while (itKeys.hasNext()) {
+                    key = itKeys.next();
+                    value = addJSONObject.optString(key);
+                    srcJSONObject.put(key, value);
+                }
+                return srcJSONObject.toString();
+            }else if(srcJSONObject!=null){
+                return srcJSONObject.toString();
+            }else if(addJSONObject!=null){
+                return addJSONObject.toString();
+            }else{
+                return null;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-
-
-    private static Gson getGson(){
+    /**把Json数据合并到map
+     * @param json
+     * @param otherMap
+     */
+    public static void parseJsonToOtherMap(String json,Map<String,Object> otherMap){
+        if(otherMap!=null&& !TextUtils.isEmpty(json)){
+            //这里的map是LinkedTreeMap
+            Map<String, Object> map = new Gson().fromJson(json, new TypeToken<Map<String, Object>>() {
+            }.getType());
+            if(map!=null&&!map.isEmpty()){
+                otherMap.putAll(map);
+            }
+//                for (Map.Entry<String,Object> entry: map.entrySet()){
+//                    otherMap.put(entry.getKey(), entry.getValue());//这边如果是Object会变成LinkedTreeMap
+//                }
+        }
+    }
+//这个是为了处理数据源本来是int，转换成map后变成double的问题
+    public static Gson getGson(){
         if(gson==null){
-            Gson gson = new GsonBuilder().create();
+            GsonBuilder gbuilder = new GsonBuilder();
+            // 不导出实体类中没有用@Expose注解的属性,正常不加这个，如果设置这个属性，没有被 @Expose 标注的字段会被排除
+            //gbuilder.excludeFieldsWithoutExposeAnnotation();
+            // 设置 内置的属性(成员变量) 命名策略 ，其优先级 低于注解@SerializedName的形式
+            //gbuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+            // 开启 排除 不进行序列化的 属性,这个是全局的,要自定义ExclusionStrategy,这里自定义GsonExclusionStrategy后要排除序列化的用@GsonExclude标记
+            gbuilder.setExclusionStrategies(new GsonExclusionStrategy());
+            // 支持Map的key为复杂对象的形式
+            gbuilder.enableComplexMapKeySerialization();
+            //gbuilder.serializeNulls();//序列化null
+            // 格式化date型　　
+            gbuilder.setDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+            gson = gbuilder.create();
             try {
                 Field factories = Gson.class.getDeclaredField("factories");
                 factories.setAccessible(true);
@@ -255,7 +385,9 @@ class GsonUtil {
                         list.set(i, MyObjectTypeAdapter.FACTORY);
                     }
                 }
+                LogUtil.e("getGson替换","成功");
             } catch (Exception e) {
+
                 e.printStackTrace();
             }
         }

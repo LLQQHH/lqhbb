@@ -45,7 +45,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/appTheme">
-        <activity android:name=".homepager.SpActivity"></activity>
+        <activity android:name=".lqhtest.LqhTestJavaActivity"></activity>
+        <activity android:name=".homepager.SpActivity" />
         <activity android:name=".homepager.LqhNotificationActivity" />
         <activity android:name=".homepager.GlideActivity" />
 
@@ -56,8 +57,7 @@
         <activity android:name=".homepager.LaunchActivity" />
         <activity
             android:name=".homepager.StateActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/OpenTheme" /> <!-- android:screenOrientation="landscape" -->
+            android:configChanges="orientation|keyboardHidden|screenSize" /> <!-- android:screenOrientation="landscape" -->
         <activity android:name=".homepager.DialogAllActivity" />
         <activity android:name=".lqhtest.LqhTestBActivity" />
         <activity android:name=".lqhtest.LqhTestAActivity" />
@@ -71,6 +71,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".homepager.TransparentActivity" />
+
+        <service
+            android:name=".service.LqhTestAIDLService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.lqh.jaxlinmaster.lqhtestaidlservice" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

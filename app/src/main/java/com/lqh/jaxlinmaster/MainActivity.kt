@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -39,6 +40,14 @@ class MainActivity : LqhBaseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         StatusBarUtil.setStatusBarLightMode(this,true)
+        var teststr="requestGetTime-1635696000000"
+        val split = teststr.split("-")
+        split.forEach {
+            LogUtil.e("split",it)
+        }
+        val testViewParent = LayoutInflater.from(this).inflate(R.layout.lqh_test_item, frame_layout,false)
+        LogUtil.e("testViewParent",""+testViewParent.id)
+
         LogUtil.e("当前activity", "onCreate")
         LogUtil.e("目录外部公有getExternalStorageDirectory:",Environment.getExternalStorageDirectory().absolutePath)
         LogUtil.e("目录外部公有getExternalStoragePublicDirectory_PICTURES:",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath)

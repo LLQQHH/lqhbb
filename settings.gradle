@@ -1,2 +1,3 @@
 rootProject.name = "JaxlinMaster"
 include ':app'
+include ':testaidlapp'

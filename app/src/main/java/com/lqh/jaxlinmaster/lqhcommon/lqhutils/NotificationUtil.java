@@ -1,4 +1,4 @@
-package com.lqh.jaxlinmaster.lqhcommon;
+package com.lqh.jaxlinmaster.lqhcommon.lqhutils;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
